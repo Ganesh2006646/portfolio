@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Kankatala Ganesh Giridhar — B.Tech CSE Student at Amrita Vishwa Vidyapeetham. Full-Stack Developer, Algorithm Enthusiast, and Sustainability Researcher.">
+  <meta name="keywords" content="Ganesh Giridhar, Portfolio, B.Tech CSE, Full Stack Developer, Amrita, Web Developer">
+  <meta name="author" content="Kankatala Ganesh Giridhar">
+  <title>Ganesh Giridhar — Full Stack Developer & CS Engineer</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%236C3CE1'/><text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' fill='white' font-family='Inter,sans-serif' font-weight='900' font-size='28'>GG</text></svg>">
+</head>
+
+<body>
+
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Cursor Glow (desktop) -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- ═══════════════════════ NAVBAR ═══════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-icon">GG</div>
+        <span>Ganesh</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#achievements">Achievements</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact" class="nav-cta btn btn-primary" style="padding: 10px 24px; font-size: 0.8rem;">Let's
+            Connect</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div class="nav-overlay" id="navOverlay"></div>
+  </nav>
+
+  <!-- ═══════════════════════ HERO ═══════════════════════ -->
+  <section class="hero" id="hero">
+    <!-- Animated background blobs -->
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+    <div class="hero-blob hero-blob-3"></div>
+    <!-- Particle canvas -->
+    <canvas id="particles-canvas"></canvas>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="pulse"></span>
+          Open to opportunities
+        </div>
+        <h1 class="hero-title">
+          Hi, I'm <span class="gradient-text gradient-text-animated">Ganesh</span><br>Giridhar
+        </h1>
+        <p class="hero-subtitle">
+          <span id="typewriter"></span><span class="typewriter-cursor"></span>
+        </p>
+        <p class="hero-description">
+          B.Tech CSE student at Amrita Vishwa Vidyapeetham building scalable systems, AI-powered platforms, and
+          research-backed solutions for real-world impact.
+        </p>
+        <div class="hero-btns">
+          <a href="#contact" class="btn btn-primary magnetic">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+            <span>Let's Connect</span>
+          </a>
+          <a href="https://github.com/Ganesh2006646" target="_blank" class="btn btn-secondary magnetic">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+            </svg>
+            <span>View GitHub</span>
+          </a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="profile-frame">
+          <div class="profile-ring"></div>
+          <div class="profile-ring-inner"></div>
+          <div class="profile-img">
+            <img src="profile.png" alt="Kankatala Ganesh Giridhar" id="profilePhoto">
+          </div>
+          <!-- Orbit icons -->
+          <div class="orbit-icon">💻</div>
+          <div class="orbit-icon">🚀</div>
+          <div class="orbit-icon">🔬</div>
+          <div class="orbit-icon">⚡</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ ABOUT ═══════════════════════ -->
+  <section class="section about" id="about">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">✦ About Me</span>
+        <h2 class="section-title">Building the Future,<br>One System at a Time</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text reveal reveal-left">
+          <p>
+            I specialize in building structured, scalable systems — from <strong>AI-powered web platforms</strong> and
+            transport booking systems to database-driven applications and community-focused water sustainability models.
+          </p>
+          <p>
+            My academic and project experience demonstrates strong proficiency in frontend technologies, backend logic,
+            database management, and algorithmic problem solving. Beyond technical implementation, I actively engage in
+            <strong>system architecture planning</strong>, performance optimization, and research documentation.
+          </p>
+          <p>
+            My unique value lies in combining <strong>analytical depth</strong>, practical full-stack implementation,
+            systems thinking for scalable solutions, and research-backed problem solving with quantifiable metrics.
+          </p>
+        </div>
+        <div class="about-stats reveal reveal-right reveal-delay-2">
+          <div class="stat-card">
+            <div class="stat-number" data-target="8">0</div>
+            <div class="stat-label">Projects Built</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" data-target="6">0</div>
+            <div class="stat-label">Languages Known</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" data-target="1">0</div>
+            <div class="stat-label">Research Paper</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" data-target="4">0</div>
+            <div class="stat-label">SDGs Aligned</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SKILLS ═══════════════════════ -->
+  <section class="section skills" id="skills">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">🛠 Skills & Technologies</span>
+        <h2 class="section-title">My Technical Arsenal</h2>
+        <p class="section-subtitle">A multidisciplinary toolkit spanning development, algorithms, databases, and
+          research</p>
+      </div>
+      <div class="skills-grid">
+
+        <div class="skill-card reveal">
+          <div class="skill-icon">💻</div>
+          <h3>Programming Languages</h3>
+          <div class="skill-list">
+            <span class="tag">Python</span>
+            <span class="tag">Java</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">SQL</span>
+            <span class="tag">C</span>
+            <span class="tag">Haskell</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal reveal-delay-1">
+          <div class="skill-icon">🌐</div>
+          <h3>Frontend Development</h3>
+          <div class="skill-list">
+            <span class="tag">HTML5</span>
+            <span class="tag">CSS3</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">DOM Manipulation</span>
+            <span class="tag">Responsive Design</span>
+            <span class="tag">UI/UX</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal reveal-delay-2">
+          <div class="skill-icon">⚙️</div>
+          <h3>Backend & Full Stack</h3>
+          <div class="skill-list">
+            <span class="tag">Node.js</span>
+            <span class="tag">React.js</span>
+            <span class="tag">Java OOP</span>
+            <span class="tag">Modular Design</span>
+            <span class="tag">JSON</span>
+            <span class="tag">Pandas</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal reveal-delay-3">
+          <div class="skill-icon">🗄️</div>
+          <h3>Database & Data</h3>
+          <div class="skill-list">
+            <span class="tag">MySQL</span>
+            <span class="tag">ER Diagrams</span>
+            <span class="tag">Normalization</span>
+            <span class="tag">Aggregations</span>
+            <span class="tag">Query Optimization</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-icon">🧠</div>
+          <h3>CS Fundamentals</h3>
+          <div class="skill-list">
+            <span class="tag">DSA (Java)</span>
+            <span class="tag">QuickSort</span>
+            <span class="tag">OS Scheduling</span>
+            <span class="tag">Linear Algebra</span>
+            <span class="tag">OOP Principles</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal reveal-delay-1">
+          <div class="skill-icon">🔬</div>
+          <h3>Research & Sustainability</h3>
+          <div class="skill-list">
+            <span class="tag">Water Quality Analysis</span>
+            <span class="tag">Rural Development</span>
+            <span class="tag">SDG Design</span>
+            <span class="tag">Data Interpretation</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal reveal-delay-2">
+          <div class="skill-icon">🛠️</div>
+          <h3>Tools & Platforms</h3>
+          <div class="skill-list">
+            <span class="tag">Git / GitHub</span>
+            <span class="tag">Devpost</span>
+            <span class="tag">Microsoft Learn</span>
+            <span class="tag">PowerPoint</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal reveal-delay-3">
+          <div class="skill-icon">🤝</div>
+          <h3>Soft Skills</h3>
+          <div class="skill-list">
+            <span class="tag">Problem Solving</span>
+            <span class="tag">System Architecture</span>
+            <span class="tag">Technical Writing</span>
+            <span class="tag">Leadership</span>
+            <span class="tag">Debugging</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ PROJECTS ═══════════════════════ -->
+  <section class="section projects" id="projects">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">🚀 Project Showcase</span>
+        <h2 class="section-title">Things I've Built</h2>
+        <p class="section-subtitle">From AI-powered platforms to algorithm optimization — each project solves a real
+          problem</p>
+      </div>
+      <div class="projects-grid">
+
+        <!-- Featured: AI Tour Website -->
+        <div class="project-card featured reveal reveal-scale">
+          <div class="project-card-header">
+            <div class="project-emoji">🌍</div>
+            <span class="project-timeline">2025</span>
+          </div>
+          <div class="project-card-body">
+            <h3>Advanced AI-Powered Tour Website</h3>
+            <span class="project-duration">Duration: 4–6 weeks</span>
+            <p>
+              A highly interactive, AI-powered tourism platform featuring login authentication, dynamic image slideshow,
+              interactive India map with state-wise monument listing, monument detail pages, and responsive UI. Designed
+              as a premium, scalable "sellable" product-level website.
+            </p>
+            <div class="project-tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">Advanced UI</span>
+              <span class="tag">AI Integration</span>
+            </div>
+            <div class="project-role">
+              <strong>My Role:</strong> Full architecture design, frontend development, slideshow & interactive map
+              logic, monument navigation, and transport booking module.
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured: Spectra-Shield Hackathon -->
+        <div class="project-card featured reveal reveal-scale">
+          <div class="project-card-header">
+            <div class="project-emoji">🛡️</div>
+            <span class="project-timeline">Dec 2025</span>
+          </div>
+          <div class="project-card-body">
+            <h3>Spectra-Shield: Agentic Signal Sovereignty</h3>
+            <span class="project-duration">Hackathon Build-athon · Score: 18.200</span>
+            <p>
+              An agentic AI system solving the "Latency Gap" in electromagnetic signal processing. Uses a Pathway Engine
+              for real-time streaming data, with Gemini 2.5 Flash-Lite as the autonomous reasoning layer. Detects
+              anomalies like unauthorized drone frequencies and generates localized defense strategies — frequency
+              hopping, signal masking, and "Ghost Unit" creation.
+            </p>
+            <div class="project-tags">
+              <span class="tag">Gemini 2.5 Flash-Lite</span>
+              <span class="tag">Pathway Engine</span>
+              <span class="tag">LiteLLM</span>
+              <span class="tag">Agentic AI</span>
+              <span class="tag">Signal Processing</span>
+              <span class="tag">Real-Time Streaming</span>
+            </div>
+            <div class="project-role">
+              <strong>Team:</strong> skullbuddies · Track 1: Agentic AI (Applied GenAI) · Use cases: Dynamic Defense,
+              Contactless ICU Monitoring, Signal-Based Pest Control.
+            </div>
+          </div>
+        </div>
+
+        <!-- Transport Booking -->
+        <div class="project-card reveal">
+          <div class="project-card-header">
+            <div class="project-emoji">🚆</div>
+            <span class="project-timeline">Q3 2025</span>
+          </div>
+          <div class="project-card-body">
+            <h3>Dynamic Transport Booking System</h3>
+            <span class="project-duration">~2 weeks</span>
+            <p>
+              A booking page with dynamic transport type selection via buttons, auto-calculated fares, ticket display
+              generation, and download functionality.
+            </p>
+            <div class="project-tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">DOM Manipulation</span>
+            </div>
+            <div class="project-role">
+              <strong>My Role:</strong> UI flow design, dynamic DOM manipulation, fare calculation logic, and ticket
+              display module.
+            </div>
+          </div>
+        </div>
+
+        <!-- Court Case -->
+        <div class="project-card reveal">
+          <div class="project-card-header">
+            <div class="project-emoji">⚖️</div>
+            <span class="project-timeline">Apr 2025</span>
+          </div>
+          <div class="project-card-body">
+            <h3>Virtual Court Case Management System</h3>
+            <span class="project-duration">3–4 weeks</span>
+            <p>
+              A structured OOP-based case management platform demonstrating multiple packages, classes, test cases, and
+              object-oriented design principles.
+            </p>
+            <div class="project-tags">
+              <span class="tag">Java</span>
+              <span class="tag">OOP</span>
+              <span class="tag">Package Structuring</span>
+            </div>
+            <div class="project-role">
+              <strong>My Role:</strong> Class diagram design, multi-package architecture, core OOP implementation, and
+              test case development.
+            </div>
+          </div>
+        </div>
+
+        <!-- WooCommerce Sorting -->
+        <div class="project-card reveal">
+          <div class="project-card-header">
+            <div class="project-emoji">📊</div>
+            <span class="project-timeline">Jul 2025</span>
+          </div>
+          <div class="project-card-body">
+            <h3>WooCommerce Order Sorting System</h3>
+            <span class="project-duration">2 weeks</span>
+            <p>
+              Designed and implemented an in-place three-way QuickSort algorithm to efficiently sort 10,000+ product
+              orders based on order value.
+            </p>
+            <div class="project-tags">
+              <span class="tag">Java</span>
+              <span class="tag">DSA</span>
+              <span class="tag">Algorithm Design</span>
+            </div>
+            <div class="project-role">
+              <strong>My Role:</strong> Algorithm design, complexity analysis, synthetic dataset generation, and
+              performance validation.
+            </div>
+          </div>
+        </div>
+
+        <!-- Water Purification -->
+        <div class="project-card reveal">
+          <div class="project-card-header">
+            <div class="project-emoji">💧</div>
+            <span class="project-timeline">2025–2026</span>
+          </div>
+          <div class="project-card-body">
+            <h3>Community-Led Water Purification System</h3>
+            <span class="project-duration">Multi-month Research</span>
+            <p>
+              Designed a modular multi-stage water purification system integrating ultrafiltration, advanced oxidation,
+              nanofiltration/RO, and real-time sensor monitoring for a rural village.
+            </p>
+            <div class="project-tags">
+              <span class="tag">Research</span>
+              <span class="tag">SDG Aligned</span>
+              <span class="tag">Environmental Design</span>
+            </div>
+            <div class="project-role">
+              <strong>My Role:</strong> Water quality analysis, literature review, system architecture proposal, SDG
+              alignment, and community sustainability strategy.
+            </div>
+          </div>
+        </div>
+
+        <!-- Python Product Sorting -->
+        <div class="project-card reveal">
+          <div class="project-card-header">
+            <div class="project-emoji">🧩</div>
+            <span class="project-timeline">Early 2024</span>
+          </div>
+          <div class="project-card-body">
+            <h3>Python Product Sorting & Review System</h3>
+            <span class="project-duration">3–4 weeks</span>
+            <p>
+              Built a modular product management system using Python collections, file handling, JSON, and Pandas for
+              optimized product decision-making.
+            </p>
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">JSON</span>
+              <span class="tag">Pandas</span>
+            </div>
+            <div class="project-role">
+              <strong>My Role:</strong> Data structure design, sorting logic, file operations, JSON integration, and
+              documentation.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ ACHIEVEMENTS ═══════════════════════ -->
+  <section class="section achievements" id="achievements">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">🏆 Achievements</span>
+        <h2 class="section-title">Milestones & Highlights</h2>
+      </div>
+      <div class="achievements-list">
+
+        <div class="achievement-item reveal">
+          <div class="achievement-icon">⚡</div>
+          <div>
+            <h4>In-Place Three-Way QuickSort</h4>
+            <p>Designed an optimized algorithm handling 10,000+ records with in-place partitioning for WooCommerce
+              orders.</p>
+          </div>
+        </div>
+
+        <div class="achievement-item reveal reveal-delay-1">
+          <div class="achievement-icon">🏗️</div>
+          <div>
+            <h4>Modular Java OOP System</h4>
+            <p>Built a multi-package architecture demonstrating advanced OOP concepts for a virtual court case
+              management system.</p>
+          </div>
+        </div>
+
+        <div class="achievement-item reveal reveal-delay-2">
+          <div class="achievement-icon">🌍</div>
+          <div>
+            <h4>AI Tourism Platform Concept</h4>
+            <p>Developed a product-grade, sellable AI-powered tourism website with interactive map and transport
+              booking.</p>
+          </div>
+        </div>
+
+        <div class="achievement-item reveal">
+          <div class="achievement-icon">💧</div>
+          <div>
+            <h4>SDG-Aligned Research Paper</h4>
+            <p>Proposed a community-led water purification system with real-time monitoring for ICSRF 2025 conference
+              submission.</p>
+          </div>
+        </div>
+
+        <div class="achievement-item reveal">
+          <div class="achievement-icon">🛡️</div>
+          <div>
+            <h4>Spectra-Shield — Hackathon Build-athon</h4>
+            <p>Built an Agentic AI system for EM signal sovereignty using Gemini 2.5 Flash-Lite & Pathway Engine. Score:
+              18.200.</p>
+          </div>
+        </div>
+
+        <div class="achievement-item reveal reveal-delay-1">
+          <div class="achievement-icon">🏆</div>
+          <div>
+            <h4>Hackathon Ecosystem Participation</h4>
+            <p>Active participation in Gemini 3 and Developer Week 2026 hackathon ecosystems.</p>
+          </div>
+        </div>
+
+        <div class="achievement-item reveal reveal-delay-2">
+          <div class="achievement-icon">🎯</div>
+          <div>
+            <h4>Academic-Engineering Balance</h4>
+            <p>Balanced cutting-edge academic research with applied software engineering across multiple domains.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ EDUCATION ═══════════════════════ -->
+  <section class="section education" id="education">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">🎓 Education</span>
+        <h2 class="section-title">Academic Background</h2>
+      </div>
+      <div class="education-card reveal reveal-scale">
+        <div class="edu-header">
+          <div class="edu-icon">🎓</div>
+          <div>
+            <h3>Amrita Vishwa Vidyapeetham, Coimbatore</h3>
+            <div class="edu-degree">Bachelor of Technology — Computer Science & Engineering</div>
+            <div class="edu-status">Completed First Year • Progressing into advanced core subjects</div>
+          </div>
+        </div>
+        <div class="edu-subjects" style="margin-bottom:24px;">
+          <h4>Core Subjects Covered</h4>
+          <div class="edu-subject-tags">
+            <span class="tag">Python Programming</span>
+            <span class="tag">Java Programming</span>
+            <span class="tag">HTML / CSS / JS</span>
+            <span class="tag">Database Management</span>
+            <span class="tag">Data Structures & Algorithms</span>
+            <span class="tag">Operating Systems</span>
+            <span class="tag">Linear Algebra</span>
+          </div>
+        </div>
+        <div class="edu-subjects edu-upcoming">
+          <h4>🔮 Upcoming Focus Areas</h4>
+          <div class="edu-subject-tags">
+            <span class="tag">Problem Solving with C</span>
+            <span class="tag">Advanced DSA</span>
+            <span class="tag">DBMS Deep Dive</span>
+            <span class="tag">Node.js & React.js</span>
+            <span class="tag">AI & ML Fundamentals</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ CONTACT CTA ═══════════════════════ -->
+  <section class="section contact" id="contact">
+    <div class="container">
+      <div class="contact-banner reveal reveal-scale">
+        <h2>Let's Build Something<br><span class="gradient-text">Amazing Together</span></h2>
+        <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
+        <div class="contact-links">
+          <a href="mailto:kankatalaganeshgiridhar@outlook.com" class="contact-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+            kankatalaganeshgiridhar@outlook.com
+          </a>
+          <a href="https://github.com/Ganesh2006646" target="_blank" class="contact-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+            </svg>
+            GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/kankatala-ganesh-giridhar-071876322" target="_blank"
+            class="contact-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            </svg>
+            LinkedIn
+          </a>
+        </div>
+        <div class="contact-socials">
+          <a href="https://github.com/Ganesh2006646" target="_blank" class="social-icon" aria-label="GitHub">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/in/kankatala-ganesh-giridhar-071876322" target="_blank" class="social-icon"
+            aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            </svg>
+          </a>
+          <a href="mailto:kankatalaganeshgiridhar@outlook.com" class="social-icon" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <div class="nav-logo-icon" style="width:32px;height:32px;font-size:0.7rem;border-radius:8px;">GG</div>
+        Ganesh Giridhar
+      </div>
+      <div class="footer-links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-copy">
+        &copy; 2026 Kankatala Ganesh Giridhar. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
