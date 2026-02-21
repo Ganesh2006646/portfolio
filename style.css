@@ -2144,3 +2144,226 @@ ul {
     background: rgba(108, 60, 225, 0.2);
     color: var(--primary-dark);
 }
+
+/* ============================================================
+   JOURNEY SECTION (TIMELINE)
+   ============================================================ */
+.journey {
+  background: white;
+  position: relative;
+}
+
+.timeline-container {
+  position: relative;
+  max-width: 1000px;
+  margin: 60px auto 0;
+  padding: 20px 0;
+}
+
+/* Vertical Spine */
+.timeline-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  background: var(--primary-pale);
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.timeline-item {
+  position: relative;
+  width: 50%;
+  padding: 0 40px;
+  margin-bottom: 60px;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-item:nth-child(odd) {
+  left: 0;
+  text-align: right;
+}
+
+.timeline-item:nth-child(even) {
+  left: 50%;
+}
+
+/* Central Dot */
+.timeline-dot {
+  position: absolute;
+  top: 24px;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border: 4px solid var(--primary);
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow: 0 0 15px var(--primary-glow);
+  transition: var(--transition-spring);
+}
+
+.timeline-item:nth-child(odd) .timeline-dot {
+  right: -12px;
+}
+
+.timeline-item:nth-child(even) .timeline-dot {
+  left: -12px;
+}
+
+.timeline-item:hover .timeline-dot {
+  transform: scale(1.3);
+  background: var(--primary);
+  border-color: var(--primary-light);
+}
+
+/* Content Box */
+.timeline-card {
+  padding: 32px;
+  background: var(--bg-card);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: var(--transition-spring);
+}
+
+.timeline-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+}
+
+.timeline-date {
+  display: inline-block;
+  font-size: var(--fs-tag);
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--primary-pale);
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 16px;
+}
+
+.timeline-card h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.timeline-card p {
+  font-size: var(--fs-small);
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.timeline-card ul {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+  text-align: left;
+}
+
+.timeline-item:nth-child(odd) .timeline-card ul {
+  justify-content: end;
+  text-align: right;
+}
+
+.timeline-card li {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.timeline-item:nth-child(odd) .timeline-card li {
+  flex-direction: row-reverse;
+}
+
+.timeline-card li::before {
+  content: '✦';
+  color: var(--primary);
+  font-size: 0.7rem;
+}
+
+/* Vision & Focus Summary */
+.journey-summary {
+  margin-top: 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.summary-card {
+  padding: 40px;
+  background: var(--bg-cta);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(108, 60, 225, 0.1);
+  transition: var(--transition);
+}
+
+.summary-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-5px);
+}
+
+.summary-card h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.summary-card p {
+  font-size: var(--fs-body);
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+/* Responsive Timeline */
+@media (max-width: 768px) {
+  .timeline-container::before {
+    left: 30px;
+  }
+
+  .timeline-item {
+    width: 100%;
+    padding-left: 70px;
+    padding-right: 20px;
+    text-align: left !important;
+  }
+
+  .timeline-item:nth-child(even) {
+    left: 0;
+  }
+
+  .timeline-item:nth-child(odd) .timeline-dot,
+  .timeline-item:nth-child(even) .timeline-dot {
+    left: 18px;
+    right: auto;
+  }
+
+  .timeline-item:nth-child(odd) .timeline-card ul,
+  .timeline-item:nth-child(even) .timeline-card ul {
+    text-align: left;
+    justify-content: start;
+  }
+
+  .timeline-item:nth-child(odd) .timeline-card li {
+    flex-direction: row;
+  }
+
+  .journey-summary {
+    grid-template-columns: 1fr;
+  }
+}
