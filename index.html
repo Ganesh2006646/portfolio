@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0A0A0A">
+  <title>Ganesh Giridhar — AI Systems Engineer & Product Builder</title>
+  <meta name="description" content="Interactive AI Product Builder & AI Systems Engineer crafting scalable, intelligent systems — from Agentic AI to real-time streaming architectures.">
+  <meta name="keywords" content="AI Engineer, Systems Engineer, Product Builder, Full-Stack Developer, Ganesh Giridhar, Portfolio">
+  <meta name="author" content="Kankatala Ganesh Giridhar">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Cinematic Film Grain & Vignette Overlay -->
+  <div class="noise-overlay"></div>
+
+  <!-- Custom Cursor -->
+  <div class="cursor"></div>
+  <div class="cursor-dot"></div>
+
+  <!-- Loading Screen -->
+  <div class="loader" id="loader">
+    <div class="loader-content">
+      <div class="circular-text" id="circularText"></div>
+      <div class="loader-counter" id="loaderCounter">0%</div>
+    </div>
+  </div>
+
+  <!-- Page Transition -->
+  <div class="page-transition" id="pageTransition">
+    <div class="route-name"></div>
+    <div class="panel"></div>
+    <div class="panel"></div>
+    <div class="panel"></div>
+    <div class="panel"></div>
+    <div class="panel"></div>
+  </div>
+
+  <!-- Top Availability Bar -->
+  <div class="top-bar" id="topBar">
+    open to ai & product internships <div class="dot"></div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="#about">About</a>
+    <a href="work.html" data-transition="Work">Work</a>
+    <a href="contact.html" data-transition="Contact">Contact</a>
+  </div>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <a class="logo magnetic" href="index.html" aria-label="Ganesh Giridhar — Home">
+      <!-- Logo Icon SVG -->
+      <svg class="logo-icon" width="34" height="36" viewBox="0 0 34 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#logoClip)">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M17 3.96C17 1.77295 15.3256 0 13.26 0H3.74C1.67446 0 0 1.77295 0 3.96V14.17C0 16.357 1.67446 18.13 3.74 18.13H13.26C15.3256 18.13 17 19.903 17 22.09V32.04C17 34.227 18.6745 36 20.74 36H30.26C32.3255 36 34 34.227 34 32.04V21.83C34 19.643 32.3255 17.87 30.26 17.87H20.74C18.6745 17.87 17 16.098 17 13.91V3.96Z" fill="currentColor"/>
+        </g>
+        <defs>
+          <clipPath id="logoClip">
+            <rect width="34" height="36" fill="white"/>
+          </clipPath>
+        </defs>
+      </svg>
+      <div class="logo-name">
+        <span class="first">Ganesh</span>
+        <span class="last">Giridhar</span>
+        <span class="logo-msg">
+          <span>•</span><span>with</span><span>❤</span>
+        </span>
+      </div>
+    </a>
+
+    <div class="availability-badge magnetic">
+      <span>open to internships</span>
+      <div class="availability-dot"></div>
+    </div>
+
+    <nav class="nav">
+      <a class="nav-link" href="index.html">
+        <span>Home</span>
+        <span>Home</span>
+      </a>
+      <a class="nav-link" href="#about">
+        <span>About</span>
+        <span>About</span>
+      </a>
+      <a class="nav-link" href="work.html" data-transition="Work">
+        <span>Work</span>
+        <span>Work</span>
+      </a>
+      <a class="nav-link" href="contact.html" data-transition="Contact">
+        <span>Contact</span>
+        <span>Contact</span>
+      </a>
+    </nav>
+
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <h1 class="hero-title">
+      AI Systems
+      <em class="accent">Engineer</em> &
+      Product Builder
+    </h1>
+    <p class="hero-subtitle parallax-layer parallax-slow">
+      Building intelligent, scalable systems — Based in Coimbatore, India
+    </p>
+    <div class="hero-scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="section about" id="about">
+    <div class="about-grid">
+      <div class="about-image-wrapper image-reveal">
+        <img src="assets/images/profile.png" alt="Kankatala Ganesh Giridhar — Portrait" loading="lazy">
+      </div>
+      <div class="about-text">
+        <span class="section-label reveal-left">About Me</span>
+        <h2 class="section-title">
+          An AI systems engineer
+          driven by solving real-world
+          problems through
+          <em class="accent" style="font-family: var(--font-serif); font-style: italic;">intelligent design</em>
+        </h2>
+        <p class="reveal-right reveal-delay-2">
+          <span class="highlight">B.Tech Computer Science & Engineering</span> student at Amrita Vishwa Vidyapeetham (CGPA: 8.36), I focus on building scalable, intelligent systems — from <span class="highlight">Agentic AI and real-time streaming architectures</span> to backend engineering and sustainable tech innovation.
+        </p>
+        <p class="reveal-right reveal-delay-3">
+          I prioritize <span class="highlight">high-performance algorithm design, system-level problem solving</span>, and user-centric product thinking. My expertise spans <span class="highlight">Python, Java, JavaScript, Node.js, Gemini Models, Pathway Engine, Next.js, Flutter</span>, and modern AI tooling — building products that don't just work, they <span class="highlight">think and adapt</span>.
+        </p>
+
+        <div class="scroll-line-reveal reveal-delay-4"></div>
+
+        <!-- Services / Focus Areas -->
+        <div class="services-grid stagger-children" style="margin-top: 2rem;">
+          <div class="service-card">
+            <span class="service-number">01</span>
+            <h3>AI Systems</h3>
+            <p>Agentic AI, Gemini Models, LiteLLM, real-time anomaly detection & reasoning.</p>
+          </div>
+          <div class="service-card">
+            <span class="service-number">02</span>
+            <h3>Full-Stack Dev</h3>
+            <p>Node.js, Express, PostgreSQL, Next.js, REST APIs — end-to-end engineering.</p>
+          </div>
+          <div class="service-card">
+            <span class="service-number">03</span>
+            <h3>Product Strategy</h3>
+            <p>System design, UI/UX motion design, product thinking & research-driven iteration.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider scroll-line-reveal"></div>
+
+  <!-- Work Section -->
+  <section class="section work-section" id="work">
+    <div class="work-header">
+      <div>
+        <span class="section-label reveal-left">Selected Work</span>
+        <h2 class="section-title">Recent Projects</h2>
+      </div>
+      <a href="work.html" class="view-all reveal-right reveal-delay-2" data-transition="Work">
+        View All
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="projects-grid">
+      <a href="work.html" class="project-card reveal-scale" data-transition="Work">
+        <div class="project-image">
+          <img src="assets/images/project-spectra-shield.png" alt="Spectra-Shield" loading="lazy">
+          <div class="project-image-overlay"></div>
+        </div>
+        <div class="project-info">
+          <div>
+            <h3>Spectra-Shield</h3>
+            <div class="project-meta">
+              <span class="project-category">Agentic AI</span>
+              <span class="project-year">2025</span>
+            </div>
+          </div>
+          <div class="project-arrow">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </a>
+
+      <a href="work.html" class="project-card reveal-scale reveal-delay-1" data-transition="Work">
+        <div class="project-image">
+          <img src="assets/images/project-dispute-deescalator.png" alt="Dispute De-Escalator" loading="lazy">
+          <div class="project-image-overlay"></div>
+        </div>
+        <div class="project-info">
+          <div>
+            <h3>Dispute De-Escalator</h3>
+            <div class="project-meta">
+              <span class="project-category">Gemini AI</span>
+              <span class="project-year">2026</span>
+            </div>
+          </div>
+          <div class="project-arrow">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </a>
+
+      <a href="work.html" class="project-card reveal-scale reveal-delay-2" data-transition="Work">
+        <div class="project-image">
+          <img src="assets/images/project-flip-wars.png" alt="Flip Wars" loading="lazy">
+          <div class="project-image-overlay"></div>
+        </div>
+        <div class="project-info">
+          <div>
+            <h3>Flip Wars</h3>
+            <div class="project-meta">
+              <span class="project-category">Java / Game Theory</span>
+              <span class="project-year">2025</span>
+            </div>
+          </div>
+          <div class="project-arrow">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </a>
+
+      <a href="work.html" class="project-card reveal-scale reveal-delay-3" data-transition="Work">
+        <div class="project-image">
+          <img src="assets/images/project-retirement-calc.png" alt="Retirement Planning Calculator" loading="lazy">
+          <div class="project-image-overlay"></div>
+        </div>
+        <div class="project-info">
+          <div>
+            <h3>HDFC Retirement Calculator</h3>
+            <div class="project-meta">
+              <span class="project-category">Full-Stack</span>
+              <span class="project-year">2025</span>
+            </div>
+          </div>
+          <div class="project-arrow">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <section class="marquee-section">
+    <div class="marquee" id="marquee">
+      <span class="marquee-item">AI Engineer</span>
+      <span class="marquee-separator">✦</span>
+      <span class="marquee-item">Full-Stack Dev</span>
+      <span class="marquee-separator">✦</span>
+      <span class="marquee-item">Product Builder</span>
+      <span class="marquee-separator">✦</span>
+      <span class="marquee-item">System Design</span>
+      <span class="marquee-separator">✦</span>
+      <span class="marquee-item">Agentic AI</span>
+      <span class="marquee-separator">✦</span>
+      <span class="marquee-item">Research</span>
+      <span class="marquee-separator">✦</span>
+    </div>
+  </section>
+
+  <!-- Achievements Section (replaces Testimonials) -->
+  <section class="section testimonials">
+    <span class="section-label reveal-left">Achievements & Competitions</span>
+    <h2 class="section-title">Hackathons & Research</h2>
+    <div class="testimonials-track stagger-children">
+      <div class="testimonial-card">
+        <blockquote class="testimonial-quote">
+          "Competed in the Synaptics AI Hackathon (SASTRA 2026) in the Applied GenAI track, achieving a top score of 18.200 with Spectra-Shield — an Agentic AI system for real-time anomaly detection."
+        </blockquote>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">🏆</div>
+          <div class="testimonial-author-info">
+            <h4>Synaptics AI Hackathon</h4>
+            <p>SASTRA 2026 — Applied GenAI Track</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <blockquote class="testimonial-quote">
+          "Google Summer of Code (GSoC) 2026 Contributor — Submitted open-source bug fixes and pull requests to the Jitsi Meet repository, optimizing UI/CSS for toolbox icons."
+        </blockquote>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">🌍</div>
+          <div class="testimonial-author-info">
+            <h4>GSoC 2026 Contributor</h4>
+            <p>Jitsi Meet — Open Source</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider scroll-line-reveal"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid stagger-children">
+      <div class="footer-brand">
+        <a class="logo" href="index.html">
+          <svg class="logo-icon" width="34" height="36" viewBox="0 0 34 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#footerLogoClip)">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M17 3.96C17 1.77295 15.3256 0 13.26 0H3.74C1.67446 0 0 1.77295 0 3.96V14.17C0 16.357 1.67446 18.13 3.74 18.13H13.26C15.3256 18.13 17 19.903 17 22.09V32.04C17 34.227 18.6745 36 20.74 36H30.26C32.3255 36 34 34.227 34 32.04V21.83C34 19.643 32.3255 17.87 30.26 17.87H20.74C18.6745 17.87 17 16.098 17 13.91V3.96Z" fill="currentColor"/>
+            </g>
+            <defs><clipPath id="footerLogoClip"><rect width="34" height="36" fill="white"/></clipPath></defs>
+          </svg>
+          <div class="logo-name">
+            <span class="first">Ganesh</span>
+            <span class="last">Giridhar</span>
+          </div>
+        </a>
+        <p>AI Systems Engineer & Product Builder crafting scalable, intelligent systems with cutting-edge AI and modern engineering.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <a href="index.html">Home</a>
+        <a href="#about">About</a>
+        <a href="work.html" data-transition="Work">Work</a>
+        <a href="contact.html" data-transition="Contact">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Socials</h4>
+        <a href="https://www.linkedin.com/in/kankatala-ganesh-giridhar-071876322" target="_blank">LinkedIn</a>
+        <a href="https://github.com/Ganesh2006646" target="_blank">GitHub</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:kankatalaganeshgiridhar@gmail.com">kankatalaganeshgiridhar@gmail.com</a>
+        <a href="contact.html" data-transition="Contact">Send a message</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Kankatala Ganesh Giridhar. All rights reserved.</span>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/kankatala-ganesh-giridhar-071876322" target="_blank" aria-label="LinkedIn">Li</a>
+        <a href="https://github.com/Ganesh2006646" target="_blank" aria-label="GitHub">Gh</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP + SplitType CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/split-type"></script>
+
+  <!-- Core JS -->
+  <script src="js/main.js"></script>
+  <!-- Comet Cursor (hero only) -->
+  <script src="js/comet-cursor.js"></script>
+  <!-- Kinetic Text Reveals -->
+  <script src="js/kinetic-text.js"></script>
+</body>
+</html>

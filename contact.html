@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0A0A0A">
+  <title>Contact — Alex Nova</title>
+  <meta name="description" content="Get in touch with Alex Nova for creative development and design projects.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Noise Overlay -->
+  <div class="noise-overlay"></div>
+
+  <!-- Custom Cursor -->
+  <div class="cursor"></div>
+  <div class="cursor-dot"></div>
+
+  <!-- Page Transition -->
+  <div class="page-transition" id="pageTransition">
+    <div class="route-name"></div>
+    <div class="panel"></div>
+    <div class="panel"></div>
+    <div class="panel"></div>
+    <div class="panel"></div>
+    <div class="panel"></div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" data-transition="Home">Home</a>
+    <a href="index.html#about" data-transition="Home">About</a>
+    <a href="work.html" data-transition="Work">Work</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <a class="logo magnetic" href="index.html" aria-label="Alex Nova — Home" data-transition="Home">
+      <svg class="logo-icon" width="34" height="36" viewBox="0 0 34 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#logoClipC)">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M17 3.96C17 1.77295 15.3256 0 13.26 0H3.74C1.67446 0 0 1.77295 0 3.96V14.17C0 16.357 1.67446 18.13 3.74 18.13H13.26C15.3256 18.13 17 19.903 17 22.09V32.04C17 34.227 18.6745 36 20.74 36H30.26C32.3255 36 34 34.227 34 32.04V21.83C34 19.643 32.3255 17.87 30.26 17.87H20.74C18.6745 17.87 17 16.098 17 13.91V3.96Z" fill="currentColor"/>
+        </g>
+        <defs><clipPath id="logoClipC"><rect width="34" height="36" fill="white"/></clipPath></defs>
+      </svg>
+      <div class="logo-name">
+        <span class="first">Alex</span>
+        <span class="last">Nova</span>
+        <span class="logo-msg"><span>•</span><span>with</span><span>❤</span></span>
+      </div>
+    </a>
+
+    <div class="availability-badge magnetic">
+      <span>available now for work</span>
+      <div class="availability-dot"></div>
+    </div>
+
+    <nav class="nav">
+      <a class="nav-link" href="index.html" data-transition="Home">
+        <span>Home</span><span>Home</span>
+      </a>
+      <a class="nav-link" href="index.html#about" data-transition="Home">
+        <span>About</span><span>About</span>
+      </a>
+      <a class="nav-link" href="work.html" data-transition="Work">
+        <span>Work</span><span>Work</span>
+      </a>
+      <a class="nav-link" href="contact.html">
+        <span>Contact</span><span>Contact</span>
+      </a>
+    </nav>
+
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </header>
+
+  <div class="contact-page">
+    <!-- Contact Hero -->
+    <section class="contact-hero">
+      <span class="section-label reveal">Get in Touch</span>
+      <h1 class="reveal reveal-delay-1">
+        Let's create<br>
+        something <em class="accent">amazing</em><br>
+        together
+      </h1>
+      <p class="lead reveal reveal-delay-2">
+        Have a project in mind? I'd love to hear about it. Whether you need a stunning website, 
+        an immersive web experience, or a complete design overhaul — let's make it happen.
+      </p>
+    </section>
+
+    <!-- Contact Form -->
+    <div class="contact-form">
+      <form id="contactForm">
+        <div class="form-group reveal">
+          <label>Your Name <span class="required">*</span></label>
+          <input type="text" placeholder="John Doe" required>
+          <div class="input-line"></div>
+        </div>
+
+        <div class="form-group reveal reveal-delay-1">
+          <label>Email Address <span class="required">*</span></label>
+          <input type="email" placeholder="john@company.com" required>
+          <div class="input-line"></div>
+        </div>
+
+        <div class="form-group reveal reveal-delay-2">
+          <label>Company / Organization</label>
+          <input type="text" placeholder="Your Company">
+          <div class="input-line"></div>
+        </div>
+
+        <div class="form-group reveal reveal-delay-3">
+          <label>What services are you interested in? <span class="required">*</span></label>
+          <div class="budget-options">
+            <div class="budget-option">Web Development</div>
+            <div class="budget-option">Mobile App</div>
+            <div class="budget-option">UX/UI Design</div>
+            <div class="budget-option">3D / Interactive</div>
+            <div class="budget-option">Consulting</div>
+          </div>
+        </div>
+
+        <div class="form-group reveal">
+          <label>Budget Range</label>
+          <div class="budget-options">
+            <div class="budget-option">$2,000 – $5,000</div>
+            <div class="budget-option">$5,001 – $10,000</div>
+            <div class="budget-option">$10,001 – $20,000</div>
+            <div class="budget-option">$20,001 and up</div>
+          </div>
+        </div>
+
+        <div class="form-group reveal reveal-delay-1">
+          <label>Tell me about your project <span class="required">*</span></label>
+          <textarea rows="4" placeholder="Describe your project, goals, timeline, and any other details..." required></textarea>
+          <div class="input-line"></div>
+        </div>
+
+        <div class="reveal reveal-delay-2">
+          <button type="submit" class="submit-btn magnetic">
+            <span>Send Message</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Contact Info -->
+    <section class="section" style="padding-top: 0;">
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:2rem; max-width:900px; margin:0 auto;">
+        <div class="reveal">
+          <span class="section-label">Email</span>
+          <a href="mailto:hello@alexnova.dev" style="font-size: 1.1rem; color: var(--text-primary); display: block; margin-top: 0.5rem; transition: color 0.3s;">hello@alexnova.dev</a>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <span class="section-label">Location</span>
+          <p style="font-size: 1.1rem; color: var(--text-primary); margin-top: 0.5rem;">San Francisco, CA</p>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <span class="section-label">Socials</span>
+          <div style="display: flex; gap: 1.5rem; margin-top: 0.5rem;">
+            <a href="#" style="font-size: 0.9rem; color: var(--text-muted); transition: color 0.3s;">LinkedIn</a>
+            <a href="#" style="font-size: 0.9rem; color: var(--text-muted); transition: color 0.3s;">Instagram</a>
+            <a href="#" style="font-size: 0.9rem; color: var(--text-muted); transition: color 0.3s;">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-bottom" style="border-top: none; margin-top: 0; padding-top: 0;">
+      <span>© 2024 Alex Nova. All rights reserved.</span>
+      <div class="social-links">
+        <a href="#">Li</a>
+        <a href="#">Ig</a>
+        <a href="#">Gh</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
