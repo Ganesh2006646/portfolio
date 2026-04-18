@@ -297,7 +297,7 @@ ul, ol { list-style: none; }
 
 @keyframes panelSlideIn {
   0% { transform: translateY(0%); }
-  100% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
 }
 
 .page-transition .route-name {
