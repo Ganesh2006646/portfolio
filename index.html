@@ -9,6 +9,8 @@
   <meta name="keywords" content="AI Engineer, Systems Engineer, Product Builder, Full-Stack Developer, Ganesh Giridhar, Portfolio">
   <meta name="author" content="Kankatala Ganesh Giridhar">
   <link rel="stylesheet" href="css/styles.css">
+  <!-- Source Code Shield -->
+  <script src="js/shield.js"></script>
 </head>
 <body>
 
@@ -53,23 +55,11 @@
   <!-- Header -->
   <header class="header" id="header">
     <a class="logo magnetic" href="index.html" aria-label="Ganesh Giridhar — Home">
-      <!-- Logo Icon SVG -->
-      <svg class="logo-icon" width="34" height="36" viewBox="0 0 34 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clip-path="url(#logoClip)">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M17 3.96C17 1.77295 15.3256 0 13.26 0H3.74C1.67446 0 0 1.77295 0 3.96V14.17C0 16.357 1.67446 18.13 3.74 18.13H13.26C15.3256 18.13 17 19.903 17 22.09V32.04C17 34.227 18.6745 36 20.74 36H30.26C32.3255 36 34 34.227 34 32.04V21.83C34 19.643 32.3255 17.87 30.26 17.87H20.74C18.6745 17.87 17 16.098 17 13.91V3.96Z" fill="currentColor"/>
-        </g>
-        <defs>
-          <clipPath id="logoClip">
-            <rect width="34" height="36" fill="white"/>
-          </clipPath>
-        </defs>
-      </svg>
+      <!-- Logo Icon Image — KG² -->
+      <img src="assets/images/kg2-logo.png" alt="KG² Logo" class="logo-icon-img">
       <div class="logo-name">
         <span class="first">Ganesh</span>
         <span class="last">Giridhar</span>
-        <span class="logo-msg">
-          <span>•</span><span>with</span><span>❤</span>
-        </span>
       </div>
     </a>
 
@@ -112,7 +102,7 @@
       Product Builder
     </h1>
     <p class="hero-subtitle parallax-layer parallax-slow">
-      Building intelligent, scalable systems — Based in Coimbatore, India
+      Building intelligent, scalable systems
     </p>
     <div class="hero-scroll-indicator">
       <span>Scroll</span>
@@ -120,19 +110,21 @@
     </div>
   </section>
 
-  <!-- About Section -->
+  <!-- =========================================
+       SECTION 1 — THE ENGINEERING IDENTITY
+       ========================================= -->
   <section class="section about" id="about">
     <div class="about-grid">
-      <div class="about-image-wrapper image-reveal">
-        <img src="assets/images/profile.png" alt="Kankatala Ganesh Giridhar — Portrait" loading="lazy">
+      <div class="about-image-wrapper image-reveal" id="profileImageWrapper">
+        <img src="assets/images/profile.png" alt="Kankatala Ganesh Giridhar — Portrait" loading="lazy" class="img-base">
+        <img src="assets/images/profile.png" alt="Kankatala Ganesh Giridhar — Portrait" loading="lazy" class="img-color overlay-mask">
       </div>
       <div class="about-text">
-        <span class="section-label reveal-left">About Me</span>
+        <span class="section-label reveal-left">The Engineering Identity</span>
         <h2 class="section-title">
-          An AI systems engineer
-          driven by solving real-world
-          problems through
-          <em class="accent" style="font-family: var(--font-serif); font-style: italic;">intelligent design</em>
+          Kankatala
+          <em class="accent" style="font-family: var(--font-serif); font-style: italic;">Ganesh</em>
+          Giridhar
         </h2>
         <p class="reveal-right reveal-delay-2">
           <span class="highlight">B.Tech Computer Science & Engineering</span> student at Amrita Vishwa Vidyapeetham (CGPA: 8.36), I focus on building scalable, intelligent systems — from <span class="highlight">Agentic AI and real-time streaming architectures</span> to backend engineering and sustainable tech innovation.
@@ -143,7 +135,7 @@
 
         <div class="scroll-line-reveal reveal-delay-4"></div>
 
-        <!-- Services / Focus Areas -->
+        <!-- Focus Areas -->
         <div class="services-grid stagger-children" style="margin-top: 2rem;">
           <div class="service-card">
             <span class="service-number">01</span>
@@ -167,107 +159,348 @@
 
   <div class="section-divider scroll-line-reveal"></div>
 
-  <!-- Work Section -->
-  <section class="section work-section" id="work">
-    <div class="work-header">
-      <div>
-        <span class="section-label reveal-left">Selected Work</span>
-        <h2 class="section-title">Recent Projects</h2>
+  <!-- =========================================
+       SECTION 2 — THE CORE FOUNDATION
+       ========================================= -->
+  <section class="section arsenal-section" id="arsenal">
+    <div class="arsenal-container">
+      <span class="section-label reveal-left">The Core Foundation</span>
+      <h2 class="section-title">Technical Arsenal</h2>
+      <p class="arsenal-subtitle reveal-right reveal-delay-1">Technologies, frameworks, and tools I wield to build intelligent systems.</p>
+
+      <div class="arsenal-grid stagger-children">
+        <!-- Languages -->
+        <div class="arsenal-category reveal-scale">
+          <div class="arsenal-category-header">
+            <span class="arsenal-icon">⟨/⟩</span>
+            <h3>Languages</h3>
+          </div>
+          <div class="arsenal-tags">
+            <span class="arsenal-tag">Python</span>
+            <span class="arsenal-tag">Java</span>
+            <span class="arsenal-tag">JavaScript</span>
+            <span class="arsenal-tag">TypeScript</span>
+            <span class="arsenal-tag">C</span>
+            <span class="arsenal-tag">SQL</span>
+            <span class="arsenal-tag">HTML/CSS</span>
+          </div>
+        </div>
+
+        <!-- AI / ML -->
+        <div class="arsenal-category reveal-scale">
+          <div class="arsenal-category-header">
+            <span class="arsenal-icon">🧠</span>
+            <h3>AI / ML</h3>
+          </div>
+          <div class="arsenal-tags">
+            <span class="arsenal-tag accent-tag">Gemini Models</span>
+            <span class="arsenal-tag accent-tag">LiteLLM</span>
+            <span class="arsenal-tag">LangChain</span>
+            <span class="arsenal-tag accent-tag">Pathway Engine</span>
+            <span class="arsenal-tag">TensorFlow</span>
+            <span class="arsenal-tag">Scikit-learn</span>
+            <span class="arsenal-tag">OpenCV</span>
+            <span class="arsenal-tag">RAG</span>
+          </div>
+        </div>
+
+        <!-- Backend & Databases -->
+        <div class="arsenal-category reveal-scale">
+          <div class="arsenal-category-header">
+            <span class="arsenal-icon">⚙️</span>
+            <h3>Backend & Databases</h3>
+          </div>
+          <div class="arsenal-tags">
+            <span class="arsenal-tag">Node.js</span>
+            <span class="arsenal-tag">Express</span>
+            <span class="arsenal-tag">FastAPI</span>
+            <span class="arsenal-tag">PostgreSQL</span>
+            <span class="arsenal-tag">MongoDB</span>
+            <span class="arsenal-tag">Firebase</span>
+            <span class="arsenal-tag">REST APIs</span>
+            <span class="arsenal-tag">WebSockets</span>
+          </div>
+        </div>
+
+        <!-- Frontend & Mobile -->
+        <div class="arsenal-category reveal-scale">
+          <div class="arsenal-category-header">
+            <span class="arsenal-icon">🎨</span>
+            <h3>Frontend & Mobile</h3>
+          </div>
+          <div class="arsenal-tags">
+            <span class="arsenal-tag">React</span>
+            <span class="arsenal-tag">Next.js</span>
+            <span class="arsenal-tag">Flutter</span>
+            <span class="arsenal-tag">GSAP</span>
+            <span class="arsenal-tag">Tailwind CSS</span>
+            <span class="arsenal-tag">Three.js</span>
+          </div>
+        </div>
+
+        <!-- Tools & DevOps -->
+        <div class="arsenal-category reveal-scale">
+          <div class="arsenal-category-header">
+            <span class="arsenal-icon">🛠️</span>
+            <h3>Tools & DevOps</h3>
+          </div>
+          <div class="arsenal-tags">
+            <span class="arsenal-tag">Git / GitHub</span>
+            <span class="arsenal-tag">Docker</span>
+            <span class="arsenal-tag">Vercel</span>
+            <span class="arsenal-tag">Figma</span>
+            <span class="arsenal-tag">Postman</span>
+            <span class="arsenal-tag">VS Code</span>
+            <span class="arsenal-tag">Linux</span>
+          </div>
+        </div>
       </div>
-      <a href="work.html" class="view-all reveal-right reveal-delay-2" data-transition="Work">
-        View All
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-    </div>
-
-    <div class="projects-grid">
-      <a href="work.html" class="project-card reveal-scale" data-transition="Work">
-        <div class="project-image">
-          <img src="assets/images/project-spectra-shield.png" alt="Spectra-Shield" loading="lazy">
-          <div class="project-image-overlay"></div>
-        </div>
-        <div class="project-info">
-          <div>
-            <h3>Spectra-Shield</h3>
-            <div class="project-meta">
-              <span class="project-category">Agentic AI</span>
-              <span class="project-year">2025</span>
-            </div>
-          </div>
-          <div class="project-arrow">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </div>
-      </a>
-
-      <a href="work.html" class="project-card reveal-scale reveal-delay-1" data-transition="Work">
-        <div class="project-image">
-          <img src="assets/images/project-dispute-deescalator.png" alt="Dispute De-Escalator" loading="lazy">
-          <div class="project-image-overlay"></div>
-        </div>
-        <div class="project-info">
-          <div>
-            <h3>Dispute De-Escalator</h3>
-            <div class="project-meta">
-              <span class="project-category">Gemini AI</span>
-              <span class="project-year">2026</span>
-            </div>
-          </div>
-          <div class="project-arrow">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </div>
-      </a>
-
-      <a href="work.html" class="project-card reveal-scale reveal-delay-2" data-transition="Work">
-        <div class="project-image">
-          <img src="assets/images/project-flip-wars.png" alt="Flip Wars" loading="lazy">
-          <div class="project-image-overlay"></div>
-        </div>
-        <div class="project-info">
-          <div>
-            <h3>Flip Wars</h3>
-            <div class="project-meta">
-              <span class="project-category">Java / Game Theory</span>
-              <span class="project-year">2025</span>
-            </div>
-          </div>
-          <div class="project-arrow">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </div>
-      </a>
-
-      <a href="work.html" class="project-card reveal-scale reveal-delay-3" data-transition="Work">
-        <div class="project-image">
-          <img src="assets/images/project-retirement-calc.png" alt="Retirement Planning Calculator" loading="lazy">
-          <div class="project-image-overlay"></div>
-        </div>
-        <div class="project-info">
-          <div>
-            <h3>HDFC Retirement Calculator</h3>
-            <div class="project-meta">
-              <span class="project-category">Full-Stack</span>
-              <span class="project-year">2025</span>
-            </div>
-          </div>
-          <div class="project-arrow">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </div>
-      </a>
     </div>
   </section>
+
+  <div class="section-divider scroll-line-reveal"></div>
+
+  <!-- =========================================
+       SECTION 3 — PROOF OF IMPACT
+       ========================================= -->
+  <section class="section impact-section" id="impact">
+    <div class="impact-container">
+      <span class="section-label reveal-left">Proof of Impact</span>
+      <h2 class="section-title">Important Projects</h2>
+
+      <div class="impact-grid">
+        <div class="impact-card reveal-scale">
+          <div class="impact-card-accent"></div>
+          <div class="impact-card-header">
+            <span class="impact-number">01</span>
+            <span class="impact-year">2025</span>
+          </div>
+          <h3>Spectra-Shield</h3>
+          <p>Multi-agent Agentic AI system for real-time anomaly detection. Scored <strong>18.200</strong> at Synaptics AI Hackathon — highest in Applied GenAI track.</p>
+          <div class="impact-stack">
+            <span>Gemini</span>
+            <span>Pathway</span>
+            <span>LiteLLM</span>
+            <span>Python</span>
+          </div>
+        </div>
+
+        <div class="impact-card reveal-scale reveal-delay-1">
+          <div class="impact-card-accent"></div>
+          <div class="impact-card-header">
+            <span class="impact-number">02</span>
+            <span class="impact-year">2026</span>
+          </div>
+          <h3>Dispute De-Escalator</h3>
+          <p>AI-powered consumer dispute resolution platform with multi-agent orchestration and legal reasoning for automated mediation.</p>
+          <div class="impact-stack">
+            <span>Gemini AI</span>
+            <span>Next.js</span>
+            <span>Node.js</span>
+            <span>PostgreSQL</span>
+          </div>
+        </div>
+
+        <div class="impact-card reveal-scale reveal-delay-2">
+          <div class="impact-card-accent"></div>
+          <div class="impact-card-header">
+            <span class="impact-number">03</span>
+            <span class="impact-year">2026</span>
+          </div>
+          <h3>CrowdIQ</h3>
+          <p>Real-time crowd intelligence platform for events — live density tracking, anomaly detection, and staff command center.</p>
+          <div class="impact-stack">
+            <span>React</span>
+            <span>Firebase</span>
+            <span>ML Models</span>
+            <span>Maps API</span>
+          </div>
+        </div>
+
+        <div class="impact-card reveal-scale reveal-delay-3">
+          <div class="impact-card-accent"></div>
+          <div class="impact-card-header">
+            <span class="impact-number">04</span>
+            <span class="impact-year">2025</span>
+          </div>
+          <h3>Flip Wars</h3>
+          <p>Strategic multiplayer board game with AI opponent using minimax algorithm with alpha-beta pruning for optimal gameplay.</p>
+          <div class="impact-stack">
+            <span>Java</span>
+            <span>Game Theory</span>
+            <span>AI</span>
+            <span>Algorithms</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider scroll-line-reveal"></div>
+
+  <!-- =========================================
+       SECTION 4 — COMPETITIVE SPIRIT
+       ========================================= -->
+  <section class="section compete-section" id="compete">
+    <div class="compete-container">
+      <span class="section-label reveal-left">Competitive Spirit</span>
+      <h2 class="section-title">Battle-Tested: Hackathons</h2>
+
+      <div class="compete-timeline">
+        <div class="compete-card reveal-right">
+          <div class="compete-badge">🏆</div>
+          <div class="compete-content">
+            <div class="compete-meta">
+              <span class="compete-date">2026</span>
+              <span class="compete-venue">IIT Madras</span>
+            </div>
+            <h3>Synaptics Frontier AI Hackathon</h3>
+            <p>Engineered Spectra-Shield, an Agentic AI system for real-time anomaly detection. Secured a <strong>top-tier score of 18.200</strong> in the Applied GenAI track.</p>
+            <span class="compete-tag">Applied GenAI Track</span>
+          </div>
+        </div>
+
+        <div class="compete-card reveal-right reveal-delay-1">
+          <div class="compete-badge">⚖️</div>
+          <div class="compete-content">
+            <div class="compete-meta">
+              <span class="compete-date">2026</span>
+              <span class="compete-venue">Google</span>
+            </div>
+            <h3>Gemini 3 Hackathon</h3>
+            <p>Built the Dispute De-Escalator — an AI-powered legal tech workflow utilizing Gemini models to <strong>sanitize emotional inputs</strong> and provide structured, out-of-court reasoning.</p>
+            <span class="compete-tag">AI Legal Tech</span>
+          </div>
+        </div>
+
+        <div class="compete-card reveal-right reveal-delay-2">
+          <div class="compete-badge">🌍</div>
+          <div class="compete-content">
+            <div class="compete-meta">
+              <span class="compete-date">2026</span>
+              <span class="compete-venue">Meta</span>
+            </div>
+            <h3>Meta OpenEnv Hackathon</h3>
+            <p>Competed in building open-source, tech-driven environmental solutions, pushing the boundaries of <strong>sustainable digital architecture</strong>.</p>
+            <span class="compete-tag">Environmental Tech</span>
+          </div>
+        </div>
+
+        <div class="compete-card reveal-right reveal-delay-3">
+          <div class="compete-badge">💰</div>
+          <div class="compete-content">
+            <div class="compete-meta">
+              <span class="compete-date">2025</span>
+              <span class="compete-venue">HDFC</span>
+            </div>
+            <h3>HDFC FinCal Innovation Hackathon</h3>
+            <p>Engineered the Retirement Planning Calculator adhering to strict <strong>HDFC brand compliance</strong> and WCAG 2.1 AA accessibility standards.</p>
+            <span class="compete-tag">FinTech</span>
+          </div>
+        </div>
+
+        <div class="compete-card reveal-right reveal-delay-4">
+          <div class="compete-badge">🚀</div>
+          <div class="compete-content">
+            <div class="compete-meta">
+              <span class="compete-date">2026</span>
+              <span class="compete-venue">Google — Active</span>
+            </div>
+            <h3>Gemma 4 Hackathon</h3>
+            <p>Currently building next-generation agentic workflows leveraging Google's lightweight <strong>open-weight models</strong> for high-efficiency edge processing.</p>
+            <span class="compete-tag">Currently Pursuing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider scroll-line-reveal"></div>
+
+  <!-- =========================================
+       SECTION 5 — SOCIAL RESPONSIBILITY
+       ========================================= -->
+  <section class="section experience-section" id="experience">
+    <div class="experience-container">
+      <span class="section-label reveal-left">Social Responsibility</span>
+      <h2 class="section-title">Experience & Research</h2>
+
+      <div class="experience-grid">
+        <div class="experience-card reveal-scale">
+          <div class="experience-icon">🌱</div>
+          <div class="experience-card-content">
+            <div class="experience-meta">
+              <span>Live-in-Labs Researcher</span>
+              <span class="experience-period">2025 — Present</span>
+            </div>
+            <h3>Rural Water Purification System</h3>
+            <p>Lead engineering and field research for a community-managed <strong>5000L/day water purification system</strong> in Nediamanickam village. Made critical, context-aware design choices (eliminating expensive solar dependencies) to ensure high rural viability. Research submitted to <strong>ICRCF 2025</strong>.</p>
+          </div>
+        </div>
+
+        <div class="experience-card reveal-scale reveal-delay-1">
+          <div class="experience-icon">🔬</div>
+          <div class="experience-card-content">
+            <div class="experience-meta">
+              <span>AI for Good Initiative</span>
+              <span class="experience-period">2025 — Ongoing</span>
+            </div>
+            <h3>Sustainable AI Solutions</h3>
+            <p>Focused on leveraging <strong>Agentic AI and Generative models</strong> to build sustainable, high-impact societal solutions — directly applied in platforms like REWOOD for environmental sustainability.</p>
+          </div>
+        </div>
+
+        <div class="experience-card reveal-scale reveal-delay-2">
+          <div class="experience-icon">🌍</div>
+          <div class="experience-card-content">
+            <div class="experience-meta">
+              <span>GSoC — Open Source</span>
+              <span class="experience-period">2026</span>
+            </div>
+            <h3>Google Summer of Code</h3>
+            <p>Contributed to the <strong>Jitsi Meet</strong> open-source repository — submitting bug fixes and optimizing UI/CSS for toolbox icons, improving accessibility and visual consistency across the platform.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider scroll-line-reveal"></div>
+
+  <!-- =========================================
+       SECTION 6 — INDUSTRY RECOGNITION
+       ========================================= -->
+  <section class="section recognition-section" id="recognition">
+    <div class="recognition-container">
+      <span class="section-label reveal-left">Industry Recognition</span>
+      <h2 class="section-title">Certifications & Continuous Learning</h2>
+
+      <div class="recognition-grid">
+        <div class="recognition-card reveal-scale">
+          <div class="recognition-icon">☁️</div>
+          <h3>Microsoft Azure AI Certification</h3>
+          <p>Validating enterprise-level cloud architecture and scalable AI model deployment — building expertise in production-grade Azure AI infrastructure.</p>
+          <span class="recognition-badge pursuing">Pursuing</span>
+        </div>
+
+        <div class="recognition-card reveal-scale reveal-delay-1">
+          <div class="recognition-icon">🧠</div>
+          <h3>AI Product Management</h3>
+          <p>Mastered the AI product lifecycle through Product Space micro-certification — bridging the gap between raw machine learning engineering and <strong>user-centric product strategy</strong>.</p>
+          <span class="recognition-badge">Product Space Certified</span>
+        </div>
+
+        <div class="recognition-card reveal-scale reveal-delay-2">
+          <div class="recognition-icon">🏗️</div>
+          <h3>Full-Stack Engineering</h3>
+          <p>Formalized end-to-end system architecture skills — focusing on robust backend (Node.js/SQL) and dynamic frontend frameworks for production-ready applications.</p>
+          <span class="recognition-badge">Certified</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider scroll-line-reveal"></div>
 
   <!-- Marquee -->
   <section class="marquee-section">
@@ -287,38 +520,6 @@
     </div>
   </section>
 
-  <!-- Achievements Section (replaces Testimonials) -->
-  <section class="section testimonials">
-    <span class="section-label reveal-left">Achievements & Competitions</span>
-    <h2 class="section-title">Hackathons & Research</h2>
-    <div class="testimonials-track stagger-children">
-      <div class="testimonial-card">
-        <blockquote class="testimonial-quote">
-          "Competed in the Synaptics AI Hackathon (SASTRA 2026) in the Applied GenAI track, achieving a top score of 18.200 with Spectra-Shield — an Agentic AI system for real-time anomaly detection."
-        </blockquote>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">🏆</div>
-          <div class="testimonial-author-info">
-            <h4>Synaptics AI Hackathon</h4>
-            <p>SASTRA 2026 — Applied GenAI Track</p>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <blockquote class="testimonial-quote">
-          "Google Summer of Code (GSoC) 2026 Contributor — Submitted open-source bug fixes and pull requests to the Jitsi Meet repository, optimizing UI/CSS for toolbox icons."
-        </blockquote>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">🌍</div>
-          <div class="testimonial-author-info">
-            <h4>GSoC 2026 Contributor</h4>
-            <p>Jitsi Meet — Open Source</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <div class="section-divider scroll-line-reveal"></div>
 
   <!-- Footer -->
@@ -326,12 +527,7 @@
     <div class="footer-grid stagger-children">
       <div class="footer-brand">
         <a class="logo" href="index.html">
-          <svg class="logo-icon" width="34" height="36" viewBox="0 0 34 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#footerLogoClip)">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M17 3.96C17 1.77295 15.3256 0 13.26 0H3.74C1.67446 0 0 1.77295 0 3.96V14.17C0 16.357 1.67446 18.13 3.74 18.13H13.26C15.3256 18.13 17 19.903 17 22.09V32.04C17 34.227 18.6745 36 20.74 36H30.26C32.3255 36 34 34.227 34 32.04V21.83C34 19.643 32.3255 17.87 30.26 17.87H20.74C18.6745 17.87 17 16.098 17 13.91V3.96Z" fill="currentColor"/>
-            </g>
-            <defs><clipPath id="footerLogoClip"><rect width="34" height="36" fill="white"/></clipPath></defs>
-          </svg>
+          <img src="assets/images/kg2-logo.png" alt="KG² Logo" class="logo-icon-img footer-logo">
           <div class="logo-name">
             <span class="first">Ganesh</span>
             <span class="last">Giridhar</span>
@@ -348,8 +544,8 @@
       </div>
       <div class="footer-col">
         <h4>Socials</h4>
-        <a href="https://www.linkedin.com/in/kankatala-ganesh-giridhar-071876322" target="_blank">LinkedIn</a>
-        <a href="https://github.com/Ganesh2006646" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/kankatala-ganesh-giridhar-071876322" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/Ganesh2006646" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
@@ -360,8 +556,8 @@
     <div class="footer-bottom">
       <span>© 2026 Kankatala Ganesh Giridhar. All rights reserved.</span>
       <div class="social-links">
-        <a href="https://www.linkedin.com/in/kankatala-ganesh-giridhar-071876322" target="_blank" aria-label="LinkedIn">Li</a>
-        <a href="https://github.com/Ganesh2006646" target="_blank" aria-label="GitHub">Gh</a>
+        <a href="https://www.linkedin.com/in/kankatala-ganesh-giridhar-071876322" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">Li</a>
+        <a href="https://github.com/Ganesh2006646" target="_blank" rel="noopener noreferrer" aria-label="GitHub">Gh</a>
       </div>
     </div>
   </footer>

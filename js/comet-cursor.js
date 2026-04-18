@@ -1,6 +1,7 @@
 /* =========================================
    COMET GAS BALL CURSOR TRAIL
    Canvas-based particle system — Hero only
+   + Interactive text color proximity effect
    ========================================= */
 
 (function () {
@@ -33,6 +34,18 @@
     [160, 60, 255],   // violet
     [200, 50, 230],   // magenta-violet
     [108, 60, 225],   // brand accent
+  ];
+
+  /* Text color palette for the proximity effect */
+  const textColors = [
+    '#00ffff',   // cyan
+    '#50c8ff',   // neon sky
+    '#6496ff',   // neon blue
+    '#8264ff',   // blue-violet
+    '#a03cff',   // violet
+    '#c832e6',   // magenta-violet
+    '#6C3CE1',   // brand accent
+    '#F175A0',   // pink
   ];
 
   function randomColor() {
@@ -111,9 +124,9 @@
   function loop() {
     if (!animating) return;
 
-    // Motion blur clear
-    ctx.fillStyle = 'rgba(5, 7, 15, 0.2)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // FIX: Use clearRect instead of semi-transparent fill.
+    // This prevents the dark overlay from accumulating and hiding the text.
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Additive blending for plasma glow
     ctx.globalCompositeOperation = 'lighter';
@@ -136,6 +149,68 @@
     ctx.globalCompositeOperation = 'source-over';
 
     requestAnimationFrame(loop);
+  }
+
+  /* ====================================================
+     INTERACTIVE TEXT COLOR — Proximity-based color shift
+     ==================================================== */
+  const heroTitle = document.querySelector('.hero-title');
+  let textChars = [];
+  const INFLUENCE_RADIUS = 250; // px — how far the color effect reaches
+
+  function collectTextChars() {
+    textChars = [];
+    if (!heroTitle) return;
+    // Collect all individual character spans (added by SplitType)
+    const chars = heroTitle.querySelectorAll('.char');
+    if (chars.length > 0) {
+      chars.forEach(c => textChars.push(c));
+    }
+  }
+
+  // Collect after SplitType has run (it runs with a delay)
+  setTimeout(collectTextChars, 3500);
+  // Also re-collect on resize in case layout shifts
+  window.addEventListener('resize', () => setTimeout(collectTextChars, 100));
+
+  function updateTextColors(cursorPageX, cursorPageY) {
+    if (textChars.length === 0) return;
+
+    const heroRect = hero.getBoundingClientRect();
+
+    textChars.forEach(char => {
+      const rect = char.getBoundingClientRect();
+      const charCenterX = rect.left + rect.width / 2;
+      const charCenterY = rect.top + rect.height / 2;
+
+      const dx = cursorPageX - charCenterX;
+      const dy = cursorPageY - charCenterY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < INFLUENCE_RADIUS) {
+        // Normalize 0 (at cursor) → 1 (at edge of influence)
+        const t = dist / INFLUENCE_RADIUS;
+        // Pick color from palette based on distance
+        const colorIndex = Math.floor(t * (textColors.length - 1));
+        const color = textColors[Math.min(colorIndex, textColors.length - 1)];
+
+        // Apply with smooth transition
+        char.style.color = color;
+        char.style.textShadow = `0 0 ${20 * (1 - t)}px ${color}`;
+        char.style.transition = 'color 0.15s ease, text-shadow 0.15s ease';
+      } else {
+        // Reset to default
+        // Check if it's the accent (.accent) element — keep its purple color
+        if (char.closest('.accent')) {
+          char.style.color = '';
+          char.style.textShadow = '';
+        } else {
+          char.style.color = '';
+          char.style.textShadow = '';
+        }
+        char.style.transition = 'color 0.6s ease, text-shadow 0.6s ease';
+      }
+    });
   }
 
   /* --- Event listeners --- */
@@ -163,10 +238,15 @@
     while (particles.length > 300) {
       particles.shift();
     }
+
+    // Update text colors based on cursor proximity
+    updateTextColors(e.clientX, e.clientY);
   });
 
   hero.addEventListener('mouseenter', () => {
     isOverHero = true;
+    // Re-collect chars in case they weren't ready initially
+    if (textChars.length === 0) collectTextChars();
     if (!animating) {
       animating = true;
       loop();
@@ -177,11 +257,18 @@
     isOverHero = false;
     mouseX = -1000;
     mouseY = -1000;
+
+    // Reset all text colors when cursor leaves hero
+    textChars.forEach(char => {
+      char.style.color = '';
+      char.style.textShadow = '';
+      char.style.transition = 'color 0.6s ease, text-shadow 0.6s ease';
+    });
+
     // Keep animating to let existing particles fade
     setTimeout(() => {
       if (!isOverHero && particles.length === 0) {
         animating = false;
-        // Full clear
         ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
     }, 2000);

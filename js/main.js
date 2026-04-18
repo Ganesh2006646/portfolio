@@ -9,8 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLoader();
   initNavigation();
   initScrollReveal();
-  initParallax();
-  initSplitText();
+  // initSplitText(); — Replaced by GSAP kinetic-text.js
   initCountUp();
   initHeroAnimation();
   initMarquee();
@@ -19,8 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initWorkPage();
   initSmoothScroll();
   initTopBar();
-  initScrollProgress();
-  initTiltCards();
+
+  /* Consolidated scroll loop — single rAF-driven handler
+     replaces multiple independent scroll listeners */
+  initScrollLoop();
 });
 
 /* ==========================================
@@ -32,9 +33,16 @@ function initCursor() {
   if (!cursor || !cursorDot) return;
   if (window.innerWidth <= 768) return;
 
+  // Activate cursor-none only when JS is running and cursor elements exist
+  document.body.classList.add('cursor-active');
+
   let mouseX = 0, mouseY = 0;
-  let cursorX = 0, cursorY = 0;
+  let ringX = 0, ringY = 0;
   let dotX = 0, dotY = 0;
+
+  // Smooth sensitivity — lower = silkier, higher = snappier
+  const RING_LERP = 0.08;  // outer ring — smooth lag
+  const DOT_LERP = 0.18;   // center dot — responsive
 
   document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
@@ -42,13 +50,14 @@ function initCursor() {
   });
 
   function animateCursor() {
-    cursorX += (mouseX - cursorX) * 0.12;
-    cursorY += (mouseY - cursorY) * 0.12;
-    cursor.style.left = cursorX + 'px';
-    cursor.style.top = cursorY + 'px';
+    // Smooth interpolation (lerp)
+    ringX += (mouseX - ringX) * RING_LERP;
+    ringY += (mouseY - ringY) * RING_LERP;
+    cursor.style.left = ringX + 'px';
+    cursor.style.top = ringY + 'px';
 
-    dotX += (mouseX - dotX) * 0.25;
-    dotY += (mouseY - dotY) * 0.25;
+    dotX += (mouseX - dotX) * DOT_LERP;
+    dotY += (mouseY - dotY) * DOT_LERP;
     cursorDot.style.left = dotX + 'px';
     cursorDot.style.top = dotY + 'px';
 
@@ -56,11 +65,37 @@ function initCursor() {
   }
   animateCursor();
 
-  const hoverEls = document.querySelectorAll('a, button, .project-card, .service-card, .budget-option, .submit-btn');
+  // Click feedback
+  document.addEventListener('mousedown', () => cursor.classList.add('clicking'));
+  document.addEventListener('mouseup', () => cursor.classList.remove('clicking'));
+
+  // Hover effect on interactive elements
+  const hoverEls = document.querySelectorAll(
+    'a, button, .project-card, .service-card, .collab-radio label, ' +
+    '.submit-btn, .arsenal-tag, .impact-card, .compete-card, .experience-card, ' +
+    '.recognition-card, .nav-link, .logo, input, textarea'
+  );
   hoverEls.forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
   });
+
+  // Spotlight effect for profile image wrapper
+  const profileWrapper = document.getElementById('profileImageWrapper');
+  if (profileWrapper) {
+    profileWrapper.addEventListener('mousemove', (e) => {
+      const rect = profileWrapper.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      profileWrapper.style.setProperty('--mouse-x', `${x}%`);
+      profileWrapper.style.setProperty('--mouse-y', `${y}%`);
+    });
+    // Reset to center when mouse leaves
+    profileWrapper.addEventListener('mouseleave', () => {
+      profileWrapper.style.setProperty('--mouse-x', '50%');
+      profileWrapper.style.setProperty('--mouse-y', '50%');
+    });
+  }
 }
 
 /* ==========================================
@@ -69,6 +104,33 @@ function initCursor() {
 function initLoader() {
   const loader = document.querySelector('.loader');
   if (!loader) return;
+
+  const handleIncomingTransition = () => {
+    const pt = document.querySelector('.page-transition');
+    const route = sessionStorage.getItem('incomingRoute');
+    if (route && pt) {
+      const label = pt.querySelector('.route-name');
+      if (label && route !== 'None') label.textContent = route;
+      
+      requestAnimationFrame(() => {
+        pt.classList.add('active-in');
+        setTimeout(() => {
+          pt.classList.remove('active-in');
+          triggerEntryAnimations();
+        }, 800); // Wait for outgoing animation
+      });
+      sessionStorage.removeItem('incomingRoute');
+    } else {
+      triggerEntryAnimations();
+    }
+  };
+
+  if (sessionStorage.getItem('incomingRoute')) {
+    // If incoming transiton exists, hide default loader and do transition
+    loader.style.display = 'none';
+    handleIncomingTransition();
+    return;
+  }
 
   // Circular text
   const circularText = document.querySelector('.circular-text');
@@ -91,24 +153,24 @@ function initLoader() {
   if (counter) {
     let count = 0;
     const interval = setInterval(() => {
-      count += Math.floor(Math.random() * 15) + 5;
+      count += Math.floor(Math.random() * 20) + 10;
       if (count >= 100) {
         count = 100;
         clearInterval(interval);
         setTimeout(() => {
           loader.classList.add('hidden');
           document.body.style.overflow = '';
-          setTimeout(triggerEntryAnimations, 300);
-        }, 400);
+          setTimeout(handleIncomingTransition, 150);
+        }, 200);
       }
       counter.textContent = count + '%';
-    }, 120);
+    }, 60);
   } else {
     setTimeout(() => {
       loader.classList.add('hidden');
       document.body.style.overflow = '';
-      setTimeout(triggerEntryAnimations, 300);
-    }, 2500);
+      setTimeout(handleIncomingTransition, 150);
+    }, 1200);
   }
 
   document.body.style.overflow = 'hidden';
@@ -118,11 +180,7 @@ function initLoader() {
    ENTRY ANIMATIONS (after loader)
    ========================================== */
 function triggerEntryAnimations() {
-  // Hero title lines
-  document.querySelectorAll('.hero-title .line span').forEach(s => s.classList.add('visible'));
-  // Hero subtitle
-  const sub = document.querySelector('.hero-subtitle');
-  if (sub) sub.classList.add('visible');
+  // Hero title & subtitle are now handled by kinetic-text.js (GSAP)
   // Work page title words
   document.querySelectorAll('.work-page-title .word span').forEach((s, i) => {
     setTimeout(() => s.classList.add('visible'), i * 80);
@@ -146,7 +204,8 @@ function initScrollReveal() {
     '.reveal-clip', '.reveal-clip-left',
     '.reveal-bounce', '.reveal-lines',
     '.stagger-children', '.image-reveal',
-    '.scroll-line-reveal', '.split-text',
+    '.scroll-line-reveal',
+    // '.split-text' — Now handled by GSAP kinetic-text.js
     '.work-item'
   ].join(',');
 
@@ -165,49 +224,86 @@ function initScrollReveal() {
 }
 
 /* ==========================================
-   PARALLAX — depth-based scroll offset
+   CONSOLIDATED SCROLL LOOP
+   Single requestAnimationFrame-driven handler
+   replaces parallax, hero parallax, scroll
+   progress, header scrolled, and top-bar
    ========================================== */
-function initParallax() {
-  const layers = document.querySelectorAll('.parallax-layer');
-  if (!layers.length) return;
+function initScrollLoop() {
+  // Cache all elements once
+  const parallaxLayers = document.querySelectorAll('.parallax-layer');
+  const heroTitle = document.querySelector('.hero-title');
+  const heroSub = document.querySelector('.hero-subtitle');
+  const scrollInd = document.querySelector('.hero-scroll-indicator');
+  const progressBar = document.querySelector('.work-progress-bar .fill');
+  const header = document.querySelector('.header');
+  const topBar = document.querySelector('.top-bar');
 
   let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        const scrollY = window.scrollY;
-        layers.forEach(layer => {
-          const speed = parseFloat(getComputedStyle(layer).getPropertyValue('--parallax-speed')) || 0.05;
-          const rect = layer.getBoundingClientRect();
-          const centerY = rect.top + rect.height / 2;
-          const offset = (window.innerHeight / 2 - centerY) * speed;
-          layer.style.transform = `translateY(${offset}px)`;
-        });
-        ticking = false;
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+
+    requestAnimationFrame(() => {
+      const scrollY = window.scrollY;
+      const wh = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight - wh;
+
+      // Parallax depth layers
+      parallaxLayers.forEach(layer => {
+        const speed = parseFloat(getComputedStyle(layer).getPropertyValue('--parallax-speed')) || 0.05;
+        const rect = layer.getBoundingClientRect();
+        const centerY = rect.top + rect.height / 2;
+        const offset = (wh / 2 - centerY) * speed;
+        layer.style.transform = `translateY(${offset}px)`;
       });
-      ticking = true;
-    }
-  });
+
+      // Hero parallax on scroll
+      if (heroTitle && scrollY < wh) {
+        heroTitle.style.transform = `translateY(${scrollY * 0.35}px)`;
+        heroTitle.style.opacity = 1 - (scrollY / wh) * 1.4;
+      }
+
+      if (heroSub && scrollY < wh) {
+        heroSub.style.transform = `translateY(${scrollY * 0.18}px)`;
+      }
+
+      if (scrollInd && scrollY < wh) {
+        scrollInd.style.opacity = 1 - (scrollY / (wh * 0.3));
+      }
+
+      // Scroll progress bar (work page)
+      if (progressBar && docHeight > 0) {
+        progressBar.style.height = (scrollY / docHeight) * 100 + '%';
+      }
+
+      // Header scrolled state
+      if (header) {
+        header.classList.toggle('scrolled', scrollY > 50);
+      }
+
+      // Top availability bar
+      if (topBar) {
+        topBar.classList.toggle('visible', scrollY > 300);
+      }
+
+      ticking = false;
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Run once on init so first paint is accurate (deep-links, restored scroll)
+  onScroll();
 }
 
 /* ==========================================
    SPLIT TEXT — letter-by-letter animation
    ========================================== */
 function initSplitText() {
-  document.querySelectorAll('.split-text').forEach(el => {
-    const text = el.textContent;
-    el.innerHTML = '';
-    el.setAttribute('aria-label', text);
-    let charIndex = 0;
-    text.split('').forEach(c => {
-      const span = document.createElement('span');
-      span.classList.add('char');
-      span.textContent = c === ' ' ? '\u00A0' : c;
-      span.style.transitionDelay = `${charIndex * 0.025}s`;
-      el.appendChild(span);
-      charIndex++;
-    });
-  });
+  // Replaced by GSAP + SplitType kinetic-text.js
+  // This function is intentionally empty.
 }
 
 /* ==========================================
@@ -241,56 +337,11 @@ function initCountUp() {
 }
 
 /* ==========================================
-   SCROLL PROGRESS BAR
-   ========================================== */
-function initScrollProgress() {
-  const bar = document.querySelector('.work-progress-bar .fill');
-  if (!bar) return;
-
-  window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.height = (scrollTop / docHeight) * 100 + '%';
-  });
-}
-
-/* ==========================================
-   HERO PARALLAX ON SCROLL
-   ========================================== */
-window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-  const wh = window.innerHeight;
-
-  const heroTitle = document.querySelector('.hero-title');
-  if (heroTitle && scrollY < wh) {
-    heroTitle.style.transform = `translateY(${scrollY * 0.35}px)`;
-    heroTitle.style.opacity = 1 - (scrollY / wh) * 1.4;
-  }
-
-  const heroSub = document.querySelector('.hero-subtitle');
-  if (heroSub && scrollY < wh) {
-    heroSub.style.transform = `translateY(${scrollY * 0.18}px)`;
-  }
-
-  const scrollInd = document.querySelector('.hero-scroll-indicator');
-  if (scrollInd && scrollY < wh) {
-    scrollInd.style.opacity = 1 - (scrollY / (wh * 0.3));
-  }
-});
-
-/* ==========================================
    NAVIGATION
    ========================================== */
 function initNavigation() {
-  const header = document.querySelector('.header');
   const hamburger = document.querySelector('.hamburger');
   const mobileMenu = document.querySelector('.mobile-menu');
-
-  if (header) {
-    window.addEventListener('scroll', () => {
-      header.classList.toggle('scrolled', window.scrollY > 50);
-    });
-  }
 
   if (hamburger && mobileMenu) {
     hamburger.addEventListener('click', () => {
@@ -320,11 +371,18 @@ function initNavigation() {
 
 function triggerPageTransition(href, routeName) {
   const transition = document.querySelector('.page-transition');
-  const label = transition?.querySelector('.route-name');
   if (!transition) { window.location.href = href; return; }
+  
+  const label = transition.querySelector('.route-name');
   if (label) label.textContent = routeName;
-  transition.classList.add('active');
-  setTimeout(() => { window.location.href = href; }, 600);
+  
+  transition.classList.remove('active-in');
+  transition.classList.add('active-out');
+  
+  sessionStorage.setItem('incomingRoute', routeName || 'None');
+  
+  // Wait for 0.5s animation + 0.2s stagger = 0.7s total
+  setTimeout(() => { window.location.href = href; }, 750);
 }
 
 /* ==========================================
@@ -377,39 +435,92 @@ function initTiltCards() {
 }
 
 /* ==========================================
-   CONTACT FORM
+   CONTACT FORM — Real Formspree submission
+   with loading, success, and error states
    ========================================== */
 function initContactForm() {
-  document.querySelectorAll('.budget-option').forEach(opt => {
-    opt.addEventListener('click', () => {
-      document.querySelectorAll('.budget-option').forEach(o => o.classList.remove('selected'));
-      opt.classList.add('selected');
-    });
-  });
+  const form = document.getElementById('contactForm');
+  if (!form) return;
 
-  const form = document.querySelector('.contact-form form');
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const btn = form.querySelector('.submit-btn');
-      const original = btn.innerHTML;
-      btn.innerHTML = '<span>Sent! ✓</span>';
-      btn.style.background = 'var(--success)';
-      setTimeout(() => {
-        btn.innerHTML = original;
-        btn.style.background = '';
-        form.reset();
-        document.querySelectorAll('.budget-option').forEach(o => o.classList.remove('selected'));
-      }, 3000);
-    });
+  const btn = document.getElementById('submitBtn');
+  const msgEl = document.getElementById('formMessage');
+
+  function showMessage(type, text) {
+    if (!msgEl) return;
+    msgEl.className = `form-message show ${type}`;
+    msgEl.textContent = text;
   }
+
+  function resetMessage() {
+    if (!msgEl) return;
+    msgEl.className = 'form-message';
+    msgEl.textContent = '';
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    resetMessage();
+
+    // Honeypot check
+    const honeypot = form.querySelector('input[name="_gotcha"]');
+    if (honeypot && honeypot.value) return;
+
+    // Validate collaboration radio
+    const collabSelected = form.querySelector('input[name="collaboration"]:checked');
+    if (!collabSelected) {
+      showMessage('error', '⚠ Please select a type of collaboration.');
+      return;
+    }
+
+    const originalHTML = btn.innerHTML;
+    btn.classList.add('loading');
+    btn.disabled = true; // Prevent duplicate submissions
+
+    // Gather form data
+    const name = form.querySelector('[name="name"]').value;
+    const email = form.querySelector('[name="email"]').value;
+    const company = form.querySelector('[name="company"]').value || 'N/A';
+    const collab = form.querySelector('input[name="collaboration"]:checked').value;
+    const message = form.querySelector('[name="message"]').value;
+
+    // Destination email
+    const destEmail = 'kankatalaganeshgiridhar@gmail.com';
+    const subject = encodeURIComponent(`Portfolio Inquiry from ${name}`);
+    const body = encodeURIComponent(
+      `Name: ${name}\n` +
+      `Email: ${email}\n` +
+      `Company: ${company}\n` +
+      `Collaboration: ${collab}\n\n` +
+      `Message:\n${message}`
+    );
+
+    // Open mail client
+    window.location.href = `mailto:${destEmail}?subject=${subject}&body=${body}`;
+
+    // Show success state on page
+    setTimeout(() => {
+      btn.classList.remove('loading');
+      btn.innerHTML = '<span>Draft Opened! ✓</span>';
+      btn.style.background = 'var(--success)';
+      showMessage('success', '✓ Email draft opened in your mail app. Please click "Send" there!');
+
+      setTimeout(() => {
+        btn.innerHTML = originalHTML;
+        btn.style.background = '';
+        btn.disabled = false; // Re-enable after success window
+        form.reset();
+        resetMessage();
+      }, 5000);
+    }, 800);
+  });
 }
 
 /* ==========================================
    WORK PAGE
    ========================================== */
 function initWorkPage() {
-  // (progress bar handled by initScrollProgress)
+  // (progress bar handled by initScrollLoop)
+  initTiltCards();
 }
 
 /* ==========================================
@@ -428,12 +539,8 @@ function initSmoothScroll() {
 }
 
 /* ==========================================
-   TOP BAR (appears on scroll)
+   TOP BAR — (now handled by initScrollLoop)
    ========================================== */
 function initTopBar() {
-  const topBar = document.querySelector('.top-bar');
-  if (!topBar) return;
-  window.addEventListener('scroll', () => {
-    topBar.classList.toggle('visible', window.scrollY > 300);
-  });
+  // consolidated into initScrollLoop
 }

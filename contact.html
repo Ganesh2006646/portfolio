@@ -4,13 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0A0A0A">
-  <title>Contact — Alex Nova</title>
-  <meta name="description" content="Get in touch with Alex Nova for creative development and design projects.">
+  <title>Contact — Ganesh Giridhar</title>
+  <meta name="description" content="Get in touch with Kankatala Ganesh Giridhar for AI engineering, product development, and collaboration opportunities.">
   <link rel="stylesheet" href="css/styles.css">
+  <!-- Source Code Shield -->
+  <script src="js/shield.js"></script>
 </head>
 <body>
 
-  <!-- Noise Overlay -->
+  <!-- Cinematic Film Grain -->
   <div class="noise-overlay"></div>
 
   <!-- Custom Cursor -->
@@ -37,22 +39,16 @@
 
   <!-- Header -->
   <header class="header" id="header">
-    <a class="logo magnetic" href="index.html" aria-label="Alex Nova — Home" data-transition="Home">
-      <svg class="logo-icon" width="34" height="36" viewBox="0 0 34 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clip-path="url(#logoClipC)">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M17 3.96C17 1.77295 15.3256 0 13.26 0H3.74C1.67446 0 0 1.77295 0 3.96V14.17C0 16.357 1.67446 18.13 3.74 18.13H13.26C15.3256 18.13 17 19.903 17 22.09V32.04C17 34.227 18.6745 36 20.74 36H30.26C32.3255 36 34 34.227 34 32.04V21.83C34 19.643 32.3255 17.87 30.26 17.87H20.74C18.6745 17.87 17 16.098 17 13.91V3.96Z" fill="currentColor"/>
-        </g>
-        <defs><clipPath id="logoClipC"><rect width="34" height="36" fill="white"/></clipPath></defs>
-      </svg>
+    <a class="logo magnetic" href="index.html" aria-label="Ganesh Giridhar — Home" data-transition="Home">
+      <img src="assets/images/kg2-logo.png" alt="KG² Logo" class="logo-icon-img">
       <div class="logo-name">
-        <span class="first">Alex</span>
-        <span class="last">Nova</span>
-        <span class="logo-msg"><span>•</span><span>with</span><span>❤</span></span>
+        <span class="first">Ganesh</span>
+        <span class="last">Giridhar</span>
       </div>
     </a>
 
     <div class="availability-badge magnetic">
-      <span>available now for work</span>
+      <span>open to internships</span>
       <div class="availability-dot"></div>
     </div>
 
@@ -83,71 +79,89 @@
     <section class="contact-hero">
       <span class="section-label reveal">Get in Touch</span>
       <h1 class="reveal reveal-delay-1">
-        Let's create<br>
-        something <em class="accent">amazing</em><br>
+        Let's build<br>
+        something <em class="accent">intelligent</em><br>
         together
       </h1>
       <p class="lead reveal reveal-delay-2">
-        Have a project in mind? I'd love to hear about it. Whether you need a stunning website, 
-        an immersive web experience, or a complete design overhaul — let's make it happen.
+        Interested in collaborating on AI systems, product development, or research? 
+        Whether it's an internship opportunity, hackathon partnership, or a project that needs 
+        scalable engineering — I'd love to connect and build something impactful.
       </p>
     </section>
 
-    <!-- Contact Form -->
-    <div class="contact-form">
-      <form id="contactForm">
+    <!-- Contact Form — Formspree integration -->
+    <div class="contact-form-wrapper reveal-right reveal-delay-2">
+      <form id="contactForm" class="contact-form">
+        <!-- Anti-spam honeypot (still useful to keep) -->
+        <div class="hp-field" aria-hidden="true">
+          <label>Don't fill this out: <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label>
+        </div>
+
         <div class="form-group reveal">
-          <label>Your Name <span class="required">*</span></label>
-          <input type="text" placeholder="John Doe" required>
+          <label for="contact-name">Your Name <span class="required">*</span></label>
+          <input type="text" id="contact-name" name="name" placeholder="Your full name" required>
           <div class="input-line"></div>
         </div>
 
         <div class="form-group reveal reveal-delay-1">
-          <label>Email Address <span class="required">*</span></label>
-          <input type="email" placeholder="john@company.com" required>
+          <label for="contact-email">Email Address <span class="required">*</span></label>
+          <input type="email" id="contact-email" name="email" placeholder="name@company.com" required>
           <div class="input-line"></div>
         </div>
 
         <div class="form-group reveal reveal-delay-2">
-          <label>Company / Organization</label>
-          <input type="text" placeholder="Your Company">
+          <label for="contact-company">Company / Organization</label>
+          <input type="text" id="contact-company" name="company" placeholder="Your organization (optional)">
           <div class="input-line"></div>
         </div>
 
         <div class="form-group reveal reveal-delay-3">
-          <label>What services are you interested in? <span class="required">*</span></label>
-          <div class="budget-options">
-            <div class="budget-option">Web Development</div>
-            <div class="budget-option">Mobile App</div>
-            <div class="budget-option">UX/UI Design</div>
-            <div class="budget-option">3D / Interactive</div>
-            <div class="budget-option">Consulting</div>
-          </div>
-        </div>
-
-        <div class="form-group reveal">
-          <label>Budget Range</label>
-          <div class="budget-options">
-            <div class="budget-option">$2,000 – $5,000</div>
-            <div class="budget-option">$5,001 – $10,000</div>
-            <div class="budget-option">$10,001 – $20,000</div>
-            <div class="budget-option">$20,001 and up</div>
-          </div>
+          <fieldset class="collab-fieldset">
+            <legend>What type of collaboration? <span class="required">*</span></legend>
+            <div class="collab-options">
+              <div class="collab-radio">
+                <input type="radio" id="collab-ai" name="collaboration" value="AI / ML Engineering" required>
+                <label for="collab-ai">AI / ML Engineering</label>
+              </div>
+              <div class="collab-radio">
+                <input type="radio" id="collab-fullstack" name="collaboration" value="Full-Stack Development">
+                <label for="collab-fullstack">Full-Stack Development</label>
+              </div>
+              <div class="collab-radio">
+                <input type="radio" id="collab-product" name="collaboration" value="Product Strategy">
+                <label for="collab-product">Product Strategy</label>
+              </div>
+              <div class="collab-radio">
+                <input type="radio" id="collab-research" name="collaboration" value="Research / Hackathon">
+                <label for="collab-research">Research / Hackathon</label>
+              </div>
+              <div class="collab-radio">
+                <input type="radio" id="collab-internship" name="collaboration" value="Internship Opportunity">
+                <label for="collab-internship">Internship Opportunity</label>
+              </div>
+              <div class="collab-radio">
+                <input type="radio" id="collab-opensource" name="collaboration" value="Open Source">
+                <label for="collab-opensource">Open Source</label>
+              </div>
+            </div>
+          </fieldset>
         </div>
 
         <div class="form-group reveal reveal-delay-1">
-          <label>Tell me about your project <span class="required">*</span></label>
-          <textarea rows="4" placeholder="Describe your project, goals, timeline, and any other details..." required></textarea>
+          <label for="contact-message">Tell me more <span class="required">*</span></label>
+          <textarea id="contact-message" name="message" rows="4" placeholder="Describe the project, opportunity, or idea you'd like to discuss..." required></textarea>
           <div class="input-line"></div>
         </div>
 
         <div class="reveal reveal-delay-2">
-          <button type="submit" class="submit-btn magnetic">
+          <button type="submit" class="submit-btn magnetic" id="submitBtn">
             <span>Send Message</span>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
+          <div class="form-message" id="formMessage"></div>
         </div>
       </form>
     </div>
@@ -157,18 +171,17 @@
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:2rem; max-width:900px; margin:0 auto;">
         <div class="reveal">
           <span class="section-label">Email</span>
-          <a href="mailto:hello@alexnova.dev" style="font-size: 1.1rem; color: var(--text-primary); display: block; margin-top: 0.5rem; transition: color 0.3s;">hello@alexnova.dev</a>
+          <a href="mailto:kankatalaganeshgiridhar@gmail.com" style="font-size: 1rem; color: var(--text-primary); display: block; margin-top: 0.5rem; transition: color 0.3s; word-break: break-all;">kankatalaganeshgiridhar@gmail.com</a>
         </div>
         <div class="reveal reveal-delay-1">
           <span class="section-label">Location</span>
-          <p style="font-size: 1.1rem; color: var(--text-primary); margin-top: 0.5rem;">San Francisco, CA</p>
+          <p style="font-size: 1.1rem; color: var(--text-primary); margin-top: 0.5rem;">Coimbatore, India<br><span style="color: var(--text-muted); font-size: 0.9rem;">Tamil Nadu, India</span></p>
         </div>
         <div class="reveal reveal-delay-2">
           <span class="section-label">Socials</span>
           <div style="display: flex; gap: 1.5rem; margin-top: 0.5rem;">
-            <a href="#" style="font-size: 0.9rem; color: var(--text-muted); transition: color 0.3s;">LinkedIn</a>
-            <a href="#" style="font-size: 0.9rem; color: var(--text-muted); transition: color 0.3s;">Instagram</a>
-            <a href="#" style="font-size: 0.9rem; color: var(--text-muted); transition: color 0.3s;">GitHub</a>
+            <a href="https://www.linkedin.com/in/kankatala-ganesh-giridhar-071876322" target="_blank" rel="noopener noreferrer" style="font-size: 0.9rem; color: var(--text-muted); transition: color 0.3s;">LinkedIn</a>
+            <a href="https://github.com/Ganesh2006646" target="_blank" rel="noopener noreferrer" style="font-size: 0.9rem; color: var(--text-muted); transition: color 0.3s;">GitHub</a>
           </div>
         </div>
       </div>
@@ -178,15 +191,20 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-bottom" style="border-top: none; margin-top: 0; padding-top: 0;">
-      <span>© 2024 Alex Nova. All rights reserved.</span>
+      <span>© 2026 Kankatala Ganesh Giridhar. All rights reserved.</span>
       <div class="social-links">
-        <a href="#">Li</a>
-        <a href="#">Ig</a>
-        <a href="#">Gh</a>
+        <a href="https://www.linkedin.com/in/kankatala-ganesh-giridhar-071876322" target="_blank" rel="noopener noreferrer">Li</a>
+        <a href="https://github.com/Ganesh2006646" target="_blank" rel="noopener noreferrer">Gh</a>
       </div>
     </div>
   </footer>
 
+  <!-- GSAP + SplitType CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/split-type"></script>
+
   <script src="js/main.js"></script>
+  <script src="js/kinetic-text.js"></script>
 </body>
 </html>
