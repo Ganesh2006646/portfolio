@@ -95,12 +95,18 @@
 
   /* --- Initialize --- */
   function init() {
+    // Detect if this is a transition arrival (loader hidden) vs first visit
+    const loader = document.querySelector('.loader');
+    const isTransitionArrival = loader && loader.style.display === 'none';
+    const hasVisibleLoader = loader && loader.style.display !== 'none';
+
     // 1. Hero title — immediate (after loader)
     const heroTitle = document.querySelector('.hero-title');
     if (heroTitle) {
-      // Detect loader presence to set appropriate delay
-      const hasLoader = document.querySelector('.loader');
-      const delay = hasLoader ? 2800 : 400;
+      // Transition arrival: short delay (lift animation ~1.1s from DOMContentLoaded)
+      // First visit with loader: long delay (loader ~2.8s)
+      // No loader: short delay
+      const delay = isTransitionArrival ? 800 : hasVisibleLoader ? 2800 : 400;
       createKineticReveal(heroTitle, {
         triggerType: 'immediate',
         delay: delay,
@@ -110,8 +116,7 @@
     // 2. Hero subtitle — fade in after title
     const heroSub = document.querySelector('.hero-subtitle');
     if (heroSub) {
-      const hasLoader = document.querySelector('.loader');
-      const subDelay = hasLoader ? 3600 : 1000;
+      const subDelay = isTransitionArrival ? 1400 : hasVisibleLoader ? 3600 : 1000;
       gsap.set(heroSub, { opacity: 0, y: 30 });
       setTimeout(() => {
         gsap.to(heroSub, {

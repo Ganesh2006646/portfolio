@@ -103,34 +103,46 @@ function initCursor() {
    ========================================== */
 function initLoader() {
   const loader = document.querySelector('.loader');
-  if (!loader) return;
+  const incomingRoute = sessionStorage.getItem('incomingRoute');
 
-  const handleIncomingTransition = () => {
-    const pt = document.querySelector('.page-transition');
-    const route = sessionStorage.getItem('incomingRoute');
-    if (route && pt) {
+  // ---- Incoming page transition (arriving from another page) ----
+  if (incomingRoute) {
+    sessionStorage.removeItem('incomingRoute');
+
+    // Hide the default loader — the transition overlay handles the reveal
+    if (loader) loader.style.display = 'none';
+    document.body.style.overflow = 'hidden';
+
+    const pt = document.getElementById('pageTransition');
+    if (pt) {
       const label = pt.querySelector('.route-name');
-      if (label && route !== 'None') label.textContent = route;
-      
-      requestAnimationFrame(() => {
+      if (label && incomingRoute !== 'None') label.textContent = incomingRoute;
+
+      // Step 1: Bars start covering the viewport (instantly)
+      pt.classList.add('covering');
+
+      // Step 2: After a brief settle (let the new page render), lift the bars
+      setTimeout(() => {
+        pt.classList.remove('covering');
         pt.classList.add('active-in');
+
+        // Step 3: After the lift animation finishes, clean up
+        // Animation: 0.5s + stagger(0.24s) + buffer
         setTimeout(() => {
           pt.classList.remove('active-in');
+          document.body.style.overflow = '';
           triggerEntryAnimations();
-        }, 800); // Wait for outgoing animation
-      });
-      sessionStorage.removeItem('incomingRoute');
+        }, 900);
+      }, 250);
     } else {
+      document.body.style.overflow = '';
       triggerEntryAnimations();
     }
-  };
-
-  if (sessionStorage.getItem('incomingRoute')) {
-    // If incoming transiton exists, hide default loader and do transition
-    loader.style.display = 'none';
-    handleIncomingTransition();
     return;
   }
+
+  // ---- Normal first-visit loader (no transition) ----
+  if (!loader) return;
 
   // Circular text
   const circularText = document.querySelector('.circular-text');
@@ -160,7 +172,7 @@ function initLoader() {
         setTimeout(() => {
           loader.classList.add('hidden');
           document.body.style.overflow = '';
-          setTimeout(handleIncomingTransition, 150);
+          setTimeout(() => triggerEntryAnimations(), 150);
         }, 200);
       }
       counter.textContent = count + '%';
@@ -169,7 +181,7 @@ function initLoader() {
     setTimeout(() => {
       loader.classList.add('hidden');
       document.body.style.overflow = '';
-      setTimeout(handleIncomingTransition, 150);
+      setTimeout(() => triggerEntryAnimations(), 150);
     }, 1200);
   }
 
@@ -370,19 +382,24 @@ function initNavigation() {
 }
 
 function triggerPageTransition(href, routeName) {
-  const transition = document.querySelector('.page-transition');
+  const transition = document.getElementById('pageTransition');
   if (!transition) { window.location.href = href; return; }
-  
+
   const label = transition.querySelector('.route-name');
   if (label) label.textContent = routeName;
-  
-  transition.classList.remove('active-in');
+
+  // Clean any previous state
+  transition.classList.remove('active-in', 'covering');
+
+  // Phase 1: Bars fall down to cover the current page
   transition.classList.add('active-out');
-  
+
+  // Store route name so the next page plays the lift animation
   sessionStorage.setItem('incomingRoute', routeName || 'None');
-  
-  // Wait for 0.5s animation + 0.2s stagger = 0.7s total
-  setTimeout(() => { window.location.href = href; }, 750);
+
+  // Navigate after bars fully cover
+  // Animation: 0.45s + stagger(0.24s) + buffer = ~800ms
+  setTimeout(() => { window.location.href = href; }, 800);
 }
 
 /* ==========================================
