@@ -40,9 +40,10 @@ function initCursor() {
   let ringX = 0, ringY = 0;
   let dotX = 0, dotY = 0;
 
-  // Smooth sensitivity — lower = silkier, higher = snappier
-  const RING_LERP = 0.08;  // outer ring — smooth lag
-  const DOT_LERP = 0.18;   // center dot — responsive
+  // Smooth sensitivity — tuned for smoke & gas ball feel
+  // Lower values = more drift/lag (smoky), higher = snappier
+  const RING_LERP = 0.045;  // outer smoke — heavy drift
+  const DOT_LERP = 0.12;    // gas core — soft but responsive
 
   document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
@@ -452,8 +453,9 @@ function initTiltCards() {
 }
 
 /* ==========================================
-   CONTACT FORM — Real Formspree submission
-   with loading, success, and error states
+   CONTACT FORM — Google Sheets + Mailto
+   Saves to Google Sheet dataset AND opens
+   the user's mail app with pre-filled draft
    ========================================== */
 function initContactForm() {
   const form = document.getElementById('contactForm');
@@ -461,6 +463,7 @@ function initContactForm() {
 
   const btn = document.getElementById('submitBtn');
   const msgEl = document.getElementById('formMessage');
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwWkPUfHJxg_ZoYPa4XsSSQy528kScGYdTh6bM2gELfg8Y0lWOdiCZMhHM-GNLNnnY7yw/exec';
 
   function showMessage(type, text) {
     if (!msgEl) return;
@@ -491,7 +494,7 @@ function initContactForm() {
 
     const originalHTML = btn.innerHTML;
     btn.classList.add('loading');
-    btn.disabled = true; // Prevent duplicate submissions
+    btn.disabled = true;
 
     // Gather form data
     const name = form.querySelector('[name="name"]').value;
@@ -500,7 +503,20 @@ function initContactForm() {
     const collab = form.querySelector('input[name="collaboration"]:checked').value;
     const message = form.querySelector('[name="message"]').value;
 
-    // Destination email
+    // 1) Save to Google Sheet (fire-and-forget, non-blocking)
+    try {
+      fetch(SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, company, collaboration: collab, message })
+      });
+    } catch (err) {
+      // Silent fail — mailto still works as backup
+      console.warn('Sheet save failed:', err);
+    }
+
+    // 2) Open mail client with pre-filled draft
     const destEmail = 'kankatalaganeshgiridhar@gmail.com';
     const subject = encodeURIComponent(`Portfolio Inquiry from ${name}`);
     const body = encodeURIComponent(
@@ -510,21 +526,19 @@ function initContactForm() {
       `Collaboration: ${collab}\n\n` +
       `Message:\n${message}`
     );
-
-    // Open mail client
     window.location.href = `mailto:${destEmail}?subject=${subject}&body=${body}`;
 
-    // Show success state on page
+    // Show success state
     setTimeout(() => {
       btn.classList.remove('loading');
-      btn.innerHTML = '<span>Draft Opened! ✓</span>';
+      btn.innerHTML = '<span>Sent! ✓</span>';
       btn.style.background = 'var(--success)';
-      showMessage('success', '✓ Email draft opened in your mail app. Please click "Send" there!');
+      showMessage('success', '✓ Message saved & email draft opened. Please click "Send" in your mail app!');
 
       setTimeout(() => {
         btn.innerHTML = originalHTML;
         btn.style.background = '';
-        btn.disabled = false; // Re-enable after success window
+        btn.disabled = false;
         form.reset();
         resetMessage();
       }, 5000);
