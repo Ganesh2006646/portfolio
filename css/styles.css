@@ -3444,13 +3444,21 @@ textarea:focus-visible,
   border-radius: 0.75rem;
   font-size: 0.9rem;
   font-weight: 500;
+  line-height: 1.45;
   display: none;
 }
 
 .form-message.show {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
   gap: 0.5rem;
+}
+
+.form-message.info {
+  background: rgba(108, 60, 225, 0.12);
+  border: 1px solid rgba(108, 60, 225, 0.32);
+  color: #c6b3ff;
 }
 
 .form-message.success {
@@ -3459,10 +3467,27 @@ textarea:focus-visible,
   color: var(--success);
 }
 
+.form-message.warning {
+  background: rgba(221, 145, 48, 0.15);
+  border: 1px solid rgba(221, 145, 48, 0.35);
+  color: #f2c27f;
+}
+
 .form-message.error {
   background: rgba(239, 68, 68, 0.12);
   border: 1px solid rgba(239, 68, 68, 0.3);
   color: #ef4444;
+}
+
+.form-message a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 700;
+}
+
+.form-message a:hover {
+  opacity: 0.85;
 }
 
 /* ---------- Collaboration Radio Inputs ---------- */

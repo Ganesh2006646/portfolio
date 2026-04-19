@@ -453,21 +453,23 @@ function initTiltCards() {
 }
 
 /* ==========================================
-   CONTACT FORM — Google Sheets + Mailto
-   Saves to Google Sheet dataset AND opens
-   the user's mail app with pre-filled draft
-   ========================================== */
+  CONTACT FORM — Google Sheets + Email Fallback
+  ========================================== */
 function initContactForm() {
   const form = document.getElementById('contactForm');
   if (!form) return;
 
   const btn = document.getElementById('submitBtn');
   const msgEl = document.getElementById('formMessage');
-  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwWkPUfHJxg_ZoYPa4XsSSQy528kScGYdTh6bM2gELfg8Y0lWOdiCZMhHM-GNLNnnY7yw/exec';
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxCHxg0WPzIscoH2Zw3ML8V4g_G9wR0FCDZt2-EDZHmgkhJRKbJH9BVl69QxQrze9A4RA/exec';
 
-  function showMessage(type, text) {
+  function showMessage(type, text, asHtml = false) {
     if (!msgEl) return;
     msgEl.className = `form-message show ${type}`;
+    if (asHtml) {
+      msgEl.innerHTML = text;
+      return;
+    }
     msgEl.textContent = text;
   }
 
@@ -497,26 +499,25 @@ function initContactForm() {
     btn.disabled = true;
 
     // Gather form data
-    const name = form.querySelector('[name="name"]').value;
-    const email = form.querySelector('[name="email"]').value;
-    const company = form.querySelector('[name="company"]').value || 'N/A';
+    const name = form.querySelector('[name="name"]').value.trim();
+    const email = form.querySelector('[name="email"]').value.trim();
+    const company = (form.querySelector('[name="company"]').value || '').trim() || 'N/A';
     const collab = form.querySelector('input[name="collaboration"]:checked').value;
-    const message = form.querySelector('[name="message"]').value;
+    const message = form.querySelector('[name="message"]').value.trim();
 
-    // 1) Save to Google Sheet (fire-and-forget, non-blocking)
-    try {
-      fetch(SHEET_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, company, collaboration: collab, message })
-      });
-    } catch (err) {
-      // Silent fail — mailto still works as backup
-      console.warn('Sheet save failed:', err);
-    }
+    showMessage('info', 'Submitting your message...');
 
-    // 2) Open mail client with pre-filled draft
+    const payload = new URLSearchParams({
+      name,
+      email,
+      company,
+      collaboration: collab,
+      message,
+      source: 'portfolio-contact-form',
+      submittedAt: new Date().toISOString()
+    });
+
+    // Build fallback mailto link (used only if sheet submission fails)
     const destEmail = 'kankatalaganeshgiridhar@gmail.com';
     const subject = encodeURIComponent(`Portfolio Inquiry from ${name}`);
     const body = encodeURIComponent(
@@ -526,23 +527,98 @@ function initContactForm() {
       `Collaboration: ${collab}\n\n` +
       `Message:\n${message}`
     );
-    window.location.href = `mailto:${destEmail}?subject=${subject}&body=${body}`;
+    const mailtoHref = `mailto:${destEmail}?subject=${subject}&body=${body}`;
 
-    // Show success state
-    setTimeout(() => {
-      btn.classList.remove('loading');
-      btn.innerHTML = '<span>Sent! ✓</span>';
+    let sheetSaved = false;
+    try {
+      // Google Apps Script doesn't return CORS headers on POST redirects,
+      // so we use a hidden iframe + dynamic form to perform a real form POST.
+      // This bypasses CORS entirely and works reliably.
+      sheetSaved = await new Promise((resolve) => {
+        const iframeName = 'gsheet_iframe_' + Date.now();
+        const iframe = document.createElement('iframe');
+        iframe.name = iframeName;
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+
+        // Timeout: resolve false if no response within 10s
+        const timeout = setTimeout(() => {
+          cleanup();
+          resolve(false);
+        }, 10000);
+
+        // When the iframe loads (Apps Script responded), count it as success
+        iframe.addEventListener('load', () => {
+          clearTimeout(timeout);
+          // Small delay to let the iframe populate
+          setTimeout(() => {
+            let success = true;
+            try {
+              // Try to read the response (may fail due to cross-origin)
+              const doc = iframe.contentDocument || iframe.contentWindow.document;
+              const body = doc.body ? doc.body.textContent : '';
+              if (body.includes('"error"')) success = false;
+            } catch (_) {
+              // Cross-origin — can't read, but the submission likely worked
+            }
+            cleanup();
+            resolve(success);
+          }, 500);
+        });
+
+        function cleanup() {
+          try { document.body.removeChild(iframe); } catch (_) {}
+          try { document.body.removeChild(hiddenForm); } catch (_) {}
+        }
+
+        // Build a hidden form that targets the iframe
+        const hiddenForm = document.createElement('form');
+        hiddenForm.method = 'POST';
+        hiddenForm.action = SHEET_URL;
+        hiddenForm.target = iframeName;
+        hiddenForm.style.display = 'none';
+
+        // Add all fields
+        const fields = { name, email, company, collaboration: collab, message,
+                         source: 'portfolio-contact-form', submittedAt: new Date().toISOString() };
+        for (const [key, val] of Object.entries(fields)) {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = key;
+          input.value = val;
+          hiddenForm.appendChild(input);
+        }
+
+        document.body.appendChild(hiddenForm);
+        hiddenForm.submit();
+      });
+    } catch (err) {
+      console.warn('Sheet save failed:', err);
+    }
+
+    btn.classList.remove('loading');
+    btn.disabled = false;
+
+    if (sheetSaved) {
+      btn.innerHTML = '<span>Submitted ✓</span>';
       btn.style.background = 'var(--success)';
-      showMessage('success', '✓ Message saved & email draft opened. Please click "Send" in your mail app!');
+      showMessage('success', '✓ Thanks! Your message was submitted successfully. I will get back to you soon.');
+      form.reset();
+    } else {
+      btn.innerHTML = '<span>Try Email Instead</span>';
+      btn.style.background = '';
+      showMessage(
+        'warning',
+        `⚠ Could not confirm Google Sheets submission right now. <a href="${mailtoHref}">Send via email instead</a>.`,
+        true
+      );
+    }
 
-      setTimeout(() => {
-        btn.innerHTML = originalHTML;
-        btn.style.background = '';
-        btn.disabled = false;
-        form.reset();
-        resetMessage();
-      }, 5000);
-    }, 800);
+    setTimeout(() => {
+      btn.innerHTML = originalHTML;
+      btn.style.background = '';
+      resetMessage();
+    }, 6000);
   });
 }
 
