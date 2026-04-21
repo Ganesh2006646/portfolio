@@ -196,97 +196,32 @@
   <!-- =========================================
        SECTION 2 — THE CORE FOUNDATION
        ========================================= -->
-  <section class="section arsenal-section" id="arsenal">
-    <div class="arsenal-container">
+  <section class="section techstack-section" id="arsenal">
+    <div class="techstack-container">
       <span class="section-label reveal-left">The Core Foundation</span>
       <h2 class="section-title">Technical Arsenal</h2>
-      <p class="arsenal-subtitle reveal-right reveal-delay-1">Technologies, frameworks, and tools I wield to build intelligent systems.</p>
+      <p class="techstack-subtitle reveal-right reveal-delay-1">Technologies, frameworks, and tools I wield to build intelligent systems. <span class="techstack-hint">Hover to interact.</span></p>
 
-      <div class="arsenal-grid stagger-children">
-        <!-- Languages -->
-        <div class="arsenal-category reveal-scale">
-          <div class="arsenal-category-header">
-            <span class="arsenal-icon">⟨/⟩</span>
-            <h3>Languages</h3>
-          </div>
-          <div class="arsenal-tags">
-            <span class="arsenal-tag">Python</span>
-            <span class="arsenal-tag">Java</span>
-            <span class="arsenal-tag">JavaScript</span>
-            <span class="arsenal-tag">TypeScript</span>
-            <span class="arsenal-tag">C</span>
-            <span class="arsenal-tag">SQL</span>
-            <span class="arsenal-tag">HTML/CSS</span>
-          </div>
-        </div>
-
-        <!-- AI / ML -->
-        <div class="arsenal-category reveal-scale">
-          <div class="arsenal-category-header">
-            <span class="arsenal-icon">🧠</span>
-            <h3>AI / ML</h3>
-          </div>
-          <div class="arsenal-tags">
-            <span class="arsenal-tag accent-tag">Gemini Models</span>
-            <span class="arsenal-tag accent-tag">LiteLLM</span>
-            <span class="arsenal-tag">LangChain</span>
-            <span class="arsenal-tag accent-tag">Pathway Engine</span>
-            <span class="arsenal-tag">TensorFlow</span>
-            <span class="arsenal-tag">Scikit-learn</span>
-            <span class="arsenal-tag">OpenCV</span>
-            <span class="arsenal-tag">RAG</span>
-          </div>
-        </div>
-
-        <!-- Backend & Databases -->
-        <div class="arsenal-category reveal-scale">
-          <div class="arsenal-category-header">
-            <span class="arsenal-icon">⚙️</span>
-            <h3>Backend & Databases</h3>
-          </div>
-          <div class="arsenal-tags">
-            <span class="arsenal-tag">Node.js</span>
-            <span class="arsenal-tag">Express</span>
-            <span class="arsenal-tag">FastAPI</span>
-            <span class="arsenal-tag">PostgreSQL</span>
-            <span class="arsenal-tag">MongoDB</span>
-            <span class="arsenal-tag">Firebase</span>
-            <span class="arsenal-tag">REST APIs</span>
-            <span class="arsenal-tag">WebSockets</span>
-          </div>
-        </div>
-
-        <!-- Frontend & Mobile -->
-        <div class="arsenal-category reveal-scale">
-          <div class="arsenal-category-header">
-            <span class="arsenal-icon">🎨</span>
-            <h3>Frontend & Mobile</h3>
-          </div>
-          <div class="arsenal-tags">
-            <span class="arsenal-tag">React</span>
-            <span class="arsenal-tag">Next.js</span>
-            <span class="arsenal-tag">Flutter</span>
-            <span class="arsenal-tag">GSAP</span>
-            <span class="arsenal-tag">Tailwind CSS</span>
-            <span class="arsenal-tag">Three.js</span>
-          </div>
-        </div>
-
-        <!-- Tools & DevOps -->
-        <div class="arsenal-category reveal-scale">
-          <div class="arsenal-category-header">
-            <span class="arsenal-icon">🛠️</span>
-            <h3>Tools & DevOps</h3>
-          </div>
-          <div class="arsenal-tags">
-            <span class="arsenal-tag">Git / GitHub</span>
-            <span class="arsenal-tag">Docker</span>
-            <span class="arsenal-tag">Vercel</span>
-            <span class="arsenal-tag">Figma</span>
-            <span class="arsenal-tag">Postman</span>
-            <span class="arsenal-tag">VS Code</span>
-            <span class="arsenal-tag">Linux</span>
-          </div>
+      <div class="techstack-canvas-wrapper reveal-scale">
+        <div id="techstack-canvas" class="techstack-canvas"></div>
+        <!-- Floating legend pills -->
+        <div class="techstack-legend" id="techstackLegend">
+          <span class="legend-pill" style="--pill-color: #3776AB;">Python</span>
+          <span class="legend-pill" style="--pill-color: #ED8B00;">Java</span>
+          <span class="legend-pill" style="--pill-color: #F7DF1E;">JavaScript</span>
+          <span class="legend-pill" style="--pill-color: #3178C6;">TypeScript</span>
+          <span class="legend-pill" style="--pill-color: #61DAFB;">React</span>
+          <span class="legend-pill" style="--pill-color: #ffffff;">Next.js</span>
+          <span class="legend-pill" style="--pill-color: #339933;">Node.js</span>
+          <span class="legend-pill" style="--pill-color: #ffffff;">Express</span>
+          <span class="legend-pill" style="--pill-color: #4169E1;">PostgreSQL</span>
+          <span class="legend-pill" style="--pill-color: #47A248;">MongoDB</span>
+          <span class="legend-pill" style="--pill-color: #FF6F00;">TensorFlow</span>
+          <span class="legend-pill" style="--pill-color: #2496ED;">Docker</span>
+          <span class="legend-pill" style="--pill-color: #02569B;">Flutter</span>
+          <span class="legend-pill" style="--pill-color: #DD2C00;">Firebase</span>
+          <span class="legend-pill" style="--pill-color: #F05032;">Git</span>
+          <span class="legend-pill" style="--pill-color: #009688;">FastAPI</span>
         </div>
       </div>
     </div>
@@ -620,6 +555,9 @@
     </div>
   </footer>
 
+  <!-- Three.js (3D Tech Stack) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+
   <!-- GSAP + SplitType CDN -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
@@ -627,6 +565,8 @@
 
   <!-- Core JS -->
   <script src="js/main.js"></script>
+  <!-- 3D Tech Stack Physics -->
+  <script src="js/techstack.js"></script>
   <!-- Comet Cursor (hero only) -->
   <script src="js/comet-cursor.js"></script>
   <!-- Kinetic Text Reveals -->
