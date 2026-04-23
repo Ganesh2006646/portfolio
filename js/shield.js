@@ -184,19 +184,25 @@
   }
 
   // Visibility API — tab hidden/visible
+  // Debounced so page-transition navigation doesn't trigger the shield
+  var _shieldTimer = null;
+
   document.addEventListener('visibilitychange', function () {
     if (document.hidden) {
-      _showShield();
+      _shieldTimer = setTimeout(_showShield, 300);
     } else {
+      clearTimeout(_shieldTimer);
       _hideShield();
     }
   });
 
   // Window blur/focus (catches alt-tab, window switching)
+  // Short delay prevents firing during normal link-click navigation
   window.addEventListener('blur', function () {
-    _showShield();
+    _shieldTimer = setTimeout(_showShield, 300);
   });
   window.addEventListener('focus', function () {
+    clearTimeout(_shieldTimer);
     _hideShield();
   });
 
