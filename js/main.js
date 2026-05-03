@@ -24,6 +24,17 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollLoop();
 });
 
+function prefersReducedMotion() {
+  return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+function signalEntryReady() {
+  if (window.__PORTFOLIO_ENTRY_READY) return;
+  window.__PORTFOLIO_ENTRY_READY = true;
+  document.body?.classList.add('entry-ready');
+  document.dispatchEvent(new Event('portfolio:entry-ready'));
+}
+
 /* ==========================================
    CUSTOM CURSOR
    ========================================== */
@@ -31,6 +42,7 @@ function initCursor() {
   const cursor = document.querySelector('.cursor');
   const cursorDot = document.querySelector('.cursor-dot');
   if (!cursor || !cursorDot) return;
+  if (prefersReducedMotion()) return;
   if (window.innerWidth <= 768) return;
 
   // Activate cursor-none only when JS is running and cursor elements exist
@@ -106,6 +118,18 @@ function initLoader() {
   const loader = document.querySelector('.loader');
   const incomingRoute = sessionStorage.getItem('incomingRoute');
 
+  if (prefersReducedMotion()) {
+    sessionStorage.removeItem('incomingRoute');
+    if (loader) {
+      loader.classList.add('hidden');
+      loader.style.display = 'none';
+    }
+    document.body.style.overflow = '';
+    triggerEntryAnimations();
+    signalEntryReady();
+    return;
+  }
+
   // ---- Incoming page transition (arriving from another page) ----
   if (incomingRoute) {
     sessionStorage.removeItem('incomingRoute');
@@ -128,16 +152,18 @@ function initLoader() {
         pt.classList.add('active-in');
 
         // Step 3: After the lift animation finishes, clean up
-        // Animation: 0.5s + stagger(0.24s) + buffer
+        // Animation: 0.36s + stagger(0.16s) + buffer
         setTimeout(() => {
           pt.classList.remove('active-in');
           document.body.style.overflow = '';
           triggerEntryAnimations();
-        }, 900);
-      }, 250);
+          signalEntryReady();
+        }, 600);
+      }, 120);
     } else {
       document.body.style.overflow = '';
       triggerEntryAnimations();
+      signalEntryReady();
     }
     return;
   }
@@ -173,7 +199,10 @@ function initLoader() {
         setTimeout(() => {
           loader.classList.add('hidden');
           document.body.style.overflow = '';
-          setTimeout(() => triggerEntryAnimations(), 150);
+          setTimeout(() => {
+            triggerEntryAnimations();
+            signalEntryReady();
+          }, 150);
         }, 200);
       }
       counter.textContent = count + '%';
@@ -182,7 +211,10 @@ function initLoader() {
     setTimeout(() => {
       loader.classList.add('hidden');
       document.body.style.overflow = '';
-      setTimeout(() => triggerEntryAnimations(), 150);
+      setTimeout(() => {
+        triggerEntryAnimations();
+        signalEntryReady();
+      }, 150);
     }, 1200);
   }
 
@@ -202,7 +234,10 @@ function triggerEntryAnimations() {
 
 function initHeroAnimation() {
   if (!document.querySelector('.loader')) {
-    setTimeout(triggerEntryAnimations, 200);
+    setTimeout(() => {
+      triggerEntryAnimations();
+      signalEntryReady();
+    }, 200);
   }
 }
 
@@ -229,7 +264,7 @@ function initScrollReveal() {
       }
     });
   }, {
-    threshold: 0.12,
+    threshold: 0.05,
     rootMargin: '0px 0px -50px 0px'
   });
 
@@ -357,17 +392,37 @@ function initNavigation() {
   const mobileMenu = document.querySelector('.mobile-menu');
 
   if (hamburger && mobileMenu) {
+    const setMenuState = (isOpen) => {
+      hamburger.classList.toggle('active', isOpen);
+      mobileMenu.classList.toggle('active', isOpen);
+      document.body.classList.toggle('menu-open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+      hamburger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+      mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+    };
+
     hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      mobileMenu.classList.toggle('active');
-      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+      setMenuState(!mobileMenu.classList.contains('active'));
     });
+
     mobileMenu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        mobileMenu.classList.remove('active');
-        document.body.style.overflow = '';
+        setMenuState(false);
       });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+        setMenuState(false);
+        hamburger.focus();
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
+        setMenuState(false);
+      }
     });
   }
 
@@ -399,8 +454,8 @@ function triggerPageTransition(href, routeName) {
   sessionStorage.setItem('incomingRoute', routeName || 'None');
 
   // Navigate after bars fully cover
-  // Animation: 0.45s + stagger(0.24s) + buffer = ~800ms
-  setTimeout(() => { window.location.href = href; }, 800);
+  // Animation: 0.32s + stagger(0.16s) + buffer = ~520ms
+  setTimeout(() => { window.location.href = href; }, 520);
 }
 
 /* ==========================================
@@ -416,6 +471,7 @@ function initMarquee() {
    MAGNETIC BUTTONS
    ========================================== */
 function initMagneticButtons() {
+  if (prefersReducedMotion()) return;
   if (window.innerWidth <= 768) return;
   document.querySelectorAll('.magnetic').forEach(btn => {
     btn.addEventListener('mousemove', (e) => {
@@ -435,13 +491,13 @@ function initMagneticButtons() {
    ========================================== */
 function initTiltCards() {
   if (window.innerWidth <= 768) return;
-  document.querySelectorAll('.project-card').forEach(card => {
+  document.querySelectorAll('.work-item').forEach(card => {
     card.addEventListener('mousemove', (e) => {
       const r = card.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width;
       const y = (e.clientY - r.top) / r.height;
-      const tiltX = (0.5 - y) * 8;  // degrees
-      const tiltY = (x - 0.5) * 8;
+      const tiltX = (0.5 - y) * 4;
+      const tiltY = (x - 0.5) * 4;
       card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-4px)`;
     });
     card.addEventListener('mouseleave', () => {
@@ -636,10 +692,20 @@ function initWorkPage() {
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', (e) => {
-      const target = document.querySelector(anchor.getAttribute('href'));
+      const href = anchor.getAttribute('href');
+      if (!href || href === '#') return;
+
+      let target = null;
+      try {
+        target = document.querySelector(href);
+      } catch (_) {
+        return;
+      }
+
       if (target) {
         e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const behavior = prefersReducedMotion() ? 'auto' : 'smooth';
+        target.scrollIntoView({ behavior, block: 'start' });
       }
     });
   });

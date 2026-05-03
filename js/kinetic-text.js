@@ -20,8 +20,8 @@
   /* --- Custom ease matching the requested cubic-bezier(0.19, 1, 0.22, 1) --- */
   // This is equivalent to "power4.out" in GSAP
   const EASE = 'power4.out';
-  const CHAR_STAGGER = 0.02;
-  const DURATION = 1.2;
+  const CHAR_STAGGER = 0.012;
+  const DURATION = 0.85;
 
   /* --- Helper: Apply SplitType and create masked reveals --- */
   function createKineticReveal(element, options = {}) {
@@ -39,7 +39,7 @@
 
     // SplitType splits into lines, words, chars
     const split = new SplitType(element, {
-      types: 'lines,chars',
+      types: 'lines,words,chars',
       tagName: 'span',
     });
 
@@ -95,38 +95,42 @@
 
   /* --- Initialize --- */
   function init() {
-    // Detect if this is a transition arrival (loader hidden) vs first visit
-    const loader = document.querySelector('.loader');
-    const isTransitionArrival = loader && loader.style.display === 'none';
-    const hasVisibleLoader = loader && loader.style.display !== 'none';
+    function whenEntryReady(callback) {
+      if (window.__PORTFOLIO_ENTRY_READY) {
+        callback();
+        return;
+      }
+      document.addEventListener('portfolio:entry-ready', callback, { once: true });
+    }
 
     // 1. Hero title — immediate (after loader)
     const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-      // Transition arrival: short delay (lift animation ~1.1s from DOMContentLoaded)
-      // First visit with loader: long delay (loader ~2.8s)
-      // No loader: short delay
-      const delay = isTransitionArrival ? 800 : hasVisibleLoader ? 2800 : 400;
-      createKineticReveal(heroTitle, {
-        triggerType: 'immediate',
-        delay: delay,
-      });
-    }
+    const heroTitleReveal = heroTitle
+      ? createKineticReveal(heroTitle, { triggerType: 'manual' })
+      : null;
 
     // 2. Hero subtitle — fade in after title
     const heroSub = document.querySelector('.hero-subtitle');
     if (heroSub) {
-      const subDelay = isTransitionArrival ? 1400 : hasVisibleLoader ? 3600 : 1000;
       gsap.set(heroSub, { opacity: 0, y: 30 });
-      setTimeout(() => {
+    }
+
+    // Run hero animations only after loader/transition is finished
+    whenEntryReady(() => {
+      if (heroTitleReveal && heroTitleReveal.tl) {
+        heroTitleReveal.tl.play(0);
+      }
+
+      if (heroSub) {
         gsap.to(heroSub, {
           opacity: 1,
           y: 0,
-          duration: 1,
+          duration: 0.95,
           ease: EASE,
+          delay: 0.35,
         });
-      }, subDelay);
-    }
+      }
+    });
 
     // 3. Section headings — scroll-triggered
     document.querySelectorAll('.section-title').forEach((el) => {
@@ -137,6 +141,31 @@
     document.querySelectorAll('.section-head h2').forEach((el) => {
       createKineticReveal(el, { triggerType: 'scroll' });
     });
+
+    // 5. Safety fallback — force-reveal hero text after 1.5s if still invisible
+    setTimeout(function () {
+      var heroEl = document.querySelector('.hero-title');
+      if (heroEl) {
+        var chars = heroEl.querySelectorAll('.char');
+        chars.forEach(function (c) {
+          if (parseFloat(getComputedStyle(c).opacity) < 0.5) {
+            gsap.set(c, { yPercent: 0, opacity: 1 });
+          }
+        });
+      }
+    }, 1500);
+
+    // 6. Safety fallback — force-reveal ALL kinetic text after 3s
+    setTimeout(function () {
+      document.querySelectorAll('.section-title, .hero-title').forEach(function (el) {
+        var chars = el.querySelectorAll('.char');
+        chars.forEach(function (c) {
+          if (parseFloat(getComputedStyle(c).opacity) < 0.5) {
+            gsap.set(c, { yPercent: 0, opacity: 1 });
+          }
+        });
+      });
+    }, 3000);
   }
 
   /* --- Run on DOMContentLoaded or immediately if already loaded --- */

@@ -6,11 +6,19 @@
   <meta name="theme-color" content="#F0F1FA">
   <title>Work — Ganesh Giridhar</title>
   <meta name="description" content="Selected projects and case studies by Kankatala Ganesh Giridhar — AI Systems Engineer & Product Builder.">
+  <meta property="og:title" content="Work — Ganesh Giridhar">
+  <meta property="og:description" content="Selected projects and case studies by Kankatala Ganesh Giridhar.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="assets/images/kg2-logo.png">
   <link rel="stylesheet" href="css/styles.css">
   <!-- Source Code Shield -->
   <script src="js/shield.js"></script>
 </head>
 <body class="work-theme">
+
+  <!-- Skip to Content (A11y) -->
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- Cinematic Film Grain -->
   <div class="noise-overlay"></div>
@@ -35,7 +43,7 @@
   </div>
 
   <!-- Mobile Menu -->
-  <div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
     <a href="index.html" data-transition="Home">Home</a>
     <a href="index.html#about" data-transition="Home">About</a>
     <a href="work.html">Work</a>
@@ -45,7 +53,7 @@
   <!-- Header (Light Mode for Work page) -->
   <header class="header light-mode" id="header">
     <a class="logo magnetic" href="index.html" aria-label="Ganesh Giridhar — Home" data-transition="Home">
-      <img src="assets/images/kg2-logo.png" alt="KG² Logo" class="logo-icon-img">
+      <img src="assets/images/kg2-logo.webp" alt="KG² Logo" class="logo-icon-img">
       <div class="logo-name">
         <span class="first">Ganesh</span>
         <span class="last">Giridhar</span>
@@ -57,14 +65,14 @@
       <div class="availability-dot"></div>
     </div>
 
-    <nav class="nav">
+    <nav class="nav" aria-label="Primary navigation">
       <a class="nav-link" href="index.html" data-transition="Home">
         <span>Home</span><span>Home</span>
       </a>
       <a class="nav-link" href="index.html#about" data-transition="Home">
         <span>About</span><span>About</span>
       </a>
-      <a class="nav-link" href="work.html">
+      <a class="nav-link" href="work.html" aria-current="page">
         <span>Work</span><span>Work</span>
       </a>
       <a class="nav-link" href="contact.html" data-transition="Contact">
@@ -72,28 +80,23 @@
       </a>
     </nav>
 
-    <button class="hamburger" id="hamburger" aria-label="Menu">
+    <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-controls="mobileMenu"
+      aria-expanded="false">
       <span class="hamburger-line"></span>
       <span class="hamburger-line"></span>
       <span class="hamburger-line"></span>
     </button>
   </header>
 
-  <div class="work-page">
+  <main id="main" class="work-page">
     <!-- Subtle Background Animation -->
     <div class="work-bg-animation" aria-hidden="true"></div>
 
     <!-- Work Hero -->
     <section class="work-page-hero">
         <h1 class="work-page-title">
-          <span class="word"><span>Building</span></span>
-          <span class="word"><span>intelligent</span></span>
-          <span class="word"><span>systems</span></span>
-          <span class="word"><span>through</span></span>
-          <span class="word"><span>AI-driven</span></span>
-          <span class="word"><span>engineering</span></span>
-          <span class="word"><span>and</span></span>
-          <span class="word"><span>design</span></span>
+          <span class="word" style="display: block;"><span>Building intelligent systems through</span></span>
+          <span class="word" style="display: block;"><span>AI-driven engineering and design</span></span>
         </h1>
         <div class="work-page-subtitle">
           <span>Work</span>
@@ -105,7 +108,7 @@
               <defs><clipPath id="starClip"><rect width="200" height="200" fill="white"/></clipPath></defs>
             </svg>
           </span>
-          <span>(07)</span>
+          <span>(08)</span>
         </div>
     </section>
 
@@ -125,14 +128,14 @@
             <span>—</span>
             <span>2026</span>
           </div>
-          <p>An AI-powered pre-court dispute understanding tool designed to reduce judicial backlog. Takes raw, emotionally charged inputs, sanitizes them, identifies core legal issues, and provides narrative reasoning for structured, de-escalated conflict resolution suggestions. Built for the Gemini 3 Hackathon.</p>
+          <p>Designed an AI-powered legal tech prototype to explore judicial backlog reduction, successfully structuring out-of-court resolutions from emotionally charged inputs, by leveraging Gemini models for agentic NLP and narrative reasoning.</p>
           <a href="https://github.com/Ganesh2006646/gemini--3-hackathon.git" target="_blank" rel="noopener noreferrer" class="github-link">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
             View Repository
           </a>
         </div>
         <div class="work-item-image">
-          <img src="assets/images/project-dispute-deescalator.png" alt="Dispute De-Escalator" loading="lazy">
+          <img src="assets/images/project-dispute-deescalator.webp" alt="Dispute De-Escalator" loading="lazy">
         </div>
       </div>
 
@@ -149,14 +152,14 @@
             <span>—</span>
             <span>2024–2025</span>
           </div>
-          <p>A mobile application engineered for low-connectivity agricultural environments. Implemented robust local caching and background sync mechanisms to ensure seamless offline data collection, syncing perfectly with cloud databases once connectivity is restored.</p>
+          <p>Developed an offline-first mobile application for agricultural data collection, ensuring zero data loss in low-connectivity environments, by implementing robust local caching and background cloud syncing using Flutter and SQLite/Hive.</p>
           <a href="https://github.com/Ganesh2006646/RICE_APP.git" target="_blank" rel="noopener noreferrer" class="github-link">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
             View Repository
           </a>
         </div>
         <div class="work-item-image">
-          <img src="assets/images/project-riceagent.png" alt="RiceAgent" loading="lazy">
+          <img src="assets/images/project-riceagent.webp" alt="RiceAgent" loading="lazy">
         </div>
       </div>
 
@@ -173,14 +176,14 @@
             <span>—</span>
             <span>2025</span>
           </div>
-          <p>A highly optimized algorithmic strategy game with a custom-built JavaFX UI. Engineered complex game theory mechanics via memoization and transposition tables, drastically reducing AI opponent computation time. Features a strictly corrected 10-second turn counter using asynchronous threading.</p>
+          <p>Programmed a highly optimized algorithmic multiplayer strategy game, drastically reducing AI computation time for opponent moves, by implementing a minimax algorithm with alpha-beta pruning, memoization, and JavaFX.</p>
           <a href="https://github.com/Ganesh2006646/FLIP.git" target="_blank" rel="noopener noreferrer" class="github-link">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
             View Repository
           </a>
         </div>
         <div class="work-item-image">
-          <img src="assets/images/project-flip-wars.png" alt="Flip Wars" loading="lazy">
+          <img src="assets/images/project-flip-wars.webp" alt="Flip Wars" loading="lazy">
         </div>
       </div>
 
@@ -197,14 +200,14 @@
             <span>—</span>
             <span>2026</span>
           </div>
-          <p>A multi-objective code grading environment built for the Scaler OpenEnv Hackathon. Grades Python submissions across correctness, performance, and code quality axes using deterministic test execution, AST complexity analysis, and static readability indicators. Features a FastAPI server, interactive dashboard, RL-style wrappers, and Gemini-powered autonomous agent loops with chain-of-reflection multi-agent architecture.</p>
+          <p>Built a multi-objective code grading environment for the OpenEnv Hackathon, evaluating Python submissions precisely across correctness, performance, and readability, by integrating FastAPI, AST complexity analysis, and Gemini-powered autonomous feedback loops.</p>
           <a href="https://github.com/Ganesh2006646/meta---hackathon.git" target="_blank" rel="noopener noreferrer" class="github-link">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
             View Repository
           </a>
         </div>
         <div class="work-item-image">
-          <img src="assets/images/project-execucode.png" alt="ExecuCode" loading="lazy">
+          <img src="assets/images/project-execucode.webp" alt="ExecuCode" loading="lazy">
         </div>
       </div>
 
@@ -217,14 +220,14 @@
             <span>—</span>
             <span>Dec 2025</span>
           </div>
-          <p>An Agentic AI system engineered for real-time anomaly detection. Parses continuous data streams, utilizes LLMs to reason over anomalies, and autonomously generates actionable mitigation strategies. Built for the Synaptics AI Hackathon (SASTRA 2026), achieving a top score of 18.200 in the Applied GenAI track.</p>
+          <p>Engineered a real-time anomaly detection system for the Synaptics AI Hackathon, capable of autonomously parsing continuous data streams to generate mitigation strategies, by orchestrating Agentic AI and LLM workflows.</p>
           <a href="https://github.com/Ganesh2006646/pathway_hackathon.git" target="_blank" rel="noopener noreferrer" class="github-link">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
             View Repository
           </a>
         </div>
         <div class="work-item-image">
-          <img src="assets/images/project-spectra-shield.png" alt="Spectra-Shield" loading="lazy">
+          <img src="assets/images/project-spectra-shield.webp" alt="Spectra-Shield" loading="lazy">
         </div>
       </div>
 
@@ -237,14 +240,14 @@
             <span>—</span>
             <span>2025</span>
           </div>
-          <p>A full-stack financial modeling engine projecting inflation-adjusted retirement corpuses based on dynamic user variables. Strictly engineered to meet WCAG 2.1 AA accessibility standards while maintaining HDFC brand compliance. Built for the HDFC FinCal Innovation Hackathon.</p>
+          <p>Engineered a full-stack financial modeling engine for the HDFC FinCal Hackathon, strictly meeting WCAG 2.1 AA accessibility and brand compliance standards, by utilizing Next.js, Node.js, and MySQL to project inflation-adjusted corpuses.</p>
           <a href="https://github.com/Ganesh2006646/FInCal--Hackathon.git" target="_blank" rel="noopener noreferrer" class="github-link">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
             View Repository
           </a>
         </div>
         <div class="work-item-image">
-          <img src="assets/images/project-retirement-calc.png" alt="Retirement Planning Calculator" loading="lazy">
+          <img src="assets/images/project-retirement-calc.webp" alt="Retirement Planning Calculator" loading="lazy">
         </div>
       </div>
 
@@ -257,19 +260,41 @@
             <span>—</span>
             <span>2025</span>
           </div>
-          <p>A full-stack platform streamlining institutional dining operations. Features real-time inventory tracking, student meal plan authorization, and waste reduction analytics. Utilizes PostgreSQL for ACID-compliant transactions and Express.js for a responsive backend API.</p>
+          <p>Streamlined institutional dining operations with a new full-stack platform, enabling real-time inventory tracking and meal plan authorization, by deploying responsive REST APIs with Node.js, Express, and ACID-compliant PostgreSQL.</p>
           <a href="https://github.com/Ganesh2006646/food-management-system-.git" target="_blank" rel="noopener noreferrer" class="github-link">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
             View Repository
           </a>
         </div>
         <div class="work-item-image">
-          <img src="assets/images/project-mess-mgmt.png" alt="Mess Management System" loading="lazy">
+          <img src="assets/images/project-mess-mgmt.webp" alt="Mess Management System" loading="lazy">
+        </div>
+      </div>
+
+
+
+      <!-- Tour Management Portal -->
+      <div class="work-item">
+        <div class="work-item-info">
+          <h3>Tour Management Portal</h3>
+          <div class="work-item-meta">
+            <span>HTML5 · CSS3 · JavaScript · Multi-Page Architecture</span>
+            <span>—</span>
+            <span>2026</span>
+          </div>
+          <p>Built a comprehensive frontend web application to facilitate travel planning, enhancing user discovery with structured search forms and geographical showcases, by engineering a modular, multi-page architecture using HTML5 and CSS3.</p>
+          <a href="https://github.com/Ganesh2006646/tourwebsite.git" target="_blank" rel="noopener noreferrer" class="github-link">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            View Repository
+          </a>
+        </div>
+        <div class="work-item-image">
+          <img src="assets/images/project-travel-planner.png" alt="Tour Management Portal" loading="lazy">
         </div>
       </div>
 
     </div>
-  </div>
+  </main>
 
 
   <!-- Footer -->
@@ -277,7 +302,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <a class="logo" href="index.html" data-transition="Home">
-          <img src="assets/images/kg2-logo.png" alt="KG² Logo" class="logo-icon-img footer-logo">
+          <img src="assets/images/kg2-logo.webp" alt="KG² Logo" class="logo-icon-img footer-logo">
           <div class="logo-name">
             <span class="first">Ganesh</span>
             <span class="last">Giridhar</span>
@@ -320,5 +345,6 @@
 
   <script src="js/main.js"></script>
   <script src="js/kinetic-text.js"></script>
+  <script src="js/scroll-3d.js"></script>
 </body>
 </html>
