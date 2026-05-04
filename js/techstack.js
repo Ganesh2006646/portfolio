@@ -21,19 +21,14 @@
     { name: 'Python', color: '#3776AB' },
     { name: 'Java', color: '#ED8B00' },
     { name: 'JavaScript', color: '#F7DF1E' },
-    { name: 'TypeScript', color: '#3178C6' },
     { name: 'React', color: '#61DAFB' },
-    { name: 'Next.js', color: '#888888' },
-    { name: 'Node.js', color: '#339933' },
+    { name: 'Node.js', color: '#639143' },
     { name: 'Express', color: '#888888' },
     { name: 'PostgreSQL', color: '#4169E1' },
     { name: 'MongoDB', color: '#47A248' },
-    { name: 'TensorFlow', color: '#FF6F00' },
     { name: 'Docker', color: '#2496ED' },
     { name: 'Flutter', color: '#02569B' },
-    { name: 'Firebase', color: '#DD2C00' },
     { name: 'Git', color: '#F05032' },
-    { name: 'FastAPI', color: '#009688' },
   ];
 
   /* ---- State ---- */

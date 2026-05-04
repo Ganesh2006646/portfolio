@@ -1151,6 +1151,8 @@ ol {
   line-height: 1.7;
   color: var(--text-muted);
   margin-bottom: 1.5rem;
+  text-align: justify;
+  text-justify: inter-word;
   word-break: break-word;
   hyphens: auto;
 }
@@ -1780,6 +1782,12 @@ ol {
   font-weight: 500;
 }
 
+@media (max-width: 1024px) {
+  .impact-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .impact-grid {
     grid-template-columns: 1fr;
@@ -1940,6 +1948,25 @@ ol {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.experience-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--pink), var(--orange));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--transition-smooth);
+}
+
+.experience-card:hover::after {
+  transform: scaleX(1);
 }
 
 .experience-card:hover {
@@ -1962,6 +1989,8 @@ ol {
 
 .experience-card-content {
   flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .experience-meta {
@@ -1997,6 +2026,15 @@ ol {
   font-size: 0.88rem;
   color: var(--text-muted);
   line-height: 1.7;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  flex: 1;
+}
+
+.experience-card p strong {
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 @media (max-width: 768px) {
@@ -2029,6 +2067,8 @@ ol {
   transition: all 0.4s var(--transition-smooth);
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .recognition-card::after {
@@ -2079,6 +2119,15 @@ ol {
   color: var(--text-muted);
   line-height: 1.7;
   margin-bottom: 1.25rem;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  flex: 1;
+}
+
+.recognition-card p strong {
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 .recognition-link {
@@ -2103,6 +2152,14 @@ ol {
 
 .recognition-link:hover svg {
   transform: translateX(4px);
+}
+
+.recognition-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 1rem;
 }
 
 .recognition-badge {
@@ -2933,7 +2990,7 @@ ol {
 
 .impact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
 }
 
@@ -2944,6 +3001,8 @@ ol {
   padding: 2.5rem;
   overflow: hidden;
   transition: all 0.5s var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
 }
 
 .impact-card-accent {
@@ -2994,6 +3053,14 @@ ol {
   color: var(--text-muted);
   line-height: 1.7;
   margin-bottom: 2rem;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  flex: 1;
+}
+
+.impact-card .github-link {
+  margin-top: auto;
 }
 
 .impact-card p strong {
@@ -3141,11 +3208,20 @@ ol {
   margin-bottom: 1rem;
 }
 
+/* Keep Experience cards aligned: reserve 2-line title space */
+.experience-card h3 {
+  line-height: 1.2;
+  min-height: calc(1.2em * 2);
+}
+
 .experience-card p,
 .recognition-card p {
   color: var(--text-muted);
   line-height: 1.7;
   font-size: 0.95rem;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
 }
 
 .recognition-link {
@@ -3164,7 +3240,6 @@ ol {
 
 .recognition-badge {
   display: inline-block;
-  margin-top: 2rem;
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -4244,7 +4319,6 @@ body.entry-ready .hero-actions {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  max-width: 900px;
 }
 
 .work-page-subtitle {
