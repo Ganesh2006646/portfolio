@@ -1,7 +1,7 @@
 // Vercel Serverless Function — RAG Chat Endpoint
 // Uses in-memory cosine similarity over pre-generated vectors
 
-const { GoogleGenAI } = require('@google/genai');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 // Load pre-generated vectors
 const vectors = require('../data/vectors.json');
@@ -68,17 +68,13 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+    const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
     // 1. Generate Query Embedding
-    const embedResult = await ai.models.embedContent({
-      model: 'models/gemini-embedding-2',
-      content: {
-        parts: [{ text: message }],
-      },
-    });
+    const embeddingModel = genAI.getGenerativeModel({ model: 'gemini-embedding-2' });
+    const embResult = await embeddingModel.embedContent(message);
 
-    const queryVector = embedResult.embedding?.values;
+    const queryVector = embResult.embedding.values;
     if (!queryVector) {
       throw new Error('Failed to generate embedding vector.');
     }
@@ -105,16 +101,14 @@ module.exports = async function handler(req, res) {
     const fullSystemInstruction = SYSTEM_PROMPT.replace('{context}', contextText);
 
     // 4. Generate Response
-    const result = await ai.models.generateContent({
+    const chatModel = genAI.getGenerativeModel({
       model: 'gemini-2.0-flash',
-      contents: [{ role: 'user', parts: [{ text: message }] }],
-      config: {
-        systemInstruction: fullSystemInstruction,
-        temperature: 0.2,
-      }
+      systemInstruction: fullSystemInstruction,
+      generationConfig: { temperature: 0.2 },
     });
 
-    const botReply = result.text || 'I was unable to formulate a response.';
+    const result = await chatModel.generateContent(message);
+    const botReply = result.response.text() || 'I was unable to formulate a response.';
 
     // 5. Extract Citations
     const citations = topMatches
