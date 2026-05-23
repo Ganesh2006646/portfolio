@@ -1,7 +1,7 @@
 // Vercel Serverless Function — RAG Chat Endpoint
 // Uses in-memory cosine similarity over pre-generated vectors
 
-const { GoogleGenAI } = require('@google/generative-ai');
+const { GoogleGenAI } = require('@google/genai');
 
 // Load pre-generated vectors
 const vectors = require('../data/vectors.json');
