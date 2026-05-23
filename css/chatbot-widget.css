@@ -882,6 +882,76 @@
   height: 16px;
 }
 
+/* --- Onboarding Divider --- */
+.rag-onboarding-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 18px 0 12px 0;
+  width: 100%;
+}
+.rag-onboarding-divider::before,
+.rag-onboarding-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.12);
+}
+.rag-onboarding-divider span {
+  padding: 0 10px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: var(--chat-font);
+}
+
+/* --- Quick Replies Wrapper --- */
+.rag-quick-replies {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+/* --- Quick Reply Chip --- */
+.rag-quick-chip {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+  color: rgba(255, 255, 255, 0.85);
+  font-family: var(--chat-font);
+  font-size: 12.5px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  outline: none;
+}
+.rag-quick-chip:hover {
+  border-color: rgba(34, 211, 238, 0.35);
+  color: #fff;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.12) 0%, rgba(34, 211, 238, 0.12) 100%);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(34, 211, 238, 0.06);
+}
+
+/* --- Suggestions Section Label --- */
+.rag-suggestions-label {
+  align-self: flex-start;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 11px;
+  font-family: var(--chat-font);
+  margin-top: 4px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 /* ================================================
    RESPONSIVE
    ================================================ */

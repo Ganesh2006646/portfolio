@@ -117,10 +117,34 @@
   }
 
   // ---- RICH MARKDOWN PARSER ----
+  function isPortfolioLink(url) {
+    if (!url) return false;
+    const cleanUrl = url.trim();
+    if (cleanUrl.startsWith('#') || cleanUrl.startsWith('/') || cleanUrl.startsWith('.') || !cleanUrl.startsWith('http')) {
+      return true;
+    }
+    try {
+      const parsed = new URL(cleanUrl);
+      return parsed.hostname === 'brandofganesh.vercel.app' || parsed.hostname === window.location.hostname;
+    } catch (e) {
+      return cleanUrl.includes('brandofganesh.vercel.app');
+    }
+  }
+
+  function createLink(text, url) {
+    const isSelf = isPortfolioLink(url);
+    const target = isSelf ? '_self' : '_blank';
+    const rel = isSelf ? '' : ' rel="noopener noreferrer"';
+    return '<a href="' + url + '" target="' + target + '"' + rel + ' class="rag-md-link">' + text + '</a>';
+  }
+
+  // ---- RICH MARKDOWN PARSER ----
   function processInline(text) {
     let html = escapeHtml(text);
     // Markdown links [text](url) — must be processed BEFORE bold/italic
-    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="rag-md-link">$1</a>');
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function (match, p1, p2) {
+      return createLink(p1, p2);
+    });
     // Bold
     html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     // Italic (single * not preceded/followed by *)
@@ -128,7 +152,9 @@
     // Inline code
     html = html.replace(/`([^`]+)`/g, '<code class="rag-inline-code">$1</code>');
     // Bare URLs (http/https) not already wrapped in an anchor tag
-    html = html.replace(/(?<!href="|">)(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="rag-md-link">$1</a>');
+    html = html.replace(/(?<!href="|">)(https?:\/\/[^\s<]+)/g, function (match, p1) {
+      return createLink(p1, p1);
+    });
     return html;
   }
 
@@ -341,7 +367,8 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: text.trim(),
-          history: historyForApi
+          history: historyForApi,
+          visitorInfo: visitorInfo || null
         }),
       });
 
@@ -634,6 +661,12 @@
       '</div>' +
       '<button class="rag-onboarding-submit">Start Chatting</button>' +
       '<button class="rag-onboarding-skip">Skip</button>' +
+      '</div>' +
+      '<div class="rag-onboarding-divider"><span>or jump straight to</span></div>' +
+      '<div class="rag-quick-replies">' +
+      '<button class="rag-quick-chip" data-prompt="Show me Ganesh\'s projects, repositories, and live links!">🚀 See Projects</button>' +
+      '<button class="rag-quick-chip" data-prompt="How can I contact Ganesh? What are his social links and email?">📞 Contact Ganesh</button>' +
+      '<button class="rag-quick-chip" data-prompt="Tell me about Ganesh\'s LinkedIn profile and positions.">💼 View LinkedIn</button>' +
       '</div>';
 
     // Bind onboarding events
@@ -665,6 +698,14 @@
           nameInput.style.borderColor = '';
         });
       }
+      // Bind quick replies clicks in onboarding
+      onboardingContainer.querySelectorAll('.rag-quick-chip').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          saveVisitor({ name: '', role: '' });
+          const prompt = btn.getAttribute('data-prompt');
+          handleSend(prompt);
+        });
+      });
     }, 0);
 
     // --- Welcome Container ---
@@ -674,6 +715,12 @@
       '<div class="rag-sphere-wrap"><div class="rag-sphere"></div></div>' +
       '<h2 class="rag-welcome-heading">Hi there!</h2>' +
       '<p class="rag-welcome-subheading">What\'s on <span class="rag-highlight">your mind</span>?</p>' +
+      '<div class="rag-quick-replies">' +
+      '<button class="rag-quick-chip" data-prompt="Show me Ganesh\'s projects, repositories, and live links!">🚀 See Projects</button>' +
+      '<button class="rag-quick-chip" data-prompt="How can I contact Ganesh? What are his social links and email?">📞 Contact Ganesh</button>' +
+      '<button class="rag-quick-chip" data-prompt="Tell me about Ganesh\'s LinkedIn profile and positions.">💼 View LinkedIn</button>' +
+      '</div>' +
+      '<div class="rag-suggestions-label">Or ask a question:</div>' +
       '<div class="rag-suggestions-scroll">' +
       SUGGESTED_PROMPTS.map(function (p) { return '<button class="rag-suggestion-chip">' + escapeHtml(p) + '</button>'; }).join('') +
       '</div>';
@@ -682,6 +729,13 @@
     setTimeout(function () {
       welcomeContainer.querySelectorAll('.rag-suggestion-chip').forEach(function (btn) {
         btn.addEventListener('click', function () { handleSend(btn.textContent); });
+      });
+      // Bind quick replies clicks in welcome
+      welcomeContainer.querySelectorAll('.rag-quick-chip').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const prompt = btn.getAttribute('data-prompt');
+          handleSend(prompt);
+        });
       });
     }, 0);
 
