@@ -1,7 +1,7 @@
 // Vercel Serverless Function — Visitor Logging Endpoint
 // Logs chatbot visitor info (name, role) to Google Sheets via Apps Script
 
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxCHxg0WPzIscoH2Zw3ML8V4g_G9wR0FCDZt2-EDZHmgkhJRKbJH9BVl69QxQrze9A4RA/exec';
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbywqIulMnSGUC0Wcyit5dhWfp_pyykgFE-L3TBlm4zOpOJifUsEbkwa-GSoguiL58N8KA/exec';
 
 module.exports = async function handler(req, res) {
   // CORS headers

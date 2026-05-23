@@ -517,7 +517,7 @@ function initContactForm() {
 
   const btn = document.getElementById('submitBtn');
   const msgEl = document.getElementById('formMessage');
-  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxCHxg0WPzIscoH2Zw3ML8V4g_G9wR0FCDZt2-EDZHmgkhJRKbJH9BVl69QxQrze9A4RA/exec';
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbywqIulMnSGUC0Wcyit5dhWfp_pyykgFE-L3TBlm4zOpOJifUsEbkwa-GSoguiL58N8KA/exec';
 
   function showMessage(type, text, asHtml = false) {
     if (!msgEl) return;
