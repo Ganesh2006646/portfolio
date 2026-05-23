@@ -7,17 +7,17 @@
 
 /* --- CSS Custom Properties --- */
 :root {
-  --chat-bg: radial-gradient(ellipse at 50% 0%, rgba(31, 41, 79, 0.97) 0%, rgba(10, 11, 22, 0.98) 100%);
-  --chat-glass: rgba(20, 22, 40, 0.9);
-  --chat-border: rgba(255, 255, 255, 0.07);
-  --chat-border-hover: rgba(255, 255, 255, 0.14);
-  --chat-accent: #3b82f6;
-  --chat-accent-dim: rgba(59, 130, 246, 0.15);
-  --chat-accent-glow: rgba(59, 130, 246, 0.35);
+  --chat-bg: linear-gradient(135deg, rgba(16, 21, 44, 0.98) 0%, rgba(33, 20, 36, 0.98) 100%);
+  --chat-glass: rgba(16, 20, 38, 0.85);
+  --chat-border: rgba(255, 255, 255, 0.06);
+  --chat-border-hover: rgba(255, 255, 255, 0.12);
+  --chat-accent: #a855f7;
+  --chat-accent-dim: rgba(168, 85, 247, 0.15);
+  --chat-accent-glow: rgba(168, 85, 247, 0.35);
   --chat-text: #f3f4f6;
   --chat-text-muted: #9ca3af;
-  --chat-user-bg: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-  --chat-bot-bg: rgba(255, 255, 255, 0.04);
+  --chat-user-bg: linear-gradient(135deg, #a855f7 0%, #6d28d9 100%);
+  --chat-bot-bg: rgba(255, 255, 255, 0.035);
   --chat-radius: 24px;
   --chat-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --chat-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
@@ -41,7 +41,7 @@
   align-items: center;
   justify-content: center;
   box-shadow:
-    0 0 20px rgba(59, 130, 246, 0.15),
+    0 0 20px rgba(168, 85, 247, 0.15),
     0 8px 32px rgba(0, 0, 0, 0.4);
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   animation: rag-pulse-ring 3s ease-in-out infinite;
@@ -73,7 +73,7 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #3b82f6;
+  background: var(--chat-accent);
   border: 2px solid #0a0a0a;
 }
 
@@ -82,7 +82,7 @@
   position: absolute;
   inset: -3px;
   border-radius: 50%;
-  background: #3b82f6;
+  background: var(--chat-accent);
   animation: rag-ping-anim 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
@@ -92,8 +92,8 @@
 }
 
 @keyframes rag-pulse-ring {
-  0%, 100% { box-shadow: 0 0 20px rgba(59,130,246,0.1), 0 8px 32px rgba(0,0,0,0.4); }
-  50% { box-shadow: 0 0 30px rgba(59,130,246,0.2), 0 8px 32px rgba(0,0,0,0.4); }
+  0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.1), 0 8px 32px rgba(0, 0, 0, 0.4); }
+  50% { box-shadow: 0 0 30px rgba(168, 85, 247, 0.2), 0 8px 32px rgba(0, 0, 0, 0.4); }
 }
 
 /* --- Chat Panel --- */
@@ -111,7 +111,7 @@
   -webkit-backdrop-filter: blur(32px) saturate(1.4);
   box-shadow:
     0 20px 50px rgba(0, 0, 0, 0.6),
-    0 0 80px rgba(59, 130, 246, 0.08);
+    0 0 80px rgba(168, 85, 247, 0.08);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -290,19 +290,19 @@
   padding: 12px 24px;
   border-radius: 14px;
   border: none;
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  background: var(--chat-user-bg);
   color: #ffffff;
   font-family: var(--chat-font);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 16px rgba(168, 85, 247, 0.3);
 }
 
 .rag-onboarding-submit:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
 }
 
 .rag-onboarding-skip {
@@ -352,12 +352,12 @@
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #93c5fd, #3b82f6 45%, #1d4ed8 75%, #1e1b4b 100%);
+  background: radial-gradient(circle at 35% 35%, #e9d5ff, #c084fc 45%, #9333ea 75%, #1e1b4b 100%);
   box-shadow:
-    0 8px 24px rgba(59, 130, 246, 0.35),
+    0 8px 24px rgba(168, 85, 247, 0.35),
     inset 0 -10px 20px rgba(0, 0, 0, 0.5),
     inset 0 6px 14px rgba(255, 255, 255, 0.4),
-    0 0 40px rgba(59, 130, 246, 0.2);
+    0 0 40px rgba(168, 85, 247, 0.2);
   animation: rag-sphere-float 4s ease-in-out infinite;
 }
 
@@ -384,7 +384,7 @@
 }
 
 .rag-highlight {
-  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  background: linear-gradient(135deg, #c084fc, #a855f7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 600;
@@ -735,8 +735,8 @@
 }
 
 .rag-chat-input-row:focus-within {
-  border-color: rgba(59, 130, 246, 0.35);
-  box-shadow: 0 0 12px rgba(59, 130, 246, 0.08);
+  border-color: rgba(168, 85, 247, 0.35);
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.08);
 }
 
 .rag-wand-icon {
@@ -773,7 +773,7 @@
   height: 34px;
   border-radius: 50%;
   border: none;
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  background: var(--chat-user-bg);
   color: #ffffff;
   cursor: pointer;
   display: flex;
@@ -781,12 +781,12 @@
   justify-content: center;
   transition: all 0.2s ease;
   flex-shrink: 0;
-  box-shadow: 0 3px 10px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 3px 10px rgba(168, 85, 247, 0.3);
 }
 
 .rag-chat-send-btn:hover:not(:disabled) {
   transform: scale(1.08);
-  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 4px 14px rgba(168, 85, 247, 0.4);
 }
 
 .rag-chat-send-btn:disabled {
