@@ -1,0 +1,8 @@
+{
+  "name": "ganesh-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1"
+  }
+}
