@@ -9,12 +9,31 @@
 
   // ---- CONFIG ----
   const API_ENDPOINT = '/api/chat'; // Vercel serverless function
-  const SUGGESTED_PROMPTS = [
+  const ALL_PROMPTS = [
     "What is RiceAgent Pro?",
     "What are Ganesh's core skills?",
     "Tell me about a time you failed",
-    "What is Ganesh's 5-year vision?"
+    "What is Ganesh's 5-year vision?",
+    "What hackathons has Ganesh done?",
+    "Explain Ganesh's engineering philosophy",
+    "What is ExecuCode?",
+    "What tech stack does Ganesh use?",
+    "Why should I hire Ganesh?",
+    "What is The Linear Paradigm?",
+    "Tell me about Spectra-Shield",
+    "What is Ganesh's background?"
   ];
+
+  // Shuffle and pick 4 random prompts each time
+  function shuffleArray(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  const SUGGESTED_PROMPTS = shuffleArray(ALL_PROMPTS).slice(0, 4);
   const WELCOME_MESSAGE = "Hi, I'm Ganesh's AI Digital Twin — powered by a custom RAG pipeline over his personal knowledge base. Ask me about his projects, skills, philosophy, or anything a recruiter would want to know!";
 
   // ---- SVG ICONS ----
