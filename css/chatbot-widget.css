@@ -252,8 +252,8 @@
 }
 
 .rag-onboarding-field:focus-within {
-  border-color: rgba(59, 130, 246, 0.35);
-  box-shadow: 0 0 12px rgba(59, 130, 246, 0.08);
+  border-color: rgba(168, 85, 247, 0.35);
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.08);
 }
 
 .rag-onboarding-icon {
@@ -420,9 +420,9 @@
 }
 
 .rag-suggestion-chip:hover {
-  border-color: rgba(59, 130, 246, 0.4);
+  border-color: rgba(168, 85, 247, 0.4);
   color: #fff;
-  background: rgba(59, 130, 246, 0.12);
+  background: rgba(168, 85, 247, 0.12);
   transform: translateY(-1px);
 }
 
@@ -609,7 +609,21 @@
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 5px;
   padding: 1px 6px;
-  color: #93c5fd;
+  color: #c4b5fd;
+}
+
+/* Markdown Links */
+.rag-md-link {
+  color: #c084fc;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(192, 132, 252, 0.3);
+  transition: color 0.2s, border-color 0.2s;
+  word-break: break-all;
+}
+
+.rag-md-link:hover {
+  color: #e9d5ff;
+  border-bottom-color: rgba(233, 213, 255, 0.6);
 }
 
 /* ================================================

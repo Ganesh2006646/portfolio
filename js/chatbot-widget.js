@@ -119,12 +119,16 @@
   // ---- RICH MARKDOWN PARSER ----
   function processInline(text) {
     let html = escapeHtml(text);
+    // Markdown links [text](url) — must be processed BEFORE bold/italic
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="rag-md-link">$1</a>');
     // Bold
     html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     // Italic (single * not preceded/followed by *)
     html = html.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
     // Inline code
     html = html.replace(/`([^`]+)`/g, '<code class="rag-inline-code">$1</code>');
+    // Bare URLs (http/https) not already wrapped in an anchor tag
+    html = html.replace(/(?<!href="|">)(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="rag-md-link">$1</a>');
     return html;
   }
 
