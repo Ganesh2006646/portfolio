@@ -44,6 +44,9 @@
     compass: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>`,
     book: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
     chat: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+    wand: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.21 1.21 0 0 0 1.72 0L21.64 5.36a1.21 1.21 0 0 0 0-1.72Z"/><path d="m14 7 3 3"/><path d="M5 6v1"/><path d="M19 17v1"/><path d="M9 3H8"/><path d="M16 21h-1"/></svg>`,
+    arrowUp: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>`,
+    refresh: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M16 3h5v5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 21H3v-5"/></svg>`,
   };
 
   // ---- STATE ----
@@ -55,7 +58,7 @@
   let msgCount = 1; // track message count for showing suggestions
 
   // ---- DOM REFS ----
-  let triggerBtn, panel, messagesContainer, inputEl, sendBtn, suggestionsEl;
+  let triggerBtn, panel, welcomeContainer, messagesContainer, inputEl, sendBtn, suggestionsEl;
 
   // ---- HELPERS ----
   function escapeHtml(str) {
@@ -121,6 +124,14 @@
   async function handleSend(text) {
     if (!text || !text.trim() || isLoading) return;
 
+    // Transition from welcome screen to messages screen
+    if (welcomeContainer && welcomeContainer.style.display !== 'none') {
+      welcomeContainer.style.display = 'none';
+      if (messagesContainer) {
+        messagesContainer.style.display = 'flex';
+      }
+    }
+
     const userMsg = { id: Date.now().toString(), sender: 'user', text: text.trim(), citations: [] };
     messages.push(userMsg);
     msgCount++;
@@ -131,9 +142,6 @@
 
     // Add user bubble to DOM
     messagesContainer.appendChild(renderMessage(userMsg));
-
-    // Hide suggestions after first message
-    if (suggestionsEl) suggestionsEl.style.display = 'none';
 
     // Show typing
     isLoading = true;
@@ -193,6 +201,30 @@
     }
   }
 
+  // ---- RESET CONVERSATION ----
+  function resetChat() {
+    messages = [
+      { id: 'welcome', sender: 'bot', text: WELCOME_MESSAGE, citations: [] }
+    ];
+    msgCount = 1;
+    isLoading = false;
+
+    if (messagesContainer) {
+      messagesContainer.innerHTML = '';
+      messagesContainer.appendChild(renderMessage(messages[0]));
+      messagesContainer.style.display = 'none';
+    }
+
+    if (welcomeContainer) {
+      welcomeContainer.style.display = 'flex';
+    }
+
+    if (inputEl) {
+      inputEl.value = '';
+    }
+    updateSendButton();
+  }
+
   // ---- OPEN / CLOSE ----
   function openChat() {
     isOpen = true;
@@ -203,7 +235,15 @@
     panel.style.animation = 'none';
     panel.offsetHeight; // force reflow
     panel.style.animation = '';
-    
+
+    if (messages.length <= 1) {
+      if (welcomeContainer) welcomeContainer.style.display = 'flex';
+      if (messagesContainer) messagesContainer.style.display = 'none';
+    } else {
+      if (welcomeContainer) welcomeContainer.style.display = 'none';
+      if (messagesContainer) messagesContainer.style.display = 'flex';
+    }
+
     setTimeout(() => {
       if (inputEl) inputEl.focus();
     }, 400);
@@ -218,7 +258,6 @@
       triggerBtn.classList.remove('hidden');
     }, 280);
   }
-
   // ---- BUILD UI ----
   function buildWidget() {
     // --- Trigger Button ---
@@ -245,16 +284,32 @@
         </div>
       </div>
     `;
+
+    const headerActions = createEl('div', 'rag-chat-header-actions');
+
+    const resetBtn = createEl('button', 'rag-chat-reset');
+    resetBtn.setAttribute('aria-label', 'Reset Conversation');
+    resetBtn.innerHTML = ICONS.refresh;
+    resetBtn.addEventListener('click', resetChat);
+
     const closeBtn = createEl('button', 'rag-chat-close');
     closeBtn.setAttribute('aria-label', 'Close chat');
     closeBtn.innerHTML = ICONS.close;
     closeBtn.addEventListener('click', closeChat);
-    header.appendChild(closeBtn);
 
-    // Messages
-    messagesContainer = createEl('div', 'rag-chat-messages');
-    // Render welcome message
-    messagesContainer.appendChild(renderMessage(messages[0]));
+    headerActions.appendChild(resetBtn);
+    headerActions.appendChild(closeBtn);
+    header.appendChild(headerActions);
+
+    // Welcome Container
+    welcomeContainer = createEl('div', 'rag-welcome-container');
+    welcomeContainer.innerHTML = `
+      <div class="rag-sphere-wrap">
+        <div class="rag-sphere"></div>
+      </div>
+      <h2 class="rag-welcome-heading">Hi there!</h2>
+      <p class="rag-welcome-subheading">What's on <span class="rag-highlight">your mind</span>?</p>
+    `;
 
     // Suggestions
     suggestionsEl = createEl('div', 'rag-suggestions');
@@ -267,6 +322,7 @@
     });
     suggestionsHTML += `</div>`;
     suggestionsEl.innerHTML = suggestionsHTML;
+    welcomeContainer.appendChild(suggestionsEl);
 
     // Bind suggestion clicks
     setTimeout(() => {
@@ -275,14 +331,24 @@
       });
     }, 0);
 
+    // Messages
+    messagesContainer = createEl('div', 'rag-chat-messages');
+    // Render welcome message
+    messagesContainer.appendChild(renderMessage(messages[0]));
+    messagesContainer.style.display = 'none'; // Hidden initially
+
     // Input area
     const inputArea = createEl('div', 'rag-chat-input-area');
-    const inputWrap = createEl('div', 'rag-chat-input-wrap');
+    const inputCard = createEl('div', 'rag-chat-input-card');
+
+    // Top Row: Wand icon + Input element
+    const inputTopRow = createEl('div', 'rag-input-top-row');
+    const wandIcon = createEl('span', 'rag-wand-icon', ICONS.wand);
 
     inputEl = document.createElement('input');
     inputEl.type = 'text';
     inputEl.className = 'rag-chat-input';
-    inputEl.placeholder = 'Ask about Ganesh\'s projects, skills...';
+    inputEl.placeholder = 'Ask me anything...';
     inputEl.addEventListener('input', updateSendButton);
     inputEl.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && !e.shiftKey) {
@@ -291,15 +357,23 @@
       }
     });
 
-    sendBtn = createEl('button', 'rag-chat-send');
+    inputTopRow.appendChild(wandIcon);
+    inputTopRow.appendChild(inputEl);
+
+    // Bottom Row: Send Button
+    const inputBottomRow = createEl('div', 'rag-input-bottom-row');
+
+    sendBtn = createEl('button', 'rag-chat-send-btn');
     sendBtn.setAttribute('aria-label', 'Send message');
-    sendBtn.innerHTML = ICONS.send;
+    sendBtn.innerHTML = `${ICONS.arrowUp} <span>Send</span>`;
     sendBtn.disabled = true;
     sendBtn.addEventListener('click', () => handleSend(inputEl.value));
 
-    inputWrap.appendChild(inputEl);
-    inputWrap.appendChild(sendBtn);
-    inputArea.appendChild(inputWrap);
+    inputBottomRow.appendChild(sendBtn);
+
+    inputCard.appendChild(inputTopRow);
+    inputCard.appendChild(inputBottomRow);
+    inputArea.appendChild(inputCard);
 
     // Footer
     const footer = createEl('div', 'rag-chat-footer');
@@ -307,8 +381,8 @@
 
     // Assemble panel
     panel.appendChild(header);
+    panel.appendChild(welcomeContainer);
     panel.appendChild(messagesContainer);
-    panel.appendChild(suggestionsEl);
     panel.appendChild(inputArea);
     panel.appendChild(footer);
 
