@@ -34,31 +34,26 @@
     return a;
   }
   const SUGGESTED_PROMPTS = shuffleArray(ALL_PROMPTS).slice(0, 4);
-  const WELCOME_MESSAGE = "Hi, I'm Ganesh's AI Digital Twin — powered by a custom RAG pipeline over his personal knowledge base. Ask me about his projects, skills, philosophy, or anything a recruiter would want to know!";
+  const WELCOME_MESSAGE = "Hi! I'm Ganesh's AI Digital Twin — ask me about his projects, skills, philosophy, or anything a recruiter would want to know!";
 
   // ---- SVG ICONS ----
   const ICONS = {
-    terminal: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>`,
     close: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
-    send: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>`,
-    compass: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>`,
-    book: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
     chat: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
     wand: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.21 1.21 0 0 0 1.72 0L21.64 5.36a1.21 1.21 0 0 0 0-1.72Z"/><path d="m14 7 3 3"/><path d="M5 6v1"/><path d="M19 17v1"/><path d="M9 3H8"/><path d="M16 21h-1"/></svg>`,
-    arrowUp: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>`,
+    arrowUp: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>`,
     refresh: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M16 3h5v5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 21H3v-5"/></svg>`,
+    sparkle: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.5 9.5 22 12 14.5 14.5 12 22 9.5 14.5 2 12 9.5 9.5z"/></svg>`,
   };
 
   // ---- STATE ----
   let isOpen = false;
   let isLoading = false;
-  let messages = [
-    { id: 'welcome', sender: 'bot', text: WELCOME_MESSAGE, citations: [] }
-  ];
-  let msgCount = 1; // track message count for showing suggestions
+  let messages = [];
+  let msgCount = 0;
 
   // ---- DOM REFS ----
-  let triggerBtn, panel, welcomeContainer, messagesContainer, inputEl, sendBtn, suggestionsEl;
+  let triggerBtn, panel, welcomeContainer, messagesContainer, inputEl, sendBtn;
 
   // ---- HELPERS ----
   function escapeHtml(str) {
@@ -77,29 +72,13 @@
   // ---- RENDER MESSAGE ----
   function renderMessage(msg) {
     const wrapper = createEl('div', `rag-msg ${msg.sender}`);
-
-    // Bubble
     const bubble = createEl('div', 'rag-msg-bubble');
-    // Simple markdown-like rendering: **bold** and newlines
     let html = escapeHtml(msg.text);
     html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     html = html.replace(/\n/g, '<br>');
     bubble.innerHTML = html;
     wrapper.appendChild(bubble);
-
-    // Citations
-    if (msg.citations && msg.citations.length > 0) {
-      const citsWrap = createEl('div', 'rag-citations');
-      msg.citations.forEach(cit => {
-        const pill = createEl('span', 'rag-citation-pill');
-        const fileName = cit.source ? cit.source.split('/').pop() : cit.category;
-        pill.innerHTML = `${ICONS.book}<span>${escapeHtml(fileName)}</span>`;
-        pill.title = cit.context_header || '';
-        citsWrap.appendChild(pill);
-      });
-      wrapper.appendChild(citsWrap);
-    }
-
+    // No citations shown — clean output
     return wrapper;
   }
 
@@ -132,7 +111,7 @@
       }
     }
 
-    const userMsg = { id: Date.now().toString(), sender: 'user', text: text.trim(), citations: [] };
+    const userMsg = { id: Date.now().toString(), sender: 'user', text: text.trim() };
     messages.push(userMsg);
     msgCount++;
 
@@ -158,8 +137,6 @@
       });
 
       const data = await response.json();
-
-      // Remove typing
       typingEl.remove();
 
       if (response.ok) {
@@ -167,7 +144,6 @@
           id: (Date.now() + 1).toString(),
           sender: 'bot',
           text: data.reply || 'No response received.',
-          citations: (data.citations || []).filter(c => c && c.source)
         };
         messages.push(botMsg);
         messagesContainer.appendChild(renderMessage(botMsg));
@@ -175,7 +151,6 @@
         throw new Error(data.error || 'API request failed');
       }
     } catch (err) {
-      // Remove typing if still present
       const existing = document.getElementById('rag-typing-indicator');
       if (existing) existing.remove();
 
@@ -183,7 +158,6 @@
         id: (Date.now() + 1).toString(),
         sender: 'bot',
         text: `Connection error: ${err.message || 'The server is unreachable. Please try again later.'}`,
-        citations: []
       };
       messages.push(errMsg);
       messagesContainer.appendChild(renderMessage(errMsg));
@@ -203,15 +177,12 @@
 
   // ---- RESET CONVERSATION ----
   function resetChat() {
-    messages = [
-      { id: 'welcome', sender: 'bot', text: WELCOME_MESSAGE, citations: [] }
-    ];
-    msgCount = 1;
+    messages = [];
+    msgCount = 0;
     isLoading = false;
 
     if (messagesContainer) {
       messagesContainer.innerHTML = '';
-      messagesContainer.appendChild(renderMessage(messages[0]));
       messagesContainer.style.display = 'none';
     }
 
@@ -219,9 +190,7 @@
       welcomeContainer.style.display = 'flex';
     }
 
-    if (inputEl) {
-      inputEl.value = '';
-    }
+    if (inputEl) inputEl.value = '';
     updateSendButton();
   }
 
@@ -231,12 +200,11 @@
     triggerBtn.classList.add('hidden');
     panel.style.display = 'flex';
     panel.classList.remove('closing');
-    // Reset animation
     panel.style.animation = 'none';
-    panel.offsetHeight; // force reflow
+    panel.offsetHeight;
     panel.style.animation = '';
 
-    if (messages.length <= 1) {
+    if (messages.length === 0) {
       if (welcomeContainer) welcomeContainer.style.display = 'flex';
       if (messagesContainer) messagesContainer.style.display = 'none';
     } else {
@@ -258,6 +226,7 @@
       triggerBtn.classList.remove('hidden');
     }, 280);
   }
+
   // ---- BUILD UI ----
   function buildWidget() {
     // --- Trigger Button ---
@@ -270,30 +239,24 @@
     panel = createEl('div', 'rag-chat-panel');
     panel.style.display = 'none';
 
-    // Header
+    // Header — minimal and clean
     const header = createEl('div', 'rag-chat-header');
     header.innerHTML = `
       <div class="rag-chat-header-left">
-        <div class="rag-chat-avatar">
-          ${ICONS.terminal}
-          <div class="rag-status-dot"></div>
-        </div>
-        <div class="rag-chat-header-info">
-          <h3>Ganesh's Digital Twin</h3>
-          <p><span class="rag-sparkle">✦</span> RAG Pipeline Active</p>
-        </div>
+        <div class="rag-header-sparkle">${ICONS.sparkle}</div>
+        <span class="rag-header-title">Ask Ganesh's AI</span>
       </div>
     `;
 
     const headerActions = createEl('div', 'rag-chat-header-actions');
 
     const resetBtn = createEl('button', 'rag-chat-reset');
-    resetBtn.setAttribute('aria-label', 'Reset Conversation');
+    resetBtn.setAttribute('aria-label', 'Reset');
     resetBtn.innerHTML = ICONS.refresh;
     resetBtn.addEventListener('click', resetChat);
 
     const closeBtn = createEl('button', 'rag-chat-close');
-    closeBtn.setAttribute('aria-label', 'Close chat');
+    closeBtn.setAttribute('aria-label', 'Close');
     closeBtn.innerHTML = ICONS.close;
     closeBtn.addEventListener('click', closeChat);
 
@@ -309,40 +272,26 @@
       </div>
       <h2 class="rag-welcome-heading">Hi there!</h2>
       <p class="rag-welcome-subheading">What's on <span class="rag-highlight">your mind</span>?</p>
+      <div class="rag-suggestions-scroll">
+        ${SUGGESTED_PROMPTS.map(p => `<button class="rag-suggestion-chip">${escapeHtml(p)}</button>`).join('')}
+      </div>
     `;
-
-    // Suggestions
-    suggestionsEl = createEl('div', 'rag-suggestions');
-    let suggestionsHTML = `
-      <div class="rag-suggestions-label">${ICONS.compass} Suggested Topics</div>
-      <div class="rag-suggestions-grid">
-    `;
-    SUGGESTED_PROMPTS.forEach(prompt => {
-      suggestionsHTML += `<button class="rag-suggestion-btn">${escapeHtml(prompt)}</button>`;
-    });
-    suggestionsHTML += `</div>`;
-    suggestionsEl.innerHTML = suggestionsHTML;
-    welcomeContainer.appendChild(suggestionsEl);
 
     // Bind suggestion clicks
     setTimeout(() => {
-      suggestionsEl.querySelectorAll('.rag-suggestion-btn').forEach(btn => {
+      welcomeContainer.querySelectorAll('.rag-suggestion-chip').forEach(btn => {
         btn.addEventListener('click', () => handleSend(btn.textContent));
       });
     }, 0);
 
     // Messages
     messagesContainer = createEl('div', 'rag-chat-messages');
-    // Render welcome message
-    messagesContainer.appendChild(renderMessage(messages[0]));
-    messagesContainer.style.display = 'none'; // Hidden initially
+    messagesContainer.style.display = 'none';
 
-    // Input area
+    // Input area — single row: wand + input + send
     const inputArea = createEl('div', 'rag-chat-input-area');
-    const inputCard = createEl('div', 'rag-chat-input-card');
+    const inputRow = createEl('div', 'rag-chat-input-row');
 
-    // Top Row: Wand icon + Input element
-    const inputTopRow = createEl('div', 'rag-input-top-row');
     const wandIcon = createEl('span', 'rag-wand-icon', ICONS.wand);
 
     inputEl = document.createElement('input');
@@ -357,34 +306,22 @@
       }
     });
 
-    inputTopRow.appendChild(wandIcon);
-    inputTopRow.appendChild(inputEl);
-
-    // Bottom Row: Send Button
-    const inputBottomRow = createEl('div', 'rag-input-bottom-row');
-
     sendBtn = createEl('button', 'rag-chat-send-btn');
-    sendBtn.setAttribute('aria-label', 'Send message');
-    sendBtn.innerHTML = `${ICONS.arrowUp} <span>Send</span>`;
+    sendBtn.setAttribute('aria-label', 'Send');
+    sendBtn.innerHTML = ICONS.arrowUp;
     sendBtn.disabled = true;
     sendBtn.addEventListener('click', () => handleSend(inputEl.value));
 
-    inputBottomRow.appendChild(sendBtn);
-
-    inputCard.appendChild(inputTopRow);
-    inputCard.appendChild(inputBottomRow);
-    inputArea.appendChild(inputCard);
-
-    // Footer
-    const footer = createEl('div', 'rag-chat-footer');
-    footer.textContent = 'Powered by Custom RAG · Gemini Embedding-2';
+    inputRow.appendChild(wandIcon);
+    inputRow.appendChild(inputEl);
+    inputRow.appendChild(sendBtn);
+    inputArea.appendChild(inputRow);
 
     // Assemble panel
     panel.appendChild(header);
     panel.appendChild(welcomeContainer);
     panel.appendChild(messagesContainer);
     panel.appendChild(inputArea);
-    panel.appendChild(footer);
 
     // Inject into page
     document.body.appendChild(triggerBtn);

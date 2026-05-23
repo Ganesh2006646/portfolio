@@ -8,20 +8,22 @@ const vectors = require('../data/vectors.json');
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
 
-const SYSTEM_PROMPT = `You are the AI Knowledge Architect and digital representative of Kankatala Ganesh Giridhar — a systems-oriented B.Tech CSE student at Amrita Vishwa Vidyapeetham, Coimbatore, builder of AI-native applications, and a pragmatic visionary bridging advanced technology with real-world operations.
+const SYSTEM_PROMPT = `You are the AI Digital Twin of Kankatala Ganesh Giridhar — a systems-oriented B.Tech CSE student at Amrita Vishwa Vidyapeetham, Coimbatore. You represent him in conversations with recruiters, visitors, and anyone curious about his work.
 
-YOUR PERSONA & IDENTITY:
-- Name: Kankatala Ganesh Giridhar (referred to as Ganesh).
-- Core Philosophy: The Linear Paradigm. You reject manufactured "turning points" and believe in consistent, daily execution and structural clarity.
-- Voice/Tone: Direct, technical, clear, and authentic. Avoid performative cliches (never say "highly motivated," "passion for learning," or generic buzzwords). Let your architectural thinking and projects speak.
-- Dialect: Indian English. Natural, professional, and slightly structured.
-- Background: From Visakhapatnam. Currently at Amrita Coimbatore (Graduating 2028).
+YOUR CORE IDENTITY:
+- Name: Kankatala Ganesh Giridhar (Ganesh)
+- Philosophy: The Linear Paradigm — consistent daily execution over manufactured turning points
+- Voice: Direct, technical, clear, and authentic Indian English
+- Background: From Visakhapatnam, studying at Amrita Coimbatore (Graduating 2028)
 
-CONSTRAINTS & RULES:
-1. ONLY answer questions using the provided context chunks. If the answer cannot be found in the context, say: "I do not have that specific information in my knowledge base, but you can contact Ganesh directly via GitHub or LinkedIn."
-2. DO NOT fabricate or guess dates, percentages, or technologies.
-3. Be concise and structured. Use formatting (bullet points, bold text) where it makes technical sense.
-4. When talking about projects, specify the technologies used (e.g., Riverpod, Drift/SQLite, FastAPI, Docker).
+HOW TO RESPOND:
+1. Use the context chunks below to answer questions. Synthesize information across multiple chunks when relevant.
+2. If a question is partially covered, answer what you can and mention what you don't have data for.
+3. Only say you don't have information if the context chunks genuinely contain nothing related to the question.
+4. Be conversational but structured. Use bullet points and bold text for readability.
+5. When discussing projects, mention the tech stack (e.g., Riverpod, Drift/SQLite, FastAPI).
+6. Do NOT fabricate specific dates, percentages, or technologies not mentioned in context.
+7. For questions about Ganesh's father, DOB, or personal family details not in the data, politely redirect: "That's not in my knowledge base — feel free to reach out to Ganesh directly via GitHub or LinkedIn."
 
 CONTEXT CHUNKS:
 {context}
@@ -79,6 +81,8 @@ module.exports = async function handler(req, res) {
       throw new Error('Failed to generate embedding vector.');
     }
 
+    console.log(`[RAG] Query: "${message}" | Embedding dim: ${queryVector.length}`);
+
     // 2. In-Memory Similarity Search
     const scoredChunks = vectors.map((point) => {
       const score = cosineSimilarity(queryVector, point.vector);
@@ -86,12 +90,14 @@ module.exports = async function handler(req, res) {
     });
 
     scoredChunks.sort((a, b) => b.score - a.score);
-    const topMatches = scoredChunks.slice(0, 5);
+    const topMatches = scoredChunks.slice(0, 8);
 
-    // 3. Build Context
+    console.log(`[RAG] Top scores: ${topMatches.slice(0, 5).map(m => `${m.payload.chunk_id}=${m.score.toFixed(3)}`).join(', ')}`);
+
+    // 3. Build Context — include all top 8 chunks
     const retrievedChunks = topMatches.map((match) => {
       const p = match.payload;
-      return `[Source: ${p.source}] [Category: ${p.category}]\n${p.content}`;
+      return `[${p.context_header || p.category}]\n${p.content}`;
     });
 
     const contextText = retrievedChunks.length > 0
@@ -104,25 +110,14 @@ module.exports = async function handler(req, res) {
     const chatModel = genAI.getGenerativeModel({
       model: 'gemini-2.5-flash',
       systemInstruction: fullSystemInstruction,
-      generationConfig: { temperature: 0.2 },
+      generationConfig: { temperature: 0.4, maxOutputTokens: 1024 },
     });
 
     const result = await chatModel.generateContent(message);
     const botReply = result.response.text() || 'I was unable to formulate a response.';
 
-    // 5. Extract Citations
-    const citations = topMatches
-      .filter((m) => m.score > 0.6)
-      .map((m) => ({
-        chunk_id: m.payload.chunk_id,
-        source: m.payload.source,
-        category: m.payload.category,
-        context_header: m.payload.context_header
-      }));
-
     return res.status(200).json({
       reply: botReply,
-      citations: citations,
     });
 
   } catch (error) {
