@@ -60,10 +60,12 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { message } = req.body;
+  const { message, history } = req.body;
   if (!message || typeof message !== 'string') {
     return res.status(400).json({ error: 'Missing query message' });
   }
+
+  const chatHistory = Array.isArray(history) ? history : [];
 
   if (!GEMINI_API_KEY) {
     return res.status(500).json({ error: 'GEMINI_API_KEY environment variable is not configured.' });
@@ -81,7 +83,7 @@ module.exports = async function handler(req, res) {
       throw new Error('Failed to generate embedding vector.');
     }
 
-    console.log(`[RAG] Query: "${message}" | Embedding dim: ${queryVector.length}`);
+    console.log(`[RAG] Query: "${message}" | History turns: ${chatHistory.length / 2} | Embedding dim: ${queryVector.length}`);
 
     // 2. In-Memory Similarity Search
     const scoredChunks = vectors.map((point) => {
@@ -106,14 +108,18 @@ module.exports = async function handler(req, res) {
 
     const fullSystemInstruction = SYSTEM_PROMPT.replace('{context}', contextText);
 
-    // 4. Generate Response
+    // 4. Generate Response using Chat Session (Memory)
     const chatModel = genAI.getGenerativeModel({
       model: 'gemini-2.5-flash',
       systemInstruction: fullSystemInstruction,
       generationConfig: { temperature: 0.4, maxOutputTokens: 1024 },
     });
 
-    const result = await chatModel.generateContent(message);
+    const chat = chatModel.startChat({
+      history: chatHistory,
+    });
+
+    const result = await chat.sendMessage(message);
     const botReply = result.response.text() || 'I was unable to formulate a response.';
 
     return res.status(200).json({

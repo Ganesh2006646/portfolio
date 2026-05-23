@@ -129,11 +129,35 @@
     messagesContainer.appendChild(typingEl);
     scrollToBottom();
 
+    // Build alternating user/model history for Gemini
+    const history = [];
+    let expectedRole = 'user';
+    for (const msg of messages.slice(0, -1)) {
+      if (msg.text.startsWith('Connection error:')) continue;
+      const role = msg.sender === 'user' ? 'user' : 'model';
+      if (role === expectedRole) {
+        history.push({
+          role: role,
+          parts: [{ text: msg.text }]
+        });
+        expectedRole = role === 'user' ? 'model' : 'user';
+      }
+    }
+    // Ensure history ends with a model message
+    if (history.length > 0 && history[history.length - 1].role === 'user') {
+      history.pop();
+    }
+    // Limit history to the last 10 messages (5 turns) to stay within limits
+    const limitedHistory = history.slice(-10);
+
     try {
       const response = await fetch(API_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text.trim() }),
+        body: JSON.stringify({ 
+          message: text.trim(),
+          history: limitedHistory
+        }),
       });
 
       const data = await response.json();
