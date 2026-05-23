@@ -580,7 +580,12 @@
     // --- Trigger Button ---
     triggerBtn = createEl('button', 'rag-chat-trigger');
     triggerBtn.setAttribute('aria-label', 'Open AI Chat');
-    triggerBtn.innerHTML = ICONS.chat + '<div class="rag-ping"></div>';
+    triggerBtn.innerHTML =
+      '<div class="rag-aura"></div>' +
+      '<div class="rag-orbit-ring"></div>' +
+      '<div class="rag-orb">' +
+        '<div class="rag-orb-icon">' + ICONS.sparkle + '</div>' +
+      '</div>';
     triggerBtn.addEventListener('click', openChat);
 
     // --- Chat Panel ---
