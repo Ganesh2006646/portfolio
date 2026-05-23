@@ -5,8 +5,7 @@
   "functions": {
     "api/chat.js": {
       "memory": 512,
-      "maxDuration": 60,
-      "supportsResponseStreaming": true
+      "maxDuration": 60
     },
     "api/log-visitor.js": {
       "memory": 128,
