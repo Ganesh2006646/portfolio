@@ -102,7 +102,7 @@ module.exports = async function handler(req, res) {
 
     // 4. Generate Response
     const chatModel = genAI.getGenerativeModel({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-2.5-flash',
       systemInstruction: fullSystemInstruction,
       generationConfig: { temperature: 0.2 },
     });
