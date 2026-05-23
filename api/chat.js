@@ -1,5 +1,6 @@
-// Vercel Serverless Function — RAG Chat Endpoint
+// Vercel Serverless Function — RAG Chat Endpoint (SSE Streaming)
 // Uses in-memory cosine similarity over pre-generated vectors
+// Streams response via Server-Sent Events for real-time UX
 
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
@@ -20,10 +21,15 @@ HOW TO RESPOND:
 1. Use the context chunks below to answer questions. Synthesize information across multiple chunks when relevant.
 2. If a question is partially covered, answer what you can and mention what you don't have data for.
 3. Only say you don't have information if the context chunks genuinely contain nothing related to the question.
-4. Be conversational but structured. Use bullet points and bold text for readability.
+4. Be conversational but structured. Use markdown formatting:
+   - Use **bold** for emphasis
+   - Use bullet points (- item) for lists
+   - Use ### for sub-section headers when appropriate
+   - Use numbered lists (1. item) for steps or rankings
 5. When discussing projects, mention the tech stack (e.g., Riverpod, Drift/SQLite, FastAPI).
 6. Do NOT fabricate specific dates, percentages, or technologies not mentioned in context.
 7. For questions about Ganesh's father, DOB, or personal family details not in the data, politely redirect: "That's not in my knowledge base — feel free to reach out to Ganesh directly via GitHub or LinkedIn."
+8. If the visitor shared their name, use it naturally in your responses to make the conversation personal.
 
 CONTEXT CHUNKS:
 {context}
@@ -108,7 +114,7 @@ module.exports = async function handler(req, res) {
 
     const fullSystemInstruction = SYSTEM_PROMPT.replace('{context}', contextText);
 
-    // 4. Generate Response using Chat Session (Memory)
+    // 4. Stream Response using Chat Session (Memory + Streaming)
     const chatModel = genAI.getGenerativeModel({
       model: 'gemini-2.5-flash',
       systemInstruction: fullSystemInstruction,
@@ -119,15 +125,36 @@ module.exports = async function handler(req, res) {
       history: chatHistory,
     });
 
-    const result = await chat.sendMessage(message);
-    const botReply = result.response.text() || 'I was unable to formulate a response.';
-
-    return res.status(200).json({
-      reply: botReply,
+    // Set SSE headers for streaming
+    res.writeHead(200, {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache, no-transform',
+      'Connection': 'keep-alive',
+      'X-Accel-Buffering': 'no',
     });
+
+    const result = await chat.sendMessageStream(message);
+
+    for await (const chunk of result.stream) {
+      const text = chunk.text();
+      if (text) {
+        res.write(`data: ${JSON.stringify({ text })}\n\n`);
+      }
+    }
+
+    res.write('data: [DONE]\n\n');
+    res.end();
 
   } catch (error) {
     console.error('RAG Pipeline Error:', error);
-    return res.status(500).json({ error: error.message || 'Internal Server Error' });
+
+    // If headers already sent (mid-stream error), send error event
+    if (res.headersSent) {
+      res.write(`data: ${JSON.stringify({ error: error.message || 'Stream interrupted' })}\n\n`);
+      res.write('data: [DONE]\n\n');
+      res.end();
+    } else {
+      return res.status(500).json({ error: error.message || 'Internal Server Error' });
+    }
   }
 };
