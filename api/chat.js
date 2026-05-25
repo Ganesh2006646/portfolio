@@ -201,13 +201,30 @@ module.exports = async function handler(req, res) {
   } catch (error) {
     console.error('RAG Pipeline Error:', error);
 
+    // Classify the error for the frontend smart interceptor
+    const errMsg = (error.message || '').toLowerCase();
+    let clientError = error.message || 'Internal Server Error';
+
+    if (errMsg.includes('quota') || errMsg.includes('429') || errMsg.includes('rate') || errMsg.includes('limit') || errMsg.includes('resource_exhausted')) {
+      clientError = 'API quota limit exceeded. Please try again in a moment.';
+    } else if (errMsg.includes('safety') || errMsg.includes('blocked') || errMsg.includes('harm') || errMsg.includes('recitation') || errMsg.includes('finish_reason')) {
+      clientError = 'Content safety filter blocked the response.';
+    } else if (errMsg.includes('api key') || errMsg.includes('api_key') || errMsg.includes('permission') || errMsg.includes('denied') || errMsg.includes('invalid')) {
+      clientError = 'API key unauthorized or invalid.';
+    } else if (errMsg.includes('timeout') || errMsg.includes('deadline') || errMsg.includes('econnreset')) {
+      clientError = 'Request timed out. Server under heavy load.';
+    } else if (errMsg.includes('embedding') || errMsg.includes('vector')) {
+      clientError = 'Embedding generation failed.';
+    }
+
     // If headers already sent (mid-stream error), send error event
     if (res.headersSent) {
-      res.write(`data: ${JSON.stringify({ error: error.message || 'Stream interrupted' })}\n\n`);
+      res.write(`data: ${JSON.stringify({ error: clientError })}\n\n`);
       res.write('data: [DONE]\n\n');
       res.end();
     } else {
-      return res.status(500).json({ error: error.message || 'Internal Server Error' });
+      const statusCode = errMsg.includes('429') || errMsg.includes('quota') ? 429 : 500;
+      return res.status(statusCode).json({ error: clientError });
     }
   }
 };

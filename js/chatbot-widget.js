@@ -441,17 +441,62 @@
 
       // If fullText was empty, render fallback
       if (!fullText) {
-        botBubble.innerHTML = parseMarkdown('No response received.');
+        botBubble.innerHTML = parseMarkdown('I processed your question but received an empty response from the AI engine. 🤔 This can happen during high-traffic periods.\n\nPlease try asking again — I\'m ready for round two! 🔄');
       }
 
     } catch (err) {
       const existing = document.getElementById('rag-typing-indicator');
       if (existing) existing.remove();
 
+      // ---- SMART ERROR INTERCEPTOR (10+ edge cases) ----
+      const msg = (err.message || '').toLowerCase();
+      let friendlyText = '';
+
+      if (msg.includes('429') || msg.includes('quota') || msg.includes('limit') || msg.includes('capacity') || msg.includes('exhausted') || msg.includes('rate')) {
+        // Case 1: API rate limit / quota exceeded
+        friendlyText = 'Whoa, my neural circuits are overheating! 🧠🔥 The Gemini API limit has been temporarily exhausted — so many awesome visitors are chatting with me right now!\n\nGive it **30 seconds** and try again. Meanwhile, connect directly with Ganesh on [LinkedIn](https://www.linkedin.com/in/kankatala-ganesh-giridhar-071876322) or send a message via the [Contact Page](https://brandofganesh.vercel.app/contact.html)! 🚀';
+      } else if (msg.includes('api key') || msg.includes('api_key') || msg.includes('apikey') || msg.includes('unauthorized') || msg.includes('401') || msg.includes('403') || msg.includes('forbidden')) {
+        // Case 2: API key missing or invalid
+        friendlyText = 'Oops! It looks like my access credentials need a quick refresh. 🔑 This is a backend configuration issue — not something you did wrong at all!\n\nGanesh will fix this shortly. In the meantime, feel free to explore the [Portfolio](https://brandofganesh.vercel.app) or reach out on [LinkedIn](https://www.linkedin.com/in/kankatala-ganesh-giridhar-071876322)! 💼';
+      } else if (msg.includes('timeout') || msg.includes('timed out') || msg.includes('deadline') || msg.includes('504') || msg.includes('aborted')) {
+        // Case 3: Request timeout / gateway timeout
+        friendlyText = 'My response pipeline took a little longer than expected and timed out. ⏱️ This usually happens when the server is under heavy load.\n\nPlease try sending your message again — it usually works on the second attempt! 🔄';
+      } else if (msg.includes('network') || msg.includes('failed to fetch') || msg.includes('fetch') || msg.includes('err_internet') || msg.includes('offline') || msg.includes('dns')) {
+        // Case 4: Network / connectivity issues
+        friendlyText = 'Hmm, it looks like your internet connection hiccupped! 📡 I couldn\'t reach the server.\n\nCheck your Wi-Fi or mobile data and try again. If everything looks fine on your end, the server might be momentarily rebooting — just retry in a few seconds! 🌐';
+      } else if (msg.includes('502') || msg.includes('503') || msg.includes('bad gateway') || msg.includes('service unavailable') || msg.includes('unreachable')) {
+        // Case 5: Server down / bad gateway
+        friendlyText = 'Oh! My home server at Vercel is temporarily taking a quick power nap. 😴💤 This is a brief infrastructure blip and usually resolves in under a minute.\n\nPlease try again shortly, or drop Ganesh a direct mail at **kankatalaganeshgiridhar@gmail.com**! 📬';
+      } else if (msg.includes('too large') || msg.includes('payload') || msg.includes('413') || msg.includes('content length')) {
+        // Case 6: Payload too large
+        friendlyText = 'That\'s a really detailed question — so detailed that it exceeded my input buffer! 📦 Could you try rephrasing it in a shorter way?\n\nTip: Break complex questions into smaller parts and I\'ll handle each one perfectly! ✨';
+      } else if (msg.includes('safety') || msg.includes('blocked') || msg.includes('content filter') || msg.includes('harm') || msg.includes('recitation')) {
+        // Case 7: Content safety filter triggered
+        friendlyText = 'My AI safety filters flagged something in that request. 🛡️ This is a protective measure to keep our conversation professional and helpful.\n\nCould you try rephrasing your question? I\'m here to help with anything about Ganesh\'s projects, skills, experience, or background! 💡';
+      } else if (msg.includes('embedding') || msg.includes('vector') || msg.includes('dimension')) {
+        // Case 8: Embedding generation failure
+        friendlyText = 'My semantic search engine had a brief hiccup while converting your question into vectors. 🔢 This is rare and usually fixes itself.\n\nPlease try asking your question again! 🔄';
+      } else if (msg.includes('json') || msg.includes('parse') || msg.includes('unexpected token') || msg.includes('syntax')) {
+        // Case 9: Malformed response / JSON parse error
+        friendlyText = 'I received a response but it got a little scrambled in transit. 📝 Think of it like a partially downloaded file.\n\nPlease retry your question — the next response should come through cleanly! ✅';
+      } else if (msg.includes('cors') || msg.includes('origin') || msg.includes('cross-origin')) {
+        // Case 10: CORS / cross-origin issues
+        friendlyText = 'There\'s a cross-origin security policy preventing my connection. 🔒 This is a backend configuration detail that Ganesh can resolve quickly.\n\nIn the meantime, explore the [Projects Page](https://brandofganesh.vercel.app/work.html) directly! 🚀';
+      } else if (msg.includes('ssl') || msg.includes('certificate') || msg.includes('tls') || msg.includes('handshake')) {
+        // Case 11: SSL / certificate errors
+        friendlyText = 'There seems to be a secure connection issue between your browser and my server. 🔐 Try refreshing the page or clearing your browser cache.\n\nIf the issue persists, try a different browser! 🌐';
+      } else if (err.name === 'AbortError' || msg.includes('abort')) {
+        // Case 12: Request was aborted
+        friendlyText = 'The request was cancelled before I could finish responding. ✋ This sometimes happens with slow connections.\n\nNo worries — just ask again and I\'ll be right on it! ⚡';
+      } else {
+        // Case 13: Generic unknown error (catch-all)
+        friendlyText = 'Hmm, my digital loops ran into an unexpected recursion! 🌀 Something went a bit sideways while fetching that answer.\n\nTry clicking the **refresh icon** in the header to restart our conversation, or dive directly into Ganesh\'s repositories on [GitHub](https://github.com/Ganesh2006646)! 💻';
+      }
+
       const errMsg = {
         id: (Date.now() + 1).toString(),
         sender: 'bot',
-        text: 'Connection error: ' + (err.message || 'The server is unreachable. Please try again later.'),
+        text: friendlyText,
       };
       messages.push(errMsg);
       messagesContainer.appendChild(renderMessage(errMsg));
