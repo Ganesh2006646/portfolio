@@ -49,7 +49,54 @@
     sparkle: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.5 9.5 22 12 14.5 14.5 12 22 9.5 14.5 2 12 9.5 9.5z"/></svg>`,
     user: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
     briefcase: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
+    // Professional mini-icons for quick-reply chips
+    rocket: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09Z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2Z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>`,
+    phone: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>`,
+    linkedin: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286ZM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065Zm1.782 13.019H3.555V9h3.564v11.452ZM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003Z"/></svg>`,
   };
+
+  // ---- CONTEXTUAL FOLLOW-UP SUGGESTIONS ----
+  const FOLLOW_UP_MAP = [
+    { keywords: ['project', 'riceagent', 'execucode', 'spectra', 'flip', 'hackathon', 'built', 'repo'], prompts: ['What tech stack did Ganesh use?', 'Tell me about another project', 'What hackathons has Ganesh won?'] },
+    { keywords: ['skill', 'stack', 'python', 'flutter', 'react', 'javascript', 'ml', 'ai', 'framework', 'language'], prompts: ['What are his strongest skills?', 'What projects use this tech?', 'What certifications does Ganesh have?'] },
+    { keywords: ['experience', 'intern', 'work', 'job', 'role', 'codsoft', 'unlox', 'ambassador', 'position'], prompts: ['What projects did he build during internships?', 'Is Ganesh open to new roles?', 'Tell me about his education'] },
+    { keywords: ['contact', 'email', 'reach', 'connect', 'hire', 'linkedin', 'social'], prompts: ['What is his GitHub profile?', 'Where is Ganesh located?', 'Tell me about his background'] },
+    { keywords: ['education', 'college', 'amrita', 'university', 'study', 'degree', 'btech'], prompts: ['What are his career goals?', 'What clubs or activities is he in?', 'Tell me about his projects'] },
+    { keywords: ['goal', 'vision', 'future', 'plan', 'career', 'germany', 'msc'], prompts: ['What is The Linear Paradigm?', 'What is his engineering philosophy?', 'What skills is he building?'] },
+    { keywords: ['philosophy', 'linear', 'paradigm', 'values', 'belief', 'mindset'], prompts: ['Tell me about a time he failed', 'Why should I hire Ganesh?', 'What drives him?'] },
+  ];
+
+  function getFollowUps(userText, botText) {
+    const combined = ((userText || '') + ' ' + (botText || '')).toLowerCase();
+    const matched = [];
+    for (const entry of FOLLOW_UP_MAP) {
+      for (const kw of entry.keywords) {
+        if (combined.includes(kw)) {
+          matched.push(...entry.prompts);
+          break;
+        }
+      }
+    }
+    // Deduplicate, shuffle, pick 2
+    const unique = [...new Set(matched)];
+    const shuffled = shuffleArray(unique);
+    return shuffled.slice(0, 2);
+  }
+
+  function renderFollowUps(userText, botText) {
+    const prompts = getFollowUps(userText, botText);
+    if (prompts.length === 0) return null;
+    const wrapper = createEl('div', 'rag-followups');
+    prompts.forEach(function (p) {
+      const btn = createEl('button', 'rag-followup-chip', escapeHtml(p));
+      btn.addEventListener('click', function () {
+        wrapper.remove();
+        handleSend(p);
+      });
+      wrapper.appendChild(btn);
+    });
+    return wrapper;
+  }
 
   // ---- STATE ----
   let isOpen = false;
@@ -444,6 +491,15 @@
         botBubble.innerHTML = parseMarkdown('I processed your question but received an empty response from the AI engine. 🤔 This can happen during high-traffic periods.\n\nPlease try asking again — I\'m ready for round two! 🔄');
       }
 
+      // ---- CONTEXTUAL FOLLOW-UP SUGGESTIONS ----
+      if (fullText) {
+        const followUpEl = renderFollowUps(text, fullText);
+        if (followUpEl) {
+          messagesContainer.appendChild(followUpEl);
+          scrollToBottom();
+        }
+      }
+
     } catch (err) {
       const existing = document.getElementById('rag-typing-indicator');
       if (existing) existing.remove();
@@ -706,12 +762,6 @@
       '</div>' +
       '<button class="rag-onboarding-submit">Start Chatting</button>' +
       '<button class="rag-onboarding-skip">Skip</button>' +
-      '</div>' +
-      '<div class="rag-onboarding-divider"><span>or jump straight to</span></div>' +
-      '<div class="rag-quick-replies">' +
-      '<button class="rag-quick-chip" data-prompt="Show me Ganesh\'s projects, repositories, and live links!">🚀 See Projects</button>' +
-      '<button class="rag-quick-chip" data-prompt="How can I contact Ganesh? What are his social links and email?">📞 Contact Ganesh</button>' +
-      '<button class="rag-quick-chip" data-prompt="Tell me about Ganesh\'s LinkedIn profile and positions.">💼 View LinkedIn</button>' +
       '</div>';
 
     // Bind onboarding events
@@ -743,14 +793,7 @@
           nameInput.style.borderColor = '';
         });
       }
-      // Bind quick replies clicks in onboarding
-      onboardingContainer.querySelectorAll('.rag-quick-chip').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          saveVisitor({ name: '', role: '' });
-          const prompt = btn.getAttribute('data-prompt');
-          handleSend(prompt);
-        });
-      });
+
     }, 0);
 
     // --- Welcome Container ---
@@ -761,9 +804,9 @@
       '<h2 class="rag-welcome-heading">Hi there!</h2>' +
       '<p class="rag-welcome-subheading">What\'s on <span class="rag-highlight">your mind</span>?</p>' +
       '<div class="rag-quick-replies">' +
-      '<button class="rag-quick-chip" data-prompt="Show me Ganesh\'s projects, repositories, and live links!">🚀 See Projects</button>' +
-      '<button class="rag-quick-chip" data-prompt="How can I contact Ganesh? What are his social links and email?">📞 Contact Ganesh</button>' +
-      '<button class="rag-quick-chip" data-prompt="Tell me about Ganesh\'s LinkedIn profile and positions.">💼 View LinkedIn</button>' +
+      '<button class="rag-quick-chip" data-prompt="Show me Ganesh\'s projects, repositories, and live links!"><span class="rag-chip-icon">' + ICONS.rocket + '</span>See Projects</button>' +
+      '<button class="rag-quick-chip" data-prompt="How can I contact Ganesh? What are his social links and email?"><span class="rag-chip-icon">' + ICONS.phone + '</span>Contact Ganesh</button>' +
+      '<button class="rag-quick-chip" data-prompt="Tell me about Ganesh\'s LinkedIn profile and positions."><span class="rag-chip-icon">' + ICONS.linkedin + '</span>View LinkedIn</button>' +
       '</div>' +
       '<div class="rag-suggestions-label">Or ask a question:</div>' +
       '<div class="rag-suggestions-scroll">' +
