@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050508">
+  <title>Journey — Ganesh Giridhar</title>
+  <meta name="description" content="The personal brand, philosophy, and engineering identity of Kankatala Ganesh Giridhar.">
+  <meta property="og:title" content="Journey — Ganesh Giridhar">
+  <meta property="og:description" content="The personal brand, philosophy, and engineering identity of Kankatala Ganesh Giridhar.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="assets/images/kg2-logo.png">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/deck.css">
+  <link rel="stylesheet" href="css/chatbot-widget.css">
+  <script src="js/shield.js"></script>
+</head>
+<body class="journey-page">
+
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="noise-overlay"></div>
+  <div class="cursor"></div>
+  <div class="cursor-dot"></div>
+
+  <!-- Page Transition -->
+  <div class="page-transition" id="pageTransition">
+    <div class="route-name"></div>
+    <div class="panel"></div>
+    <div class="panel"></div>
+    <div class="panel"></div>
+    <div class="panel"></div>
+    <div class="panel"></div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <a href="index.html" data-transition="Home">Home</a>
+    <a href="index.html#about" data-transition="Home">About</a>
+    <a href="work.html" data-transition="Work">Work</a>
+    <a href="journey.html">Journey</a>
+    <a href="contact.html" data-transition="Contact">Contact</a>
+  </div>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <a class="logo magnetic" href="index.html" aria-label="Ganesh Giridhar — Home" data-transition="Home">
+      <img src="assets/images/kg2-logo.webp" alt="KG² Logo" class="logo-icon-img">
+      <div class="logo-name">
+        <span class="first">Ganesh</span>
+        <span class="last">Giridhar</span>
+      </div>
+    </a>
+    <div class="availability-badge magnetic">
+      <span>open to internships</span>
+      <div class="availability-dot"></div>
+    </div>
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="nav-link" href="index.html" data-transition="Home">
+        <span>Home</span><span>Home</span>
+      </a>
+      <a class="nav-link" href="index.html#about" data-transition="Home">
+        <span>About</span><span>About</span>
+      </a>
+      <a class="nav-link" href="work.html" data-transition="Work">
+        <span>Work</span><span>Work</span>
+      </a>
+      <a class="nav-link" href="journey.html" aria-current="page">
+        <span>Journey</span><span>Journey</span>
+      </a>
+      <a class="nav-link" href="contact.html" data-transition="Contact">
+        <span>Contact</span><span>Contact</span>
+      </a>
+    </nav>
+    <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </header>
+
+  <!-- 3D Particle Background -->
+  <canvas id="journey-bg-canvas"></canvas>
+
+  <main id="main">
+
+    <!-- ===== HERO ===== -->
+    <section class="deck-hero">
+      <h1 class="deck-hero-title">Personal<br>Journey Deck</h1>
+      <p class="deck-hero-sub">Engineering Identity · Philosophy · Brand</p>
+      <div class="hero-flair-track">
+        <div class="hero-flair"></div>
+        <div class="hero-flair"></div>
+        <div class="hero-flair"></div>
+        <div class="hero-flair"></div>
+        <div class="hero-flair"></div>
+      </div>
+      <div class="scroll-indicator">
+        <span>Scroll to explore</span>
+        <div class="scroll-arrow"></div>
+      </div>
+    </section>
+
+    <!-- ===== SEC 1: JOURNEY PATH — The Genesis ===== -->
+    <section class="j-panel sec-path">
+      <div class="j-panel__inner">
+        <div class="sec-path__layout">
+          <!-- Text column -->
+          <div class="sec-path__text">
+            <span class="j-label">01 — The Genesis</span>
+            <h2 class="j-title">From <span class="grad">Blank Slate</span><br>to Builder</h2>
+            <blockquote class="j-quote">"Engineering is not learned from textbooks; it is forged by building solutions that matter."</blockquote>
+            <p class="j-desc"><strong>The Mindset:</strong> Coming from an MPC (Math, Physics, Chemistry) background with zero computer science foundation, I stepped into this domain armed only with a relentless passion for AI and technology. Instead of letting imposter syndrome win, I observed, absorbed insights from top tech leaders, and completely shifted my perspective.</p>
+            <p class="j-desc"><strong>Product Thinking over Syntax:</strong> I stopped worrying about memorizing code and started learning how to "vibe code"—translating raw concepts into functional products. By upskilling in product thinking and immersing myself in tech communities, I built a strong network and the confidence to scale greater heights.</p>
+            <div class="j-formula">Passion + Observation + Product Thinking = Real Engineering</div>
+            <div class="j-tags">
+              <span class="j-tag">Zero to Builder</span>
+              <span class="j-tag">Product Thinking</span>
+              <span class="j-tag">Vibe Coding</span>
+            </div>
+          </div>
+          <!-- Journey Path visual -->
+          <div class="sec-path__visual">
+            <svg class="sec-path__svg" viewBox="0 0 200 500" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <linearGradient id="pathGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#6C3CE1" />
+                  <stop offset="50%" stop-color="#F175A0" />
+                  <stop offset="100%" stop-color="#D334DF" />
+                </linearGradient>
+              </defs>
+              <!-- Background trail (faint) -->
+              <path class="sec-path__trail" d="M 100 20 C 160 60, 40 120, 100 160 C 160 200, 40 260, 100 300 C 160 340, 40 400, 100 440 C 130 460, 100 480, 100 490" />
+              <!-- Animated draw path -->
+              <path id="journeyDrawPath" class="sec-path__draw" d="M 100 20 C 160 60, 40 120, 100 160 C 160 200, 40 260, 100 300 C 160 340, 40 400, 100 440 C 130 460, 100 480, 100 490" />
+            </svg>
+
+            <!-- Milestone markers -->
+            <div class="sec-path__milestone sec-path__milestone--1">
+              <div class="sec-path__dot"></div>
+              <span class="sec-path__label">MPC<br>Background</span>
+            </div>
+            <div class="sec-path__milestone sec-path__milestone--2">
+              <div class="sec-path__dot"></div>
+              <span class="sec-path__label">Discovered<br>AI & Tech</span>
+            </div>
+            <div class="sec-path__milestone sec-path__milestone--3">
+              <div class="sec-path__dot"></div>
+              <span class="sec-path__label">Product<br>Thinking</span>
+            </div>
+            <div class="sec-path__milestone sec-path__milestone--4">
+              <div class="sec-path__dot"></div>
+              <span class="sec-path__label">Vibe<br>Coder</span>
+            </div>
+            <div class="sec-path__milestone sec-path__milestone--5">
+              <div class="sec-path__dot"></div>
+              <span class="sec-path__label">Real<br>Engineer</span>
+            </div>
+            <!-- Traveler dot that follows the path -->
+            <div class="sec-path__traveler"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SEC 2: The Crucibles of Growth ===== -->
+    <section class="j-panel sec-windmill">
+      <div class="j-panel__inner">
+        <div class="grid">
+          <div class="sec-windmill__text">
+            <span class="j-label">02 — The Crucibles</span>
+            <h2 class="j-title">Empathy in the Field,<br><span class="grad">Execution</span> under Pressure</h2>
+            <blockquote class="j-quote">"A solution is only sustainable if it is rooted in the reality of the people living the problem."</blockquote>
+            <p class="j-desc"><strong>Live-in-Labs (The Empathy Engine):</strong> I stepped out of the classroom to live within communities, analyzing their daily friction firsthand. Guided by top mentors, I learned how to approach complex human problems, utilize sustainable methodologies, and understand the hidden edge cases required to build real, working solutions.</p>
+            <p class="j-desc"><strong>Hackathons (The Execution Arena):</strong> My ultimate playground. A high-pressure environment where I observe how top-tier minds think, identify my own gaps, and rapidly implement my skills and methodologies.</p>
+            <div class="j-formula">Lived Insights &times; Rapid Iteration = Sustainable Innovation</div>
+            <div class="j-tags">
+              <span class="j-tag">Live-in-Labs</span>
+              <span class="j-tag">Hackathons</span>
+              <span class="j-tag">Dual-Environment Learning</span>
+            </div>
+          </div>
+          <div class="collage-grid">
+            <div class="collage-item collage-item--tall"><img src="assets/images/journey/Screenshot 2026-06-13 154052.png" alt="Live-in-Labs fieldwork in Ulaiyur, Tamil Nadu"></div>
+            <div class="collage-item"><img src="assets/images/journey/Screenshot 2026-06-13 155318.png" alt="Synaptix Frontier AI Hack & OpenEnv Hackathon"></div>
+            <div class="collage-item"><img src="assets/images/journey/Screenshot 2026-06-13 155352.png" alt="Gemini Hackathon & CODORRA 2026"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SEC 3: Decoding Tomorrow ===== -->
+    <section class="j-panel sec-flow">
+      <div class="j-panel__inner">
+        <div class="grid">
+          <div class="sec-flow__text">
+            <span class="j-label">03 — Decoding Tomorrow</span>
+            <h2 class="j-title">The <span class="grad">Execution</span><br>Mindset</h2>
+            <blockquote class="j-quote">"What will happen tomorrow is entirely dictated by the discipline of what you execute today." — A lesson from my father.</blockquote>
+            <p class="j-desc"><strong>The Mindset:</strong> Many students lack awareness of industry realities, remaining "asleep" to what it actually takes to succeed. I refuse to be one of them. Guided by my father's work ethic and lessons from great people, I actively decode life.</p>
+            <p class="j-desc"><strong>Proactive Architecture:</strong> I do not wait for opportunities to come to me. I attend webinars, read deep-dive industry newsletters, seek guidance from mentors, and map out exactly what I need to do today to stand at the top tomorrow.</p>
+            <div class="j-formula">Tomorrow's Success = Today's Execution<sup>Awareness</sup></div>
+            <div class="j-tags">
+              <span class="j-tag">Proactive Architecture</span>
+              <span class="j-tag">Industry Awareness</span>
+              <span class="j-tag">Discipline</span>
+            </div>
+          </div>
+          <div class="collage-grid collage-grid--alt">
+            <div class="collage-item"><img src="assets/images/journey/Screenshot 2026-06-13 154858.png" alt="Projects — dashboard, hardware, apps"></div>
+            <div class="collage-item collage-item--tall"><img src="assets/images/journey/Screenshot 2026-06-13 160049.png" alt="Webinars, mentors, and learning"></div>
+            <div class="collage-item"><img src="assets/images/journey/Screenshot 2026-06-13 155318.png" alt="Industry engagement and competitions"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SEC 4: The Compound Effect ===== -->
+    <section class="j-panel sec-lever">
+      <div class="j-panel__inner">
+        <div class="grid">
+          <div class="sec-lever__text">
+            <span class="j-label">04 — The Compound Effect</span>
+            <h2 class="j-title">Architecting<br><span class="grad">Reality</span></h2>
+            <blockquote class="j-quote">"AI is not a threat to be feared; it is the ultimate companion for the engineer who knows how to orchestrate it."</blockquote>
+            <p class="j-desc"><strong>The Mindset:</strong> Armed with a clear understanding of reality, I grounded my roots in Web Development, Artificial Intelligence, and Data Science. Validated by certifications and guided by top mentors, I transformed from a learner into a builder.</p>
+            <p class="j-desc"><strong>The Continuous Loop:</strong></p>
+            <ul class="j-list">
+              <li><strong>Workflow Multipliers:</strong> Utilizing advanced AI workflows as a daily companion to 10X my execution.</li>
+              <li><strong>Practical Grit:</strong> Shipping projects for real-life problems and securing internships for hands-on experience.</li>
+              <li><strong>Open Source Contribution:</strong> Diving into real-world codebases to truly understand collaborative engineering.</li>
+            </ul>
+            <div class="j-formula">Analyse &rarr; Build &rarr; Iterate</div>
+            <div class="j-tags">
+              <span class="j-tag">AI Workflows</span>
+              <span class="j-tag">Practical Grit</span>
+              <span class="j-tag">Open Source</span>
+            </div>
+          </div>
+          <div class="sec-lever__orbit">
+            <div class="sec-lever__ring sec-lever__ring--1"></div>
+            <div class="sec-lever__ring sec-lever__ring--2"></div>
+            <div class="sec-lever__ring sec-lever__ring--3"></div>
+            <div class="sec-lever__orbit-center"></div>
+            <div class="sec-lever__orbit-dot sec-lever__orbit-dot--1"></div>
+            <div class="sec-lever__orbit-dot sec-lever__orbit-dot--2"></div>
+            <div class="sec-lever__orbit-dot sec-lever__orbit-dot--3"></div>
+            <div class="sec-lever__orbit-label sec-lever__orbit-label--1">Analyse</div>
+            <div class="sec-lever__orbit-label sec-lever__orbit-label--2">Build</div>
+            <div class="sec-lever__orbit-label sec-lever__orbit-label--3">Iterate</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SEC 5: The Empty Room ===== -->
+    <section class="j-panel sec-parallax">
+      <div class="sec-parallax__flair sec-parallax__flair--1"></div>
+      <div class="sec-parallax__flair sec-parallax__flair--2"></div>
+      <div class="sec-parallax__flair sec-parallax__flair--3"></div>
+      <div class="sec-parallax__flair sec-parallax__flair--4"></div>
+      <div class="sec-parallax__flair sec-parallax__flair--5"></div>
+      <div class="sec-parallax__flair sec-parallax__flair--6"></div>
+      <div class="sec-parallax__flair sec-parallax__flair--7"></div>
+      <div class="sec-parallax__flair sec-parallax__flair--8"></div>
+      <div class="sec-parallax__content">
+        <span class="j-label" style="justify-content:center;">05 — The Empty Room</span>
+        <h2 class="j-title" style="text-align:center;">The Ultimate<br><span class="grad">Identifier</span></h2>
+        <blockquote class="j-quote" style="text-align:center;">"Code is just execution. True engineering is the discipline of experiencing the friction, extracting the root cause, and architecting a system that survives the real world."</blockquote>
+        <p class="j-desc" style="text-align:center;"><strong>The Mindset:</strong> My reputation is built on bridging human psychology with high-performance system architecture. When a critical problem arises, the assignment is easy: hand it over, knowing I will find the root cause and engineer a system that survives the real world.</p>
+        <p class="j-desc" style="text-align:center;"><strong>Purposeful Impact:</strong> I deliver intelligent systems that execute with precision, support my team, and build with relentless purpose. Technology only matters when it creates an immediate, linear improvement in daily life.</p>
+        <div class="j-tags" style="justify-content:center;">
+          <span class="j-tag">Root-Cause Engineer</span>
+          <span class="j-tag">Precision Execution</span>
+          <span class="j-tag">Purposeful Impact</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="logo" href="index.html" data-transition="Home">
+          <img src="assets/images/kg2-logo.webp" alt="KG² Logo" class="logo-icon-img footer-logo">
+          <div class="logo-name">
+            <span class="first">Ganesh</span>
+            <span class="last">Giridhar</span>
+          </div>
+        </a>
+        <p>AI Systems Engineer & Product Builder crafting scalable, intelligent systems.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <a href="index.html" data-transition="Home">Home</a>
+        <a href="index.html#about" data-transition="Home">About</a>
+        <a href="work.html" data-transition="Work">Work</a>
+        <a href="journey.html">Journey</a>
+        <a href="contact.html" data-transition="Contact">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Socials</h4>
+        <a href="https://www.linkedin.com/in/kankatala-ganesh-giridhar-071876322" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/Ganesh2006646" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:kankatalaganeshgiridhar@gmail.com">kankatalaganeshgiridhar@gmail.com</a>
+        <a href="contact.html" data-transition="Contact">Send a message</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Kankatala Ganesh Giridhar. All rights reserved.</span>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/kankatala-ganesh-giridhar-071876322" target="_blank" rel="noopener noreferrer">Li</a>
+        <a href="https://github.com/Ganesh2006646" target="_blank" rel="noopener noreferrer">Gh</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/MotionPathPlugin.min.js"></script>
+  <script src="https://unpkg.com/split-type"></script>
+  <script src="js/main.js"></script>
+  <script src="js/journey-deck.js"></script>
+  <script src="js/chatbot-widget.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

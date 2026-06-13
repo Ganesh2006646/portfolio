@@ -39,6 +39,9 @@
   let animationId;
   let mouse3D;
   let mouseTarget;
+  let mouse2D = new THREE.Vector2(-100, -100);
+  let raycaster = new THREE.Raycaster();
+  let hoveredMesh = null;
   let materialCache = [];
   let sharedGeometry;
 
@@ -302,6 +305,11 @@
     // Orbit speed boost from scroll velocity
     const scrollBoost = 1 + Math.abs(scrollVelocity) * 0.005;
 
+    // Update raycaster for hover detection
+    raycaster.setFromCamera(mouse2D, camera);
+    const intersects = raycaster.intersectObjects(particles.map(p => p.mesh));
+    hoveredMesh = intersects.length > 0 ? intersects[0].object : null;
+
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
       const pos = p.mesh.position;
@@ -326,20 +334,29 @@
       p.vy += (Math.random() - 0.5) * jiggle;
       p.vz += (Math.random() - 0.5) * jiggle;
 
-      // 3. Mouse repulsion
-      const dx = pos.x - mouse3D.x;
-      const dy = pos.y - mouse3D.y;
-      const dz = pos.z - mouse3D.z;
-      const mouseDist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+      const isHovered = (p.mesh === hoveredMesh);
 
-      if (mouseDist > 0.1 && mouseDist < MOUSE_RADIUS + p.scale * 1.5) {
-        const pushForce = MOUSE_PUSH * dt / (mouseDist * mouseDist);
-        p.vx += (dx / mouseDist) * pushForce * 40;
-        p.vy += (dy / mouseDist) * pushForce * 40;
-        p.vz += (dz / mouseDist) * pushForce * 15;
-        p.avx += (Math.random() - 0.5) * pushForce * 0.2;
-        p.avy += (Math.random() - 0.5) * pushForce * 0.2;
-        p.avz += (Math.random() - 0.5) * pushForce * 0.2;
+      // 3. Mouse interaction (Hover vs Repulsion)
+      if (isHovered) {
+        // Pull towards camera and dampen velocity for readability
+        p.vz += 20.0 * dt; 
+        p.vx *= 0.8;
+        p.vy *= 0.8;
+      } else {
+        const dx = pos.x - mouse3D.x;
+        const dy = pos.y - mouse3D.y;
+        const dz = pos.z - mouse3D.z;
+        const mouseDist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+        if (mouseDist > 0.1 && mouseDist < MOUSE_RADIUS + p.scale * 1.5) {
+          const pushForce = MOUSE_PUSH * dt / (mouseDist * mouseDist);
+          p.vx += (dx / mouseDist) * pushForce * 40;
+          p.vy += (dy / mouseDist) * pushForce * 40;
+          p.vz += (dz / mouseDist) * pushForce * 15;
+          p.avx += (Math.random() - 0.5) * pushForce * 0.2;
+          p.avy += (Math.random() - 0.5) * pushForce * 0.2;
+          p.avz += (Math.random() - 0.5) * pushForce * 0.2;
+        }
       }
 
       // 4. Sphere collision
@@ -393,10 +410,25 @@
 
       // Rotation: boost spin speed with scroll velocity
       const spinBoost = 1 + Math.abs(scrollVelocity) * 0.002;
-      p.mesh.rotation.x += (p.avx + p.baseAvx) * spinBoost;
-      p.mesh.rotation.y += (p.avy + p.baseAvy) * spinBoost;
-      p.mesh.rotation.z += (p.avz + p.baseAvz) * spinBoost;
+      if (isHovered) {
+        // Slow down spin completely for readability
+        p.avx *= 0.5; p.avy *= 0.5; p.avz *= 0.5;
+        p.mesh.rotation.x += p.avx * spinBoost;
+        p.mesh.rotation.y += p.avy * spinBoost;
+        p.mesh.rotation.z += p.avz * spinBoost;
+      } else {
+        p.mesh.rotation.x += (p.avx + p.baseAvx) * spinBoost;
+        p.mesh.rotation.y += (p.avy + p.baseAvy) * spinBoost;
+        p.mesh.rotation.z += (p.avz + p.baseAvz) * spinBoost;
+      }
       p.avx *= 0.95; p.avy *= 0.95; p.avz *= 0.95;
+
+      // Hover Visual Effects (Scale & Glow)
+      const targetScale = isHovered ? p.scale * 1.3 : p.scale;
+      p.mesh.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.15);
+      
+      const targetEmissive = isHovered ? 0.4 : 0.1;
+      p.mesh.material.emissiveIntensity += (targetEmissive - p.mesh.material.emissiveIntensity) * 0.1;
     }
   }
 
@@ -499,6 +531,8 @@
     const ndcX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
     const ndcY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
 
+    mouse2D.set(ndcX, ndcY);
+
     const viewHeight = camera.position.z * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * 2;
     const viewWidth = viewHeight * camera.aspect;
     mouseTarget.set(ndcX * viewWidth * 0.5, ndcY * viewHeight * 0.5, 0);
@@ -506,6 +540,7 @@
 
   function onMouseLeave() {
     mouseTarget.set(100, 100, 100);
+    mouse2D.set(-100, -100);
   }
 
   function onResize() {

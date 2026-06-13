@@ -1,0 +1,728 @@
+/* =========================================
+   JOURNEY DECK — Full GSAP Showcase
+   Different shades per section, no pin
+   ========================================= */
+
+.journey-page {
+  background-color: #050508;
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+/* ---- 3D Background Canvas ---- */
+#journey-bg-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ========== HERO ========== */
+.deck-hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 80%, rgba(108,60,225,0.08) 0%, transparent 60%);
+}
+
+.deck-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 800;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(255,255,255,0.95), var(--accent), var(--pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.deck-hero-sub {
+  font-family: var(--font-body);
+  font-size: clamp(0.75rem, 1.1vw, 1rem);
+  color: var(--text-muted);
+  margin-top: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+}
+
+.hero-flair-track {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  pointer-events: none;
+}
+
+.hero-flair {
+  width: clamp(3rem, 6vw, 6rem);
+  height: clamp(3rem, 6vw, 6rem);
+  border-radius: 50%;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+.hero-flair:nth-child(1) { background: radial-gradient(circle, var(--accent) 0%, transparent 70%); }
+.hero-flair:nth-child(2) { background: radial-gradient(circle, var(--pink) 0%, transparent 70%); width: clamp(2rem, 4vw, 4rem); height: clamp(2rem, 4vw, 4rem); }
+.hero-flair:nth-child(3) { background: radial-gradient(circle, var(--orange) 0%, transparent 70%); }
+.hero-flair:nth-child(4) { background: radial-gradient(circle, #219653 0%, transparent 70%); width: clamp(2.5rem, 5vw, 5rem); height: clamp(2.5rem, 5vw, 5rem); }
+.hero-flair:nth-child(5) { background: radial-gradient(circle, #D334DF 0%, transparent 70%); }
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  opacity: 0.6;
+}
+
+.scroll-arrow {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+  animation: scrollPulse 2s infinite ease-in-out;
+}
+
+@keyframes scrollPulse {
+  0%   { transform: scaleY(0); opacity: 0; transform-origin: top; }
+  50%  { transform: scaleY(1); opacity: 1; transform-origin: top; }
+  50.1%{ transform: scaleY(1); opacity: 1; transform-origin: bottom; }
+  100% { transform: scaleY(0); opacity: 0; transform-origin: bottom; }
+}
+
+/* ========== GENERIC SECTION ========== */
+.journey-section {
+  position: relative;
+  z-index: 2;
+}
+
+.j-panel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.j-panel__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 5vw;
+}
+
+/* ====================================
+   SECTION-SPECIFIC BACKGROUNDS (SHADES)
+   ==================================== */
+
+/* Sec 1 — Deep Indigo */
+.sec-worm {
+  background: linear-gradient(180deg, #050508 0%, #0d0a1f 30%, #110e26 70%, #0d0a1f 100%);
+  padding: clamp(6rem, 10vw, 12rem) 0;
+}
+
+/* Sec 2 — Dark Rose */
+.sec-windmill {
+  background: linear-gradient(180deg, #0d0a1f 0%, #150a16 30%, #1a0c1b 70%, #150a16 100%);
+  padding: clamp(1.5rem, 3vw, 3rem) 0;
+}
+
+/* Sec 3 — Deep Amber */
+.sec-flow {
+  background: linear-gradient(180deg, #150a16 0%, #14100a 30%, #1a150c 70%, #14100a 100%);
+  padding: clamp(6rem, 10vw, 12rem) 0;
+}
+
+/* Sec 4 — Dark Emerald */
+.sec-lever {
+  background: linear-gradient(180deg, #14100a 0%, #081210 30%, #0a1612 70%, #081210 100%);
+  padding: clamp(6rem, 10vw, 12rem) 0;
+}
+
+/* Sec 5 — Deep Violet */
+.sec-parallax {
+  background: linear-gradient(180deg, #081210 0%, #100a18 40%, #130c1e 60%, #0a0610 100%);
+  padding: clamp(6rem, 12vw, 14rem) 0;
+  position: relative;
+  text-align: center;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========== SEC 1: JOURNEY PATH ========== */
+.sec-path__layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.sec-path__text { display: flex; flex-direction: column; gap: 1.25rem; }
+
+.sec-path__visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 5;
+  max-width: 260px;
+  margin: 0 auto;
+}
+
+.sec-path__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Faint background trail */
+.sec-path__trail {
+  fill: none;
+  stroke: rgba(108, 60, 225, 0.08);
+  stroke-width: 2;
+  stroke-dasharray: 8 6;
+}
+
+/* Animated draw path */
+.sec-path__draw {
+  fill: none;
+  stroke: url(#pathGrad);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px rgba(108, 60, 225, 0.4));
+}
+
+/* Milestone markers */
+.sec-path__milestone {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  opacity: 0.15;
+  will-change: opacity, transform;
+}
+
+.sec-path__dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px rgba(108, 60, 225, 0.5);
+  flex-shrink: 0;
+}
+
+.sec-path__label {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: rgba(240, 241, 250, 0.75);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+/* Position milestones along the winding path */
+.sec-path__milestone--1 { top: 4%;  left: 38%; }
+.sec-path__milestone--2 { top: 26%; right: 0;  flex-direction: row-reverse; }
+.sec-path__milestone--3 { top: 48%; left: -5%; }
+.sec-path__milestone--4 { top: 70%; right: 0;  flex-direction: row-reverse; }
+.sec-path__milestone--5 { top: 92%; left: 28%; }
+
+/* Theme colors for each dot */
+.sec-path__milestone--1 .sec-path__dot { background: var(--accent); box-shadow: 0 0 12px rgba(108,60,225,0.5); }
+.sec-path__milestone--2 .sec-path__dot { background: var(--pink); box-shadow: 0 0 12px rgba(241,117,160,0.5); }
+.sec-path__milestone--3 .sec-path__dot { background: var(--orange); box-shadow: 0 0 12px rgba(221,145,48,0.5); }
+.sec-path__milestone--4 .sec-path__dot { background: #2ecc71; box-shadow: 0 0 12px rgba(46,204,113,0.5); }
+.sec-path__milestone--5 .sec-path__dot { background: #D334DF; box-shadow: 0 0 12px rgba(211,52,223,0.5); }
+
+/* Traveler dot */
+.sec-path__traveler {
+  position: absolute;
+  width: clamp(1.2rem, 2.5vw, 1.8rem);
+  height: clamp(1.2rem, 2.5vw, 1.8rem);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff, var(--accent));
+  box-shadow: 0 0 20px rgba(108, 60, 225, 0.6), 0 0 40px rgba(108, 60, 225, 0.25);
+  z-index: 5;
+  top: 0; left: 0;
+}
+
+
+/* ========== SEC 2 & 3: GRIDS (text + collage) ========== */
+.sec-windmill .grid,
+.sec-flow .grid {
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.sec-windmill .j-panel__inner,
+.sec-flow .j-panel__inner {
+  max-width: 1300px;
+}
+
+
+.sec-windmill__text,
+.sec-flow__text { display: flex; flex-direction: column; gap: 1.25rem; }
+
+/* ========== PHOTO COLLAGE GRID ========== */
+.collage-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 220px 220px;
+  gap: 1rem;
+}
+
+.collage-grid--alt {
+  grid-template-rows: 220px 220px;
+}
+
+.collage-item {
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+}
+
+.collage-item:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+
+.collage-item--tall {
+  grid-row: span 2;
+}
+
+.collage-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.collage-item:hover img {
+  transform: scale(1.05);
+}
+
+/* Subtle gradient overlay at bottom for depth */
+.collage-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 40%;
+  background: linear-gradient(to top, rgba(5,5,8,0.4), transparent);
+  pointer-events: none;
+  border-radius: 0 0 16px 16px;
+}
+
+/* Theme glow per section */
+.sec-windmill .collage-item {
+  border-color: rgba(241,117,160,0.12);
+}
+.sec-windmill .collage-item:hover {
+  box-shadow: 0 12px 40px rgba(241,117,160,0.1), 0 0 0 1px rgba(241,117,160,0.15);
+}
+.sec-flow .collage-item {
+  border-color: rgba(221,145,48,0.12);
+}
+.sec-flow .collage-item:hover {
+  box-shadow: 0 12px 40px rgba(221,145,48,0.1), 0 0 0 1px rgba(221,145,48,0.15);
+}
+
+
+/* ========== SEC 4: ORBIT LOOP ========== */
+.sec-lever .grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.sec-lever__text { display: flex; flex-direction: column; gap: 1.25rem; }
+
+.sec-lever__orbit {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+/* Concentric rings */
+.sec-lever__ring {
+  position: absolute;
+  top: 50%; left: 50%;
+  border-radius: 50%;
+  border: 1px solid rgba(33, 150, 83, 0.15);
+  transform: translate(-50%, -50%);
+}
+
+.sec-lever__ring--1 { width: 40%; height: 40%; border-color: rgba(33,150,83,0.25); }
+.sec-lever__ring--2 { width: 65%; height: 65%; border-color: rgba(33,150,83,0.18); }
+.sec-lever__ring--3 { width: 90%; height: 90%; border-color: rgba(33,150,83,0.12); }
+
+/* Center glow */
+.sec-lever__orbit-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #27ae60, #0e5a2f);
+  box-shadow: 0 0 30px rgba(33,150,83,0.35), 0 0 60px rgba(33,150,83,0.15);
+  z-index: 3;
+}
+
+/* Orbiting dots — positioned on ring edge via transform-origin */
+.sec-lever__orbit-dot {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  z-index: 4;
+}
+
+.sec-lever__orbit-dot--1 {
+  background: #27ae60;
+  box-shadow: 0 0 12px rgba(33,150,83,0.5);
+  transform-origin: 0 calc(-340px * 0.2);
+  margin-left: -0.425rem;
+  margin-top: -0.425rem;
+}
+
+.sec-lever__orbit-dot--2 {
+  background: #2ecc71;
+  box-shadow: 0 0 12px rgba(46,204,113,0.5);
+  transform-origin: 0 calc(-340px * 0.325);
+  margin-left: -0.425rem;
+  margin-top: -0.425rem;
+}
+
+.sec-lever__orbit-dot--3 {
+  background: #1abc9c;
+  box-shadow: 0 0 12px rgba(26,188,156,0.5);
+  transform-origin: 0 calc(-340px * 0.45);
+  margin-left: -0.425rem;
+  margin-top: -0.425rem;
+}
+
+/* Labels floating near each ring */
+.sec-lever__orbit-label {
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(33,150,83,0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.sec-lever__orbit-label--1 { top: 50%; right: -1rem; transform: translateY(-50%); }
+.sec-lever__orbit-label--2 { bottom: -0.5rem; left: 50%; transform: translateX(-50%); }
+.sec-lever__orbit-label--3 { top: -0.5rem; left: 50%; transform: translateX(-50%); }
+
+
+/* ========== SEC 5: PARALLAX FLAIR ========== */
+.sec-parallax__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 5vw;
+}
+
+.sec-parallax__flair {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.sec-parallax__flair--1 {
+  width: clamp(4rem, 10vw, 10rem);
+  height: clamp(4rem, 10vw, 10rem);
+  background: radial-gradient(circle at 30% 30%, #D334DF, #6a1a70);
+  top: 10%; left: 8%;
+  opacity: 0.4;
+}
+
+.sec-parallax__flair--2 {
+  width: clamp(3rem, 7vw, 7rem);
+  height: clamp(3rem, 7vw, 7rem);
+  background: radial-gradient(circle at 30% 30%, var(--accent), #2a1070);
+  top: 25%; right: 10%;
+  opacity: 0.35;
+}
+
+.sec-parallax__flair--3 {
+  width: clamp(5rem, 12vw, 12rem);
+  height: clamp(5rem, 12vw, 12rem);
+  background: radial-gradient(circle at 30% 30%, var(--pink), #8e1a50);
+  bottom: 15%; left: 15%;
+  opacity: 0.3;
+}
+
+.sec-parallax__flair--4 {
+  width: clamp(2rem, 4vw, 4rem);
+  height: clamp(2rem, 4vw, 4rem);
+  background: radial-gradient(circle at 40% 40%, #6C3CE1, #3a1a8e);
+  top: 60%; right: 6%;
+  opacity: 0.35;
+}
+
+.sec-parallax__flair--5 {
+  width: clamp(3.5rem, 8vw, 8rem);
+  height: clamp(3.5rem, 8vw, 8rem);
+  background: radial-gradient(circle at 30% 30%, var(--orange), #8a4a10);
+  top: 8%; right: 25%;
+  opacity: 0.2;
+}
+
+.sec-parallax__flair--6 {
+  width: clamp(1.5rem, 3vw, 3rem);
+  height: clamp(1.5rem, 3vw, 3rem);
+  background: radial-gradient(circle at 40% 40%, #2ecc71, #0e5a2f);
+  bottom: 25%; right: 20%;
+  opacity: 0.3;
+}
+
+.sec-parallax__flair--7 {
+  width: clamp(2.5rem, 5vw, 5rem);
+  height: clamp(2.5rem, 5vw, 5rem);
+  background: radial-gradient(circle at 30% 30%, #D334DF, #8e1a70);
+  top: 45%; left: 5%;
+  opacity: 0.25;
+}
+
+.sec-parallax__flair--8 {
+  width: clamp(1.8rem, 3.5vw, 3.5rem);
+  height: clamp(1.8rem, 3.5vw, 3.5rem);
+  background: radial-gradient(circle at 40% 40%, var(--accent), #4a20b0);
+  bottom: 8%; left: 40%;
+  opacity: 0.3;
+}
+
+/* ========== SHARED TYPOGRAPHY ========== */
+.j-label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.j-label::before {
+  content: '';
+  width: 30px; height: 1px;
+  background: var(--accent);
+}
+
+/* Theme-specific label colors */
+.sec-windmill .j-label { color: var(--pink); }
+.sec-windmill .j-label::before { background: var(--pink); }
+.sec-flow .j-label { color: var(--orange); }
+.sec-flow .j-label::before { background: var(--orange); }
+.sec-lever .j-label { color: #219653; }
+.sec-lever .j-label::before { background: #219653; }
+.sec-parallax .j-label { color: #D334DF; }
+.sec-parallax .j-label::before { background: #D334DF; }
+
+.j-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.j-title .grad {
+  background: linear-gradient(135deg, var(--accent), var(--pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Theme-specific gradient text */
+.sec-windmill .j-title .grad {
+  background: linear-gradient(135deg, var(--pink), #e84393);
+  -webkit-background-clip: text; background-clip: text;
+}
+.sec-flow .j-title .grad {
+  background: linear-gradient(135deg, var(--orange), #e67e22);
+  -webkit-background-clip: text; background-clip: text;
+}
+.sec-lever .j-title .grad {
+  background: linear-gradient(135deg, #219653, #27ae60);
+  -webkit-background-clip: text; background-clip: text;
+}
+.sec-parallax .j-title .grad {
+  background: linear-gradient(135deg, #D334DF, #a855f7);
+  -webkit-background-clip: text; background-clip: text;
+}
+
+.j-desc {
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+  line-height: 1.8;
+  color: var(--text-muted);
+}
+
+.j-desc strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Blockquote — the slide motto */
+.j-quote {
+  font-family: var(--font-display);
+  font-size: clamp(0.9rem, 1.15vw, 1.15rem);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.6;
+  color: rgba(240, 241, 250, 0.75);
+  border-left: 2px solid var(--accent);
+  padding: 0.5rem 0 0.5rem 1.25rem;
+  margin: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Theme-specific quote borders */
+.sec-windmill .j-quote { border-color: var(--pink); }
+.sec-flow .j-quote { border-color: var(--orange); }
+.sec-lever .j-quote { border-color: #219653; }
+.sec-parallax .j-quote { border-color: #D334DF; border-left: none; border: none; padding-left: 0; }
+
+/* Formula bar */
+.j-formula {
+  font-family: var(--font-display);
+  font-size: clamp(0.78rem, 0.9vw, 0.95rem);
+  font-weight: 600;
+  color: rgba(240, 241, 250, 0.8);
+  background: rgba(108, 60, 225, 0.06);
+  border: 1px solid rgba(108, 60, 225, 0.15);
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  letter-spacing: 0.03em;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  display: inline-block;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.j-formula sup {
+  font-size: 0.75em;
+  vertical-align: super;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Theme-specific formula */
+.sec-windmill .j-formula { background: rgba(241,117,160,0.06); border-color: rgba(241,117,160,0.15); }
+.sec-windmill .j-formula sup { color: var(--pink); }
+.sec-flow .j-formula { background: rgba(221,145,48,0.06); border-color: rgba(221,145,48,0.15); }
+.sec-flow .j-formula sup { color: #f1c40f; } /* bright yellow/orange for visibility */
+.sec-lever .j-formula { background: rgba(33,150,83,0.06); border-color: rgba(33,150,83,0.15); }
+.sec-lever .j-formula sup { color: #2ecc71; }
+
+/* Bullet list */
+.j-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.j-list li {
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 1vw, 1.05rem);
+  line-height: 1.7;
+  color: var(--text-muted);
+  padding-left: 1.25rem;
+  position: relative;
+}
+
+.j-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: #219653;
+  font-weight: 700;
+}
+
+.j-list li strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+
+.j-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.j-tag {
+  font-size: 0.65rem;
+  font-weight: 500;
+  padding: 0.3rem 0.85rem;
+  border-radius: 50px;
+  background: rgba(108, 60, 225, 0.08);
+  border: 1px solid rgba(108, 60, 225, 0.18);
+  color: rgba(240, 241, 250, 0.7);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Theme-specific tags */
+.sec-windmill .j-tag { background: rgba(241,117,160,0.08); border-color: rgba(241,117,160,0.18); }
+.sec-flow .j-tag { background: rgba(221,145,48,0.08); border-color: rgba(221,145,48,0.18); }
+.sec-lever .j-tag { background: rgba(33,150,83,0.08); border-color: rgba(33,150,83,0.18); }
+.sec-parallax .j-tag { background: rgba(211,52,223,0.08); border-color: rgba(211,52,223,0.18); }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+  .sec-path__layout,
+  .sec-windmill .grid,
+  .sec-flow .grid,
+  .sec-lever .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sec-path__visual { max-width: 200px; }
+  .collage-grid { order: -1; }
+  .sec-lever__orbit { max-width: 280px; }
+}
+

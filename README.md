@@ -34,6 +34,7 @@ This is not a basic static site. It is a full-stack production application combi
 | 🎬 **Cinematic UX** | Multi-panel page transitions, WebGL hero, comet cursor, kinetic typography |
 | 🔮 **3D Tech Stack** | Three.js physics sphere cluster with scroll-driven Fibonacci assembly + mouse repulsion |
 | ⚡ **Zero Build Step** | Pure HTML/CSS/Vanilla JS frontend — no bundler, no framework |
+| 🃏 **Personal Deck** | Interactive slide deck presentation tracing personal philosophy and timelines |
 | 📡 **Serverless Backend** | Vercel Edge Functions for RAG chat and visitor logging |
 | 📊 **Dual Analytics** | Vercel Web Analytics + Google Sheets visitor/lead capture |
 
@@ -119,6 +120,9 @@ The chatbot is backed by a curated personal knowledge base across **15 categorie
 ### Work — `work.html`
 9 projects with vertical scroll-progress bar, 3D tilt perspective cards, project imagery, and repository links.
 
+### Journey — `journey.html`
+Interactive personal presentation deck detailing core philosophy, timelines, and the "Linear Paradigm".
+
 ### Contact — `contact.html`
 Collaboration-intent radio selectors + Google Sheets logging via iframe POST (CORS-bypassed) + auto-generated `mailto:` fallback.
 
@@ -146,6 +150,7 @@ Collaboration-intent radio selectors + Google Sheets logging via iframe POST (CO
 portfolio/
 ├── index.html                  # Home — brand identity, about, tech arsenal, projects
 ├── work.html                   # Projects showcase with 3D tilt cards
+├── journey.html                # Interactive personal presentation deck
 ├── contact.html                # Collaboration form + Google Sheets logging
 ├── vercel.json                 # Vercel deployment config
 ├── package.json                # Dependencies (@google/generative-ai)
@@ -158,6 +163,7 @@ portfolio/
 │
 ├── css/
 │   ├── styles.css              # Monolithic portfolio design system (~83 KB)
+│   ├── deck.css                # Personal deck presentation styles
 │   └── chatbot-widget.css      # Chatbot panel + markdown renderer styles
 │
 ├── js/
@@ -166,6 +172,7 @@ portfolio/
 │   ├── techstack.js            # Three.js 3D physics sphere simulation (~578 LOC)
 │   ├── hero-bg.js              # WebGL hero particle background
 │   ├── kinetic-text.js         # GSAP + SplitType kinetic typography engine
+│   ├── journey-deck.js         # Interactive presentation deck logic
 │   ├── comet-cursor.js         # Canvas comet particle trail (hero-only)
 │   └── shield.js               # Source-protection layer
 │
